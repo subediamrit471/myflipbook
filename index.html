@@ -1,1 +1,547 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लोकसेवा ज्ञान सागर - GitHub Cloud Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .ql-editor { min-height: 250px; font-size: 14px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col text-slate-800">
+
+    <div class="bg-slate-900 text-white px-4 py-2.5 flex justify-between items-center text-xs shadow-md border-b border-slate-800">
+        <div class="flex items-center gap-3">
+            <span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                <i class="fa-solid fa-cloud"></i> GITHUB CLOUD ACTIVE
+            </span>
+            <span id="global-db-counter" class="text-slate-400 font-mono">Loading Repository Sync...</span>
+        </div>
+        <div class="flex gap-2">
+            <button onclick="navigateView('learner')" id="nav-btn-learner" class="bg-blue-600 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5 text-white">
+                <i class="fa-solid fa-graduation-cap"></i> Learner View
+            </button>
+            <button onclick="navigateView('admin')" id="nav-btn-admin" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-lock"></i> Admin Dashboard
+            </button>
+        </div>
+    </div>
+
+    <div id="portal-learner-view" class="flex-1 flex flex-col">
+        <header class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white py-8 px-4 text-center border-b-4 border-amber-500">
+            <h1 class="text-2xl sm:text-4xl font-bold tracking-wide text-amber-400">लोकसेवा आयोग तयारी पोर्टल</h1>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1.5 font-light tracking-wide">केन्द्रीय क्लाउड भण्डारण संस्करण</p>
+        </header>
+
+        <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-40 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 h-14" id="ui-primary-navbar"></div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
+            <aside class="bg-white p-4 rounded-xl border border-slate-200 h-fit lg:sticky lg:top-20 shadow-sm">
+                <h3 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-blue-600"></i> उप-विषय सूची (Subcategories)
+                </h3>
+                <div class="space-y-1" id="ui-sidebar-subcategories"></div>
+            </aside>
+
+            <main class="lg:col-span-3 space-y-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block" id="ui-bread-primary">CATEGORY</span>
+                        <h2 id="ui-current-heading" class="text-lg font-bold text-slate-900">Loading...</h2>
+                    </div>
+                    <span id="ui-total-articles-badge" class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-full">0 Articles</span>
+                </div>
+                <div id="ui-articles-stream-box" class="space-y-4"></div>
+            </main>
+        </div>
+    </div>
+
+    <div id="portal-admin-view" class="hidden flex-1 bg-slate-100 p-4 sm:p-6">
+        
+        <div id="admin-auth-lock" class="max-w-md mx-auto my-20 bg-white p-8 rounded-2xl shadow-xl border border-slate-200 text-center space-y-4">
+            <div class="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-slate-900">Protected Admin System</h3>
+                <p class="text-xs text-slate-500 mt-1">Enter password configuration to update your ecosystem records.</p>
+            </div>
+            <div class="space-y-2">
+                <input type="password" id="auth-input-password" placeholder="••••••••" class="w-full text-center border rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-slate-900">
+                <button onclick="attemptAuthentication()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+                    Unlock System Gateway
+                </button>
+            </div>
+            <p class="text-[11px] text-amber-600 font-medium bg-amber-50 p-2 rounded-lg">Default Password: <span class="font-mono font-bold">admin</span></p>
+        </div>
+
+        <div id="admin-authenticated-workspace" class="hidden max-w-7xl mx-auto space-y-6">
+            
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 p-6 rounded-2xl text-white shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-down"></i> GitHub Database Export Sync Engine</h2>
+                    <p class="text-xs text-emerald-100 mt-1">When you finish adding, editing, or changing layout arrays, hit Download and upload the database file to GitHub.</p>
+                </div>
+                <button onclick="triggerDatabaseDownloadPipeline()" class="bg-white text-emerald-800 hover:bg-emerald-50 px-5 py-3 rounded-xl font-bold text-sm shadow transition flex items-center gap-2">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> 1. Download database.json
+                </button>
+            </div>
+
+            <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-folder-tree text-indigo-600"></i> Menu Structure Manager</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Primary Navigation Category (मेनु समूह)</label>
+                        <div class="flex gap-2">
+                            <select id="adm-manage-cat-select" onchange="syncAdminSubcatManagerOptions()" class="flex-1 border text-xs bg-white rounded-lg p-2 outline-none"></select>
+                            <button onclick="editPrimaryCategory()" class="bg-slate-200 text-slate-700 px-3 rounded-lg text-xs hover:bg-slate-300 font-medium">Rename</button>
+                            <button onclick="addPrimaryCategory()" class="bg-slate-900 text-white px-3 rounded-lg text-xs hover:bg-slate-800 font-medium">+ New Menu</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Subcategory Branch Mapping (उप-विषय विधा)</label>
+                        <div class="flex gap-2">
+                            <select id="adm-manage-subcat-select" class="flex-1 border text-xs bg-white rounded-lg p-2 outline-none"></select>
+                            <button onclick="editSubCategory()" class="bg-slate-200 text-slate-700 px-3 rounded-lg text-xs hover:bg-slate-300 font-medium">Rename</button>
+                            <button onclick="addSubCategory()" class="bg-indigo-600 text-white px-3 rounded-lg text-xs hover:bg-indigo-500 font-medium">+ New Sub</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
+                <div class="xl:col-span-3 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-file-pen text-blue-600"></i> Content Engine (Article Editor)</h3>
+                    </div>
+
+                    <form id="adm-article-form" onsubmit="saveArticleDataPipeline(event)" class="space-y-4">
+                        <input type="hidden" id="adm-field-id" value="">
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Article Title / शीर्षक</label>
+                            <input type="text" id="adm-field-title" required placeholder="Type title here..." class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Main Menu Link</label>
+                                <select id="adm-field-cat" onchange="cascadeSubcategoryFieldOptions(this.value)" class="w-full border rounded-lg p-2 text-sm bg-white outline-none"></select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subcategory Link</label>
+                                <select id="adm-field-subcat" class="w-full border rounded-lg p-2 text-sm bg-white outline-none"></select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Article Body Content</label>
+                            <div id="editor-workspace" class="bg-white border rounded-lg"></div>
+                        </div>
+
+                        <div class="flex gap-2 pt-2">
+                            <button type="submit" id="adm-submit-btn-text" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg text-sm transition">
+                                <i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes
+                            </button>
+                            <button type="button" onclick="resetFormState()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-sm transition">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="xl:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                    <div class="mb-4">
+                        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-server text-teal-600"></i> Records Workspace Inventory</h3>
+                        <p class="text-xs text-slate-500">Items inside local memory buffer workspace matrix layout.</p>
+                    </div>
+
+                    <div class="flex-1 overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-400 uppercase tracking-wider border-b">
+                                    <th class="p-2.5">Title Meta</th>
+                                    <th class="p-2.5">Mapping Path</th>
+                                    <th class="p-2.5 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adm-data-table-rows" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                        <div id="adm-empty-state-banner" class="text-center py-12 text-slate-400 hidden">
+                            <i class="fa-solid fa-folder-open text-3xl mb-2 block"></i> Storage Array Empty.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 border-t border-slate-800 text-center py-4 text-slate-500 text-xs mt-auto">
+        <p>© 2026 Loksewa Cloud System Infrastructure. Distributed Node Network Layer.</p>
+    </footer>
+
+    <script>
+        let dbStructure = {};
+        let dbArticles = [];
+
+        let activePrimaryCategory = "";
+        let activeSubCategory = "All";
+        let isUserAuthenticated = false;
+        let quillEditorInstance = null;
+
+        // Automatically fetch data from database.json hosted in your repository root
+        async function fetchCentralCloudRepositoryData() {
+            try {
+                const response = await fetch('./database.json');
+                if (!response.ok) throw new Error("Missing structural configuration initialization asset.");
+                const data = await response.json();
+                
+                dbStructure = data.structure || {};
+                dbArticles = data.articles || [];
+                
+                activePrimaryCategory = Object.keys(dbStructure)[0] || "";
+                document.getElementById('global-db-counter').textContent = `${dbArticles.length} Articles Synchronized`;
+                renderFrontendInterfaceEngine();
+            } catch (err) {
+                console.warn("Bootstrap pipeline warning: database.json target structural endpoint unallocated. Seeding defaults.", err);
+                seedDefaultLocalBufferSchema();
+            }
+        }
+
+        function seedDefaultLocalBufferSchema() {
+            dbStructure = {
+                "प्रथम पत्र": ["सामान्य ज्ञान (GK)", "इन्टेलिजेन्स टेस्ट (IQ)"],
+                "द्वितीय पत्र": ["राज्य व्यवस्था", "सार्वजनिक व्यवस्थापन"]
+            };
+            dbArticles = [
+                {
+                    id: "101",
+                    title: "सार्वजनिक व्यवस्थापनका नविनतम आयामहरू",
+                    category: "द्वितीय पत्र",
+                    subcategory: "सार्वजनिक व्यवस्थापन",
+                    content: "<h2>नयाँ सार्वजनिक व्यवस्थापन</h2><p>यसले नतिजामुखी कार्यसम्पादनमा जोड दिन्छ।</p>"
+                }
+            ];
+            activePrimaryCategory = "प्रथम पत्र";
+            document.getElementById('global-db-counter').textContent = `${dbArticles.length} Default Seeded Articles`;
+            renderFrontendInterfaceEngine();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            quillEditorInstance = new Quill('#editor-workspace', {
+                theme: 'snow',
+                placeholder: 'Write article documentation parameters here...',
+                modules: {
+                    toolbar: [
+                        [{ 'font': [] }, { 'size': [] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'header': [1, 2, 3, false] }],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'align': [] }],
+                        ['link', 'image', 'clean']
+                    ]
+                }
+            });
+            fetchCentralCloudRepositoryData();
+        });
+
+        // Downloader Execution Script Pipeline Routine
+        function triggerDatabaseDownloadPipeline() {
+            const packagePayload = {
+                structure: dbStructure,
+                articles: dbArticles
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(packagePayload, null, 4));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "database.json");
+            dlAnchorElem.click();
+        }
+
+        // View Controller Router System Switcher
+        function navigateView(target) {
+            const learnerSection = document.getElementById('portal-learner-view');
+            const adminSection = document.getElementById('portal-admin-view');
+            const btnLearner = document.getElementById('nav-btn-learner');
+            const btnAdmin = document.getElementById('nav-btn-admin');
+
+            if (target === 'learner') {
+                learnerSection.classList.remove('hidden');
+                adminSection.classList.add('hidden');
+                btnLearner.className = "bg-blue-600 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5 text-white";
+                btnAdmin.className = "bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5";
+                renderFrontendInterfaceEngine();
+            } else {
+                learnerSection.classList.add('hidden');
+                adminSection.classList.remove('hidden');
+                btnLearner.className = "bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5";
+                btnAdmin.className = "bg-purple-600 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1.5 text-white";
+                
+                if (isUserAuthenticated) {
+                    showAdminDashboardWorkspace();
+                } else {
+                    document.getElementById('admin-auth-lock').classList.remove('hidden');
+                    document.getElementById('admin-authenticated-workspace').classList.add('hidden');
+                }
+            }
+        }
+
+        function attemptAuthentication() {
+            const passField = document.getElementById('auth-input-password');
+            if (passField.value === 'admin') {
+                isUserAuthenticated = true;
+                document.getElementById('admin-auth-lock').classList.add('hidden');
+                showAdminDashboardWorkspace();
+            } else {
+                alert("Access Denied: Parameter configuration mismatch.");
+                passField.value = '';
+            }
+        }
+
+        function showAdminDashboardWorkspace() {
+            document.getElementById('admin-authenticated-workspace').classList.remove('hidden');
+            syncAdminStructureManagerInterface();
+            renderBackendControlMatrix();
+        }
+
+        // FRONTEND RENDERING LOGIC MODULES
+        function renderFrontendInterfaceEngine() {
+            if(!activePrimaryCategory && Object.keys(dbStructure).length > 0) {
+                activePrimaryCategory = Object.keys(dbStructure)[0];
+            }
+
+            const topNavContainer = document.getElementById('ui-primary-navbar');
+            topNavContainer.innerHTML = Object.keys(dbStructure).map(mainCat => {
+                const isActive = activePrimaryCategory === mainCat;
+                return `<button onclick="selectPrimaryFrontendCategory('${mainCat}')" class="px-4 py-2 text-sm font-semibold rounded-xl whitespace-nowrap transition-all ${isActive ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'}">${mainCat}</button>`;
+            }).join('');
+
+            const sidePanelContainer = document.getElementById('ui-sidebar-subcategories');
+            let subcatArr = dbStructure[activePrimaryCategory] || [];
+            
+            let sideHtml = `
+                <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2 text-xs rounded-lg font-medium flex justify-between items-center transition ${activeSubCategory === 'All' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-slate-600 hover:bg-slate-50'}">
+                    <span>🌐 View All Sub-Topics</span>
+                    <span class="bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded text-[10px]">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
+                </button>
+            `;
+
+            subcatArr.forEach(sub => {
+                let itemsCount = dbArticles.filter(a => a.category === activePrimaryCategory && a.subcategory === sub).length;
+                sideHtml += `<button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2 text-xs rounded-lg font-medium flex justify-between items-center transition ${activeSubCategory === sub ? 'bg-blue-50 text-blue-700 font-bold' : 'text-slate-600 hover:bg-slate-50'}"><span>📁 ${sub}</span> <span class="bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded text-[10px]">${itemsCount}</span></button>`;
+            });
+            sidePanelContainer.innerHTML = sideHtml;
+
+            document.getElementById('ui-bread-primary').textContent = activePrimaryCategory || "EMPTY";
+            document.getElementById('ui-current-heading').textContent = activeSubCategory === 'All' ? 'सबै उप-विषयहरू समाहित' : activeSubCategory;
+
+            let streamingDataset = dbArticles.filter(a => a.category === activePrimaryCategory);
+            if (activeSubCategory !== 'All') {
+                streamingDataset = streamingDataset.filter(a => a.subcategory === activeSubCategory);
+            }
+
+            document.getElementById('ui-total-articles-badge').textContent = `${streamingDataset.length} Articles Found`;
+
+            const streamBox = document.getElementById('ui-articles-stream-box');
+            if (streamingDataset.length === 0) {
+                streamBox.innerHTML = `<div class="bg-white p-12 text-center text-slate-400 border rounded-xl shadow-sm">कुनै लेखहरू फेला परेनन्।</div>`;
+                return;
+            }
+
+            streamBox.innerHTML = streamingDataset.map(art => `
+                <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-indigo-50 text-indigo-700 text-[10px] font-bold px-2 py-0.5 rounded">${art.category}</span>
+                        <span class="bg-amber-50 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded">${art.subcategory}</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 border-b pb-2 border-slate-100">${art.title}</h3>
+                    <div class="text-sm text-slate-600 leading-relaxed space-y-2 ql-editor !p-0 !min-h-0">${art.content}</div>
+                </article>
+            `).join('');
+        }
+
+        function selectPrimaryFrontendCategory(cat) {
+            activePrimaryCategory = cat;
+            activeSubCategory = "All";
+            renderFrontendInterfaceEngine();
+        }
+
+        function selectSubcatFrontendCategory(sub) {
+            activeSubCategory = sub;
+            renderFrontendInterfaceEngine();
+        }
+
+        // ADMIN CONFIGURATION INTERFACE SYNC
+        function syncAdminStructureManagerInterface() {
+            const catSelect = document.getElementById('adm-manage-cat-select');
+            catSelect.innerHTML = Object.keys(dbStructure).map(c => `<option value="${c}">${c}</option>`).join('');
+            
+            const fieldCat = document.getElementById('adm-field-cat');
+            fieldCat.innerHTML = Object.keys(dbStructure).map(c => `<option value="${c}">${c}</option>`).join('');
+
+            syncAdminSubcatManagerOptions();
+            cascadeSubcategoryFieldOptions(fieldCat.value);
+        }
+
+        function syncAdminSubcatManagerOptions() {
+            const targetMainCat = document.getElementById('adm-manage-cat-select').value;
+            const subcatSelect = document.getElementById('adm-manage-subcat-select');
+            if(!targetMainCat) return;
+            let subs = dbStructure[targetMainCat] || [];
+            subcatSelect.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
+        }
+
+        function cascadeSubcategoryFieldOptions(selectedMainCat) {
+            const fieldSubcat = document.getElementById('adm-field-subcat');
+            let subs = dbStructure[selectedMainCat] || [];
+            fieldSubcat.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
+        }
+
+        function addPrimaryCategory() {
+            let name = prompt("Enter new main menu layout key value configuration string:");
+            if (name && name.trim() !== "") {
+                name = name.trim();
+                if (!dbStructure[name]) {
+                    dbStructure[name] = [];
+                    syncAdminStructureManagerInterface();
+                }
+            }
+        }
+
+        function editPrimaryCategory() {
+            let target = document.getElementById('adm-manage-cat-select').value;
+            if(!target) return;
+            let rename = prompt(`Rename config path for "${target}":`, target);
+            if (rename && rename.trim() !== "" && rename.trim() !== target) {
+                rename = rename.trim();
+                dbStructure[rename] = dbStructure[target];
+                delete dbStructure[target];
+                dbArticles.forEach(a => { if (a.category === target) a.category = rename; });
+                if (activePrimaryCategory === target) activePrimaryCategory = rename;
+                syncAdminStructureManagerInterface();
+                renderBackendControlMatrix();
+            }
+        }
+
+        function addSubCategory() {
+            let parent = document.getElementById('adm-manage-cat-select').value;
+            if(!parent) return;
+            let subName = prompt(`Add new child subcategory to target matrix entry map cluster under "${parent}":`);
+            if (subName && subName.trim() !== "") {
+                subName = subName.trim();
+                if (!dbStructure[parent].includes(subName)) {
+                    dbStructure[parent].push(subName);
+                    syncAdminStructureManagerInterface();
+                }
+            }
+        }
+
+        function editSubCategory() {
+            let parent = document.getElementById('adm-manage-cat-select').value;
+            let targetSub = document.getElementById('adm-manage-subcat-select').value;
+            if (!targetSub) return;
+
+            let rename = prompt(`Rename subcategory "${targetSub}":`, targetSub);
+            if (rename && rename.trim() !== "" && rename.trim() !== targetSub) {
+                rename = rename.trim();
+                let idx = dbStructure[parent].indexOf(targetSub);
+                if (idx !== -1) {
+                    dbStructure[parent][idx] = rename;
+                    dbArticles.forEach(a => {
+                        if (a.category === parent && a.subcategory === targetSub) a.subcategory = rename;
+                    });
+                    syncAdminStructureManagerInterface();
+                    renderBackendControlMatrix();
+                }
+            }
+        }
+
+        function renderBackendControlMatrix() {
+            document.getElementById('global-db-counter').textContent = `${dbArticles.length} Buffers Modified`;
+            const tbody = document.getElementById('adm-data-table-rows');
+            
+            if (dbArticles.length === 0) {
+                tbody.innerHTML = '';
+                document.getElementById('adm-empty-state-banner').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('adm-empty-state-banner').classList.add('hidden');
+
+            tbody.innerHTML = dbArticles.map(art => `
+                <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                    <td class="p-2.5 font-medium text-slate-900 max-w-[150px] truncate">${art.title}</td>
+                    <td class="p-2.5 text-[10px] text-slate-500 font-mono">${art.category} ➔ ${art.subcategory}</td>
+                    <td class="p-2.5 text-right space-x-1">
+                        <button onclick="loadArticleToForm('${art.id}')" class="bg-blue-50 text-blue-600 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="purgeArticleEntry('${art.id}')" class="bg-red-50 text-red-600 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function saveArticleDataPipeline(e) {
+            e.preventDefault();
+            const id = document.getElementById('adm-field-id').value;
+            const title = document.getElementById('adm-field-title').value;
+            const category = document.getElementById('adm-field-cat').value;
+            const subcategory = document.getElementById('adm-field-subcat').value;
+            const content = quillEditorInstance.getSemanticHTML(); 
+
+            if (!subcategory) {
+                alert("Operation Aborted: Mapped configuration targets lack active endpoints.");
+                return;
+            }
+
+            if (id) {
+                const idx = dbArticles.findIndex(a => a.id === id);
+                if (idx !== -1) dbArticles[idx] = { id, title, category, subcategory, content };
+            } else {
+                dbArticles.push({ id: Date.now().toString(), title, category, subcategory, content });
+            }
+
+            resetFormState();
+            renderBackendControlMatrix();
+        }
+
+        function loadArticleToForm(id) {
+            const art = dbArticles.find(a => a.id === id);
+            if (art) {
+                document.getElementById('adm-field-id').value = art.id;
+                document.getElementById('adm-field-title').value = art.title;
+                document.getElementById('adm-field-cat').value = art.category;
+                cascadeSubcategoryFieldOptions(art.category);
+                document.getElementById('adm-field-subcat').value = art.subcategory;
+                quillEditorInstance.clipboard.dangerouslyPasteHTML(art.content);
+                document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-check mr-1"></i> Update Entry`;
+            }
+        }
+
+        function purgeArticleEntry(id) {
+            if (confirm("Purge content parameters?")) {
+                dbArticles = dbArticles.filter(a => a.id !== id);
+                renderBackendControlMatrix();
+            }
+        }
+
+        function resetFormState() {
+            document.getElementById('adm-field-id').value = '';
+            document.getElementById('adm-article-form').reset();
+            quillEditorInstance.setContents([]);
+            document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes`;
+        }
+    </script>
+</body>
+</html>
