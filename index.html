@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>लोकसेवा ज्ञान सागर - Elite Hub Edition</title>
+    <title>लोकसेवा ज्ञान सागर - Premium Portal Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
     <script>
-        // Tailwind Custom Configuration for Dark Mode System Injection
         tailwind.config = {
             darkMode: 'class',
         }
@@ -28,16 +27,16 @@
         .article-rich-text h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; }
         .select-none { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         
-        /* Smooth Scrollbar design variables */
+        /* Smooth Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 min-h-screen flex flex-col text-slate-800 dark:text-slate-200">
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen flex flex-col text-slate-800 dark:text-slate-200 antialiased">
 
-    <div id="ui-reading-progress" class="fixed top-0 left-0 h-1 bg-amber-500 z-50 transition-all duration-75" style="width: 0%;"></div>
+    <div id="ui-reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500 z-50 transition-all duration-75" style="width: 0%;"></div>
 
     <div id="admin-top-exit-bar" class="hidden bg-purple-900 text-white px-4 py-2 flex justify-between items-center text-xs shadow-md select-none">
         <span class="font-bold flex items-center gap-1"><i class="fa-solid fa-user-gear"></i> ADMIN MODE ACTIVE</span>
@@ -47,43 +46,47 @@
     </div>
 
     <div id="portal-learner-view" class="flex-1 flex flex-col">
-        <header class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white py-8 px-4 text-center border-b-4 border-amber-500 select-none relative">
-            <h1 class="text-2xl sm:text-4xl font-bold tracking-wide text-amber-400">लोकसेवा आयोग तयारी पोर्टल</h1>
-            <p class="text-slate-400 text-xs sm:text-sm mt-1.5 font-light tracking-wide">उच्च-स्तरीय प्रशासनिक तथा वित्तीय क्षेत्र प्रतिस्पर्धात्मक परीक्षा तयारी केन्द्र</p>
+        
+        <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-10 px-4 text-center border-b-4 border-amber-500 select-none relative shadow-inner">
+            <div class="max-w-4xl mx-auto space-y-2">
+                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 drop-shadow-sm">लोकसेवा आयोग तयारी पोर्टल</h1>
+                <p class="text-slate-400 text-xs sm:text-base font-light tracking-wide max-w-2xl mx-auto">उच्च-स्तरीय प्रशासनिक तथा वित्तीय क्षेत्र प्रतिस्पर्धात्मक परीक्षा तयारी केन्द्र</p>
+            </div>
             
-            <button onclick="toggleGlobalFocusMode()" class="absolute top-4 right-4 bg-slate-800/60 hover:bg-slate-800 border border-slate-700 p-2 rounded-xl transition text-slate-300 shadow-sm" title="Toggle Reading Focus Mode">
+            <button onclick="toggleGlobalFocusMode()" class="absolute top-4 right-4 bg-slate-800/40 hover:bg-slate-800 border border-slate-700/60 p-2.5 rounded-xl transition-all text-slate-300 shadow-sm hover:text-white" title="Toggle Reading Focus Mode">
                 <i id="theme-toggle-icon" class="fa-solid fa-moon text-sm"></i>
             </button>
         </header>
 
-        <nav class="bg-white dark:bg-slate-950 shadow-sm border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 py-2 md:h-16">
-                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto py-1" id="ui-primary-navbar"></div>
+        <nav class="bg-white/95 dark:bg-slate-950/95 backdrop-blur shadow-sm border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 py-2.5 md:h-16">
                 
-                <div class="relative w-full md:w-64 shrink-0 select-none">
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto py-1 scrollbar-none" id="ui-primary-navbar"></div>
+                
+                <div class="relative w-full md:w-72 shrink-0 select-none">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                    <input type="text" id="ui-search-input" oninput="executeLiveDatabaseQuery(this.value)" placeholder="सामग्री खोज्नुहोस् (Search)..." class="w-full text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-2 outline-none focus:ring-2 focus:ring-indigo-600 dark:text-white">
+                    <input type="text" id="ui-search-input" oninput="executeLiveDatabaseQuery(this.value)" placeholder="सामग्री खोज्नुहोस् (Search)..." class="w-full text-xs bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 dark:text-white transition">
                 </div>
             </div>
         </nav>
 
         <div class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
             
-            <aside class="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 h-fit lg:sticky lg:top-24 shadow-sm">
+            <aside class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 h-fit lg:sticky lg:top-24 shadow-sm">
                 <h3 class="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 select-none">
-                    <i class="fa-solid fa-sitemap text-indigo-600"></i> उप-विषय सूची (Subcategories)
+                    <i class="fa-solid fa-sitemap text-indigo-500"></i> उप-विषय सूची (Subcategories)
                 </h3>
                 <div class="space-y-1" id="ui-sidebar-subcategories"></div>
             </aside>
 
             <main class="lg:col-span-3 space-y-4">
                 
-                <div id="ui-filter-status-bar" class="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-sm select-none">
+                <div id="ui-filter-status-bar" class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-sm select-none">
                     <div>
                         <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block" id="ui-bread-primary">CATEGORY</span>
                         <h2 id="ui-current-heading" class="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">Loading Content Stream...</h2>
                     </div>
-                    <span id="ui-total-articles-badge" class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs font-semibold px-2.5 py-1 rounded-full">0 Articles</span>
+                    <span id="ui-total-articles-badge" class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs font-semibold px-3 py-1 rounded-full border dark:border-slate-800">0 Articles</span>
                 </div>
 
                 <div id="ui-articles-stream-box" class="space-y-4"></div>
@@ -263,12 +266,12 @@
     </footer>
 
     <script>
-        const fallbackDefaultHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // "admin"
+        const fallbackDefaultHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
         let adminPasswordHash = fallbackDefaultHash;
         
         let dbStructure = {};
         let dbArticles = [];
-        let runningSearchFilteredCache = null; // Caches real-time query sets
+        let runningSearchFilteredCache = null; 
 
         let activePrimaryCategory = "Home"; 
         let activeSubCategory = "All";
@@ -280,13 +283,11 @@
         let isUserAuthenticated = false;
         let quillEditorInstance = null;
 
-        // Pomodoro Core variables Engine
         let pomodoroTimerObject = null;
-        let pomodoroRemainingSeconds = 1500; // 25 minutes setup base
+        let pomodoroRemainingSeconds = 1500; 
         let isPomodoroClockActive = false;
         let isPomodoroWidgetExpanded = false;
 
-        // Native SHA-256 Engine Core 
         async function convertStringIntoCryptographicHash(stringInput) {
             const msgBuffer = new TextEncoder().encode(stringInput);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -297,7 +298,7 @@
         async function fetchCentralCloudRepositoryData() {
             try {
                 const response = await fetch(`./database.json?t=${Date.now()}`);
-                if (!response.ok) throw new Error("Missing database file layout structure parameters.");
+                if (!response.ok) throw new Error("Missing database configuration file.");
                 const data = await response.json();
                 
                 if (data.security && data.security.admin_password_hash) {
@@ -309,14 +310,13 @@
                 
                 renderFrontendInterfaceEngine();
             } catch (err) {
-                console.warn("Bootstrap sync alert: target database unallocated. Seeding base syllabus mapping layout layout arrays.", err);
+                console.warn("Seeding core syllabus structure matrices.", err);
                 seedDefaultLocalBufferSchema();
             }
         }
 
         function seedDefaultLocalBufferSchema() {
             adminPasswordHash = fallbackDefaultHash;
-            // High-yield structural architecture optimized for advanced tracks
             dbStructure = {
                 "१. प्रथम पत्र": ["सामान्य ज्ञान (GK)", "इन्टेलिजेन्स टेस्ट (IQ)", "समसामयिक मामिला"],
                 "२. शासकीय प्रबन्ध": ["राज्य व्यवस्था", "सार्वजनिक प्रशासन", "सार्वजनिक नीति"],
@@ -331,7 +331,7 @@
                     title: "सार्वजनिक प्रशासन र यसको बदलिँदो स्वरूप",
                     category: "२. शासकीय प्रबन्ध",
                     subcategory: "सार्वजनिक प्रशासन",
-                    content: "<h2>सार्वजनिक प्रशासनको परिचय</h2><p>सार्वजनिक प्रशासन राज्यको नीति र योजना कार्यान्वयन गर्ने मूल संयन्त्र हो। यसले विश्वव्यापीकरण र नव-उदारवादको सन्दर्भमा नवीन स्वरूप अंगाल्दै आएको छ।</p>"
+                    content: "<h2>सार्वजनिक प्रशासनको परिचय</h2><p>सार्वजनिक प्रशासन राज्यको नीति र योजना कार्यान्वयन गर्ने मूल संयन्त्र हो। यसले विश्वव्यापीकरणको सन्दर्भमा नवीन स्वरूप अंगाल्दै आएको छ।</p>"
                 }
             ];
             renderFrontendInterfaceEngine();
@@ -340,7 +340,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             quillEditorInstance = new Quill('#editor-workspace', {
                 theme: 'snow',
-                placeholder: 'Write comprehensive educational curriculum materials modules inside this block editor workspace...',
+                placeholder: 'Write comprehensive educational curriculum materials modules...',
                 modules: {
                     toolbar: [
                         [{ 'font': [] }, { 'size': [] }],
@@ -354,18 +354,14 @@
                 }
             });
             fetchCentralCloudRepositoryData();
-
-            // Set scrolling engine triggers to control reading progress metrics dynamically
             window.addEventListener('scroll', calculateReadingProgressPercentage);
             
-            // Retain reading theme states locally 
             if (localStorage.getItem('focus-mode-enabled') === 'true') {
                 document.documentElement.classList.add('dark');
                 updateThemeIconsMarkup(true);
             }
         });
 
-        // 🔐 STEALTH SECURITY GATEWAY CORES (Ctrl + Shift + A Router Activation Mapping Matrix)
         window.addEventListener('keydown', function(event) {
             if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'a') {
                 event.preventDefault(); 
@@ -373,7 +369,6 @@
             }
         });
 
-        // FOCUS MODE UTILITY LOGIC (Dark Mode Matrix Engine)
         function toggleGlobalFocusMode() {
             const isDarkActive = document.documentElement.classList.toggle('dark');
             localStorage.setItem('focus-mode-enabled', isDarkActive);
@@ -382,14 +377,9 @@
 
         function updateThemeIconsMarkup(isDark) {
             const iconNode = document.getElementById('theme-toggle-icon');
-            if(isDark) {
-                iconNode.className = "fa-solid fa-sun text-amber-400 text-sm";
-            } else {
-                iconNode.className = "fa-solid fa-moon text-sm";
-            }
+            iconNode.className = isDark ? "fa-solid fa-sun text-amber-400 text-sm" : "fa-solid fa-moon text-sm";
         }
 
-        // READING PROGRESS GENERATOR ENGINE
         function calculateReadingProgressPercentage() {
             const progressIndicator = document.getElementById('ui-reading-progress');
             if (activeSelectedArticleID === null) {
@@ -402,7 +392,6 @@
             progressIndicator.style.width = scrolled + "%";
         }
 
-        // REACTIVE ENGINE QUERY ENGINE
         function executeLiveDatabaseQuery(queryString) {
             const cleanQuery = queryString.trim().toLowerCase();
             if (cleanQuery === "") {
@@ -418,31 +407,46 @@
             renderFrontendInterfaceEngine();
         }
 
-        // LEARNER VIEW RE-RENDERING PIPELINE
         function renderFrontendInterfaceEngine() {
             const topNavContainer = document.getElementById('ui-primary-navbar');
-            let navHtml = `<button onclick="resetToHomeFeed()" class="px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition-all ${activePrimaryCategory === 'Home' && runningSearchFilteredCache === null ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900'}"><i class="fa-solid fa-house mr-1"></i> गृहपृष्ठ (Home)</button>`;
+            
+            // Premium Silicon Valley Navigation Underlines and Gradient Pills Styling Matrix
+            let isHomeActive = activePrimaryCategory === 'Home' && runningSearchFilteredCache === null;
+            let navHtml = `
+                <button onclick="resetToHomeFeed()" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all duration-300 transform active:scale-95 flex items-center gap-1.5 shadow-sm border dark:border-slate-800/80 ${isHomeActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}">
+                    <i class="fa-solid fa-house text-[11px]"></i> गृहपृष्ठ (Home)
+                </button>
+            `;
             
             Object.keys(dbStructure).forEach(mainCat => {
                 const isActive = activePrimaryCategory === mainCat && runningSearchFilteredCache === null;
-                navHtml += `<button onclick="selectPrimaryFrontendCategory('${mainCat}')" class="px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition-all ${isActive ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900'}">${mainCat}</button>`;
+                navHtml += `
+                    <button onclick="selectPrimaryFrontendCategory('${mainCat}')" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all duration-300 transform active:scale-95 shadow-sm border dark:border-slate-800/80 ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}">
+                        ${mainCat}
+                    </button>
+                `;
             });
             topNavContainer.innerHTML = navHtml;
 
             const sidePanelContainer = document.getElementById('ui-sidebar-subcategories');
             if (activePrimaryCategory === 'Home' || runningSearchFilteredCache !== null) {
-                sidePanelContainer.innerHTML = `<div class="text-xs text-slate-400 dark:text-slate-500 p-2 italic text-center select-none">Select a specific main menu category to explore sub-topic filters.</div>`;
+                sidePanelContainer.innerHTML = `<div class="text-xs text-slate-400 dark:text-slate-500 p-2 italic text-center select-none">Select a category to view dynamic sub-topics lists.</div>`;
             } else {
                 let subcatArr = dbStructure[activePrimaryCategory] || [];
                 let sideHtml = `
-                    <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2 text-xs rounded-lg font-medium flex justify-between items-center transition ${activeSubCategory === 'All' ? 'bg-blue-50 dark:bg-slate-900 text-blue-700 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900'}">
+                    <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === 'All' ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
                         <span>🌐 All Sub-Topics</span>
-                        <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded text-[10px]">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
+                        <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md font-bold border dark:border-slate-800">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
                     </button>
                 `;
                 subcatArr.forEach(sub => {
                     let itemsCount = dbArticles.filter(a => a.category === activePrimaryCategory && a.subcategory === sub).length;
-                    sideHtml += `<button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2 text-xs rounded-lg font-medium flex justify-between items-center transition ${activeSubCategory === sub ? 'bg-blue-50 dark:bg-slate-900 text-blue-700 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900'}"><span>📁 ${sub}</span> <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded text-[10px]">${itemsCount}</span></button>`;
+                    sideHtml += `
+                        <button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === sub ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
+                            <span>📁 ${sub}</span> 
+                            <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md font-bold border dark:border-slate-800">${itemsCount}</span>
+                        </button>
+                    `;
                 });
                 sidePanelContainer.innerHTML = sideHtml;
             }
@@ -451,14 +455,13 @@
             const filterStatusBar = document.getElementById('ui-filter-status-bar');
             const paginationControlsBox = document.getElementById('ui-pagination-controls');
 
-            // Detail Panel Display Tracker Injection Check
             if (activeSelectedArticleID !== null) {
                 filterStatusBar.classList.add('hidden');
                 paginationControlsBox.innerHTML = ''; 
 
                 const targetArticle = dbArticles.find(a => a.id === activeSelectedArticleID);
                 if (!targetArticle) {
-                    streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border rounded-xl">Article resource unallocated.</div>`;
+                    streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border rounded-xl">Article parameters missing.</div>`;
                     return;
                 }
 
@@ -481,11 +484,10 @@
 
             filterStatusBar.classList.remove('hidden');
             
-            // Build working dataset dynamically from caches or filters
             let dynamicFilteredDataset = [];
             if (runningSearchFilteredCache !== null) {
                 dynamicFilteredDataset = [...runningSearchFilteredCache];
-                document.getElementById('ui-bread-primary').textContent = "SEARCH SEARCH FILTERS SYSTEM";
+                document.getElementById('ui-bread-primary').textContent = "SEARCH RESULTS MATCHES";
                 document.getElementById('ui-current-heading').textContent = `खोज परिणामहरू (Query Matches Found)`;
             } else if (activePrimaryCategory === 'Home') {
                 dynamicFilteredDataset = [...dbArticles];
@@ -500,18 +502,16 @@
                 document.getElementById('ui-current-heading').textContent = activeSubCategory === 'All' ? 'सबै उप-विषयहरू समाहित' : activeSubCategory;
             }
 
-            // Mirror reverse timeline view
             dynamicFilteredDataset.reverse();
             const absoluteTotalFilteredRecordsCount = dynamicFilteredDataset.length;
             document.getElementById('ui-total-articles-badge').textContent = `${absoluteTotalFilteredRecordsCount} Articles Available`;
 
             if (absoluteTotalFilteredRecordsCount === 0) {
-                streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-xl shadow-sm select-none">कुनै सामग्रीहरू फेला परेनन्।</div>`;
+                streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-2xl shadow-sm select-none">कुनै सामग्रीहरू फेला परेनन्।</div>`;
                 paginationControlsBox.innerHTML = '';
                 return;
             }
 
-            // Segment parameters layout architecture
             const totalRequiredCalculatedPages = Math.ceil(absoluteTotalFilteredRecordsCount / ARTICLES_PER_PAGE_LIMIT);
             if (currentActivePaginationPage > totalRequiredCalculatedPages) currentActivePaginationPage = 1;
 
@@ -519,39 +519,38 @@
             const targetEndingSliceIndexOffset = targetStartingSliceIndexOffset + ARTICLES_PER_PAGE_LIMIT;
             const segmentedPageSliceDataset = dynamicFilteredDataset.slice(targetStartingSliceIndexOffset, targetEndingSliceIndexOffset);
 
+            // Render Premium Cards with Microscopic Polish Lift Effects
             streamBox.innerHTML = segmentedPageSliceDataset.map(art => {
                 const tempDivNode = document.createElement('div');
                 tempDivNode.innerHTML = art.content;
                 const flattenedPlainTextExtract = tempDivNode.textContent || tempDivNode.innerText || "";
                 const optimizedCleanSummaryString = flattenedPlainTextExtract.slice(0, 160) + (flattenedPlainTextExtract.length > 160 ? "..." : "");
 
-                // Formulate estimated reading speed parameters
                 const wordLength = flattenedPlainTextExtract.trim().split(/\s+/).length;
                 const readTimeEstimate = Math.max(1, Math.ceil(wordLength / 180));
 
                 return `
-                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 hover:border-slate-300 dark:hover:border-slate-700 transition duration-150 flex flex-col justify-between">
-                        <div class="space-y-1.5">
+                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transform-gpu hover:scale-[1.01] hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                        <div class="space-y-2">
                             <div class="flex items-center justify-between gap-2 select-none">
-                                <div class="flex items-center gap-2">
-                                    <span class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">${art.category}</span>
-                                    <span class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">${art.subcategory}</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase border dark:border-slate-800">${art.category}</span>
+                                    <span class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase border border-indigo-100 dark:border-indigo-950">${art.subcategory}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400"><i class="fa-solid fa-clock"></i> ⏱️ ${readTimeEstimate} मिनेट</span>
+                                <span class="text-[10px] text-slate-400 font-medium"><i class="fa-solid fa-clock mr-0.5"></i> ⏱️ ${readTimeEstimate} मिनेट</span>
                             </div>
-                            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-wide hover:text-indigo-600 transition cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
+                            <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white tracking-wide group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
                             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-light">${optimizedCleanSummaryString}</p>
                         </div>
-                        <div class="pt-3 border-t border-slate-50 dark:border-slate-900 mt-2 flex justify-end">
-                            <button onclick="openArticleDetailSingleView('${art.id}')" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 text-xs font-bold transition flex items-center gap-1 select-none">
-                                थप पढ्नुहोस् (Read Full Article) <i class="fa-solid fa-arrow-right-long"></i>
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-900 mt-3 flex justify-end">
+                            <button onclick="openArticleDetailSingleView('${art.id}')" class="text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 dark:group-hover:text-indigo-300 text-xs font-bold transition flex items-center gap-1 select-none">
+                                थप पढ्नुहोस् (Read Full Article) <i class="fa-solid fa-arrow-right-long transform group-hover:translate-x-1 transition-transform"></i>
                             </button>
                         </div>
                     </div>
                 `;
             }).join('');
 
-            // Build out structural component index mapping
             if (totalRequiredCalculatedPages <= 1) {
                 paginationControlsBox.innerHTML = '';
                 return;
@@ -559,20 +558,20 @@
 
             let paginationControlsMarkupHTML = '';
             paginationControlsMarkupHTML += `
-                <button onclick="changePaginationTargetPage(${currentActivePaginationPage - 1})" ${currentActivePaginationPage === 1 ? 'disabled class="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-300 dark:text-slate-600 text-xs rounded-lg cursor-not-allowed select-none"' : 'class="px-2.5 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs rounded-lg transition select-none"'}>
+                <button onclick="changePaginationTargetPage(${currentActivePaginationPage - 1})" ${currentActivePaginationPage === 1 ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 dark:text-slate-600 text-xs rounded-xl cursor-not-allowed select-none"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs rounded-xl transition select-none"'}>
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
             `;
             for (let i = 1; i <= totalRequiredCalculatedPages; i++) {
                 const isSelectedCurrentPageIndex = currentActivePaginationPage === i;
                 paginationControlsMarkupHTML += `
-                    <button onclick="changePaginationTargetPage(${i})" class="w-8 h-8 text-xs font-bold rounded-lg transition select-none ${isSelectedCurrentPageIndex ? 'bg-indigo-600 text-white shadow' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900'}">
+                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl transition status-link vector-identity select-none ${isSelectedCurrentPageIndex ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900'}">
                         ${i}
                     </button>
                 `;
             }
             paginationControlsMarkupHTML += `
-                <button onclick="changePaginationTargetPage(${currentActivePaginationPage + 1})" ${currentActivePaginationPage === totalRequiredCalculatedPages ? 'disabled class="px-2.5 py-1.5 bg-slate-100 dark:bg-slate-900 text-slate-300 dark:text-slate-600 text-xs rounded-lg cursor-not-allowed select-none"' : 'class="px-2.5 py-1.5 bg-white dark:bg-slate-950 border dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs rounded-lg transition select-none"'}>
+                <button onclick="changePaginationTargetPage(${currentActivePaginationPage + 1})" ${currentActivePaginationPage === totalRequiredCalculatedPages ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 dark:text-slate-600 text-xs rounded-xl cursor-not-allowed select-none"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs rounded-xl transition select-none"'}>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             `;
@@ -623,7 +622,6 @@
             renderFrontendInterfaceEngine();
         }
 
-        // VIEW ROUTER MATRIX WITH STEALTH CONFIGURATION CONTROLS
         function navigateView(target) {
             const learnerSection = document.getElementById('portal-learner-view');
             const adminSection = document.getElementById('portal-admin-view');
@@ -657,7 +655,7 @@
                 document.getElementById('admin-auth-lock').classList.add('hidden');
                 showAdminDashboardWorkspace();
             } else {
-                alert("Security Error: Authentication mismatch.");
+                alert("Authentication mismatch.");
                 passField.value = '';
             }
         }
@@ -672,14 +670,14 @@
         async function commitNewPasswordConfiguration() {
             const newPasswordRawText = document.getElementById('adm-security-pass-input').value;
             if (!newPasswordRawText || newPasswordRawText.trim() === "") {
-                alert("Validation Mismatch: Password field cannot be blank.");
+                alert("Password field cannot be blank.");
                 return;
             }
-            if (confirm("Apply security credential configuration modifications?")) {
+            if (confirm("Apply security configuration modifications?")) {
                 const updatedGeneratedHash = await convertStringIntoCryptographicHash(newPasswordRawText.trim());
                 adminPasswordHash = updatedGeneratedHash;
                 document.getElementById('adm-security-pass-input').value = "";
-                alert("Fingerprint calculated. Export database.json and upload to GitHub to finish update.");
+                alert("Fingerprint configuration staged successfully.");
             }
         }
 
@@ -696,7 +694,6 @@
             dlAnchorElem.click();
         }
 
-        // BACKEND CONTROL UTILITIES
         function syncAdminStructureManagerInterface() {
             const catSelect = document.getElementById('adm-manage-cat-select');
             catSelect.innerHTML = Object.keys(dbStructure).map(c => `<option value="${c}">${c}</option>`).join('');
@@ -789,7 +786,7 @@
             tbody.innerHTML = dbArticles.map(art => `
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b border-slate-100 dark:border-slate-800">
                     <td class="p-2.5 font-medium text-slate-900 dark:text-slate-100 max-w-[140px] truncate">${art.title}</td>
-                    <td class="p-2.5 text-[10px] text-slate-500 font-mono select-none">${art.category} ➔ ${art.subcategory}</td>
+                    <td class="p-2.5 text-[10px] text-slate-500 font-mono">${art.category} ➔ ${art.subcategory}</td>
                     <td class="p-2.5 text-right space-x-1 whitespace-nowrap">
                         <button onclick="loadArticleToForm('${art.id}')" class="bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-pen"></i></button>
                         <button onclick="purgeArticleEntry('${art.id}')" class="bg-red-50 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-trash"></i></button>
@@ -807,7 +804,7 @@
             const content = quillEditorInstance.getSemanticHTML(); 
 
             if (!subcategory) {
-                alert("Operation Interrupted: Missing mapping branch paths configurations.");
+                alert("Missing mapping paths parameters config.");
                 return;
             }
             if (id) {
@@ -834,7 +831,7 @@
         }
 
         function purgeArticleEntry(id) {
-            if (confirm("Permanently discard this content entry record from local buffers?")) {
+            if (confirm("Discard this record layer from local system buffers?")) {
                 dbArticles = dbArticles.filter(a => a.id !== id);
                 renderBackendControlMatrix();
             }
@@ -859,9 +856,6 @@
             document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes`;
         }
 
-        // ========================================================
-        // ⏳ LIGHTWEIGHT POMODORO SYSTEM PROCESSING MODULE
-        // ========================================================
         function togglePomodoroExpandedState(event) {
             if (isPomodoroWidgetExpanded) return; 
             const widget = document.getElementById('pomodoro-floating-widget');
@@ -873,7 +867,7 @@
         }
 
         function minimizePomodoroWidget(event) {
-            event.stopPropagation(); // Stops parent container from firing re-expand execution loop
+            event.stopPropagation(); 
             const widget = document.getElementById('pomodoro-floating-widget');
             document.getElementById('pomo-expanded-view').classList.add('hidden');
             document.getElementById('pomo-collapsed-view').classList.remove('hidden');
@@ -902,7 +896,7 @@
                     if (pomodoroRemainingSeconds <= 0) {
                         clearInterval(pomodoroTimerObject);
                         isPomodoroClockActive = false;
-                        alert("Focus interval terminated! Take a structured restorative break.");
+                        alert("Focus block complete!");
                         pomodoroRemainingSeconds = 1500;
                         updatePomodoroTimeDisplayString();
                         btn.textContent = "Start";
