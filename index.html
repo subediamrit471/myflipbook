@@ -1209,27 +1209,26 @@ window.addEventListener('click', function(e) {
 // ==========================================
         // 🔄 AUTOMATED LIVE VISITOR COUNTER ENGINE
         // ==========================================
-        async function initializeVisitorCounter() {
-            // Using a clean, fixed workspace name for instant registration
-            const workspace = "loksewasarathistudio";
-            const key = "main-counter-key";
+        function initializeVisitorCounter() {
+            // Check if our tracking ledger already has a count saved
+            let currentCount = localStorage.getItem('ls_matrix_counter_clean');
             
-            try {
-                // Hits the public counter API v1 path cleanly
-                const response = await fetch(`https://api.counterapi.dev/v1/${workspace}/${key}/up`);
-                const data = await response.json();
-                
-                if (data && data.value) {
-                    document.getElementById('visitor-count').innerText = data.value;
-                } else {
-                    document.getElementById('visitor-count').innerText = "2039800";
-                }
-            } catch (error) {
-                // If local browser blocks it, show your high milestone immediately
-                document.getElementById('visitor-count').innerText = "2039800";
+            if (!currentCount) {
+                // First launch? Start fresh at 1
+                currentCount = 1;
+            } else {
+                // Subsequent load or refresh? Increment the count by 1
+                currentCount = parseInt(currentCount) + 1;
             }
+            
+            // Save the updated value back to the browser storage
+            localStorage.setItem('ls_matrix_counter_clean', currentCount);
+            
+            // Render the value beautifully into your visual HTML slot
+            document.getElementById('visitor-count').innerText = currentCount;
         }
 
+        // Initialize the automation tracker as soon as the page loads
         document.addEventListener('DOMContentLoaded', initializeVisitorCounter);
     </script>
 </body>
