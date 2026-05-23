@@ -1,361 +1,358 @@
 <!DOCTYPE html>
-<html lang="ne">
+<html lang="en" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>लोकसेवा ज्ञान सागर - Premium Portal Edition</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Sarkari Portal — Executive Management Studio</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
-
     <style>
-        body { font-family: 'Poppins', sans-serif; transition: background-color 0.2s, color 0.2s; }
-        .ql-editor { min-height: 250px; font-size: 14px; }
-        .article-rich-text img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1rem 0; }
-        .article-rich-text ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
-        .article-rich-text ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 1rem; }
-        .article-rich-text h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1rem; margin-bottom: 0.5rem; }
-        .article-rich-text h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; }
-        .select-none { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-        
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .article-rich-text ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 0.75rem; }
+        .article-rich-text ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 0.75rem; }
+        .article-rich-text p { margin-bottom: 0.75rem; }
+        .article-rich-text h1 { font-size: 1.5rem; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; }
+        .article-rich-text h2 { font-size: 1.25rem; font-weight: bold; margin-top: 0.85rem; margin-bottom: 0.4rem; }
+        .article-rich-text h3 { font-size: 1.1rem; font-weight: bold; margin-top: 0.75rem; margin-bottom: 0.35rem; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 min-h-screen flex flex-col text-slate-800 dark:text-slate-200 antialiased">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen font-sans antialiased selection:bg-indigo-500/30 transition-colors duration-200">
 
-    <div id="ui-reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500 z-50 transition-all duration-75" style="width: 0%;"></div>
-
-    <div id="admin-top-exit-bar" class="hidden bg-purple-900 text-white px-4 py-2 flex justify-between items-center text-xs shadow-md select-none">
-        <span class="font-bold flex items-center gap-1"><i class="fa-solid fa-user-gear"></i> ADMIN MODE ACTIVE</span>
-        <button onclick="navigateView('learner')" class="bg-purple-700 hover:bg-purple-600 px-3 py-1 rounded font-semibold transition">
-            <i class="fa-solid fa-graduation-cap"></i> Exit to Learner View
+    <div id="admin-top-exit-bar" class="hidden bg-slate-900 border-b border-slate-800 text-white px-4 py-2 flex items-center justify-between shadow-md sticky top-0 z-50 animate-fade-in">
+        <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs font-mono tracking-wider uppercase text-slate-400">Authenticated Studio Terminal Workspace</span>
+        </div>
+        <button onclick="navigateView('learner')" class="bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs px-3 py-1 rounded-xl font-semibold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-left-from-line"></i> Exit System Studio
         </button>
     </div>
 
-    <div id="portal-learner-view" class="flex-1 flex flex-col">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         
-        <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-10 px-4 text-center border-b-4 border-amber-500 select-none relative shadow-inner">
-            <div class="max-w-4xl mx-auto space-y-2">
-                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 drop-shadow-sm">लोकसेवा आयोग तयारी पोर्टल</h1>
-                <p class="text-slate-400 text-xs sm:text-base font-light tracking-wide max-w-2xl mx-auto">उच्च-स्तरीय प्रशासनिक, लेखा तथा वित्तीय क्षेत्र प्रतिस्पर्धात्मक परीक्षा तयारी केन्द्र</p>
+        <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-950 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+                    <i class="fa-solid fa-gavel text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-black tracking-tight sm:text-xl">लोकसेवा सारथी</h1>
+                    <p class="text-[11px] text-slate-400 font-medium font-mono uppercase tracking-wider">Strategic Knowledge Engine</p>
+                </div>
             </div>
-            
-            <button onclick="toggleGlobalFocusMode()" class="absolute top-4 right-4 bg-slate-800/40 hover:bg-slate-800 border border-slate-700/60 p-2.5 rounded-xl transition-all text-slate-300 shadow-sm hover:text-white" title="Toggle Reading Focus Mode">
-                <i id="theme-toggle-icon" class="fa-solid fa-moon text-sm"></i>
-            </button>
+
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="relative flex-1 sm:flex-initial">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+                    <input type="text" id="ui-search-input" oninput="executeLiveDatabaseQuery(this.value)" class="w-full sm:w-64 text-xs pl-9 pr-4 py-2 rounded-xl bg-slate-100 border border-transparent focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-950 focus:border-slate-200 dark:focus:border-slate-800 focus:outline-none transition-all placeholder:text-slate-400" placeholder="शीर्षक वा विषयवस्तु खोज्नुहोस्...">
+                </div>
+                <button onclick="toggleGlobalFocusMode()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition text-slate-600 dark:text-slate-400">
+                    <i id="theme-toggle-icon" class="fa-solid fa-moon text-sm"></i>
+                </button>
+            </div>
         </header>
 
-        <nav class="bg-white/95 dark:bg-slate-950/95 backdrop-blur shadow-sm border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 py-2.5 md:h-16">
-                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto py-1" id="ui-primary-navbar"></div>
-                
-                <div class="relative w-full md:w-72 shrink-0 select-none">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                    <input type="text" id="ui-search-input" oninput="executeLiveDatabaseQuery(this.value)" placeholder="सामग्री खोज्नुहोस् (Search)..." class="w-full text-xs bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 dark:text-white transition">
-                </div>
-            </div>
-        </nav>
-
-        <div class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
+        <main id="portal-learner-view" class="grid grid-cols-1 lg:grid-cols-4 gap-4 items-start">
             
-            <aside id="portal-left-sidebar" class="h-fit lg:sticky lg:top-24 space-y-5">
+            <div id="portal-left-sidebar" class="lg:col-span-1 space-y-4">
                 
-                <div id="sidebar-subcat-container" class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hidden">
-                    <h3 class="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 select-none">
-                        <i class="fa-solid fa-sitemap text-indigo-500"></i> उप-विषय सूची (Subcategories)
-                    </h3>
-                    <div class="space-y-1" id="ui-sidebar-subcategories"></div>
+                <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-4 rounded-2xl border border-slate-800 shadow-sm space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-300"><i class="fa-solid fa-hourglass-half mr-1"></i> Exam Countdown Metrics</h4>
+                    <div id="ui-exam-countdown-list" class="space-y-2">
+                        </div>
                 </div>
 
-                <div id="sidebar-homepage-utilities" class="space-y-5">
+                <div class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex justify-between items-center">
+                        <span>🎯 Daily Focus Goals</span>
+                        <i class="fa-solid fa-list-check"></i>
+                    </h4>
                     
-                    <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm select-none">
-                        <h3 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-days text-amber-500"></i> परीक्षा घडी (Exam Countdown)
-                        </h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                                    <span>NRB Assistant Manager</span>
-                                    <span class="text-indigo-600 dark:text-indigo-400 font-bold" id="cd-nrb-days">Calculating...</span>
-                                </div>
-                                <div class="w-full bg-slate-100 dark:bg-slate-900 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-indigo-500 to-blue-500 h-full rounded-full" style="width: 70%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                                    <span>Up-Sachiv (Under Secretary)</span>
-                                    <span class="text-emerald-600 dark:text-emerald-400 font-bold" id="cd-sec-days">Calculating...</span>
-                                </div>
-                                <div class="w-full bg-slate-100 dark:bg-slate-900 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full" style="width: 45%"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="flex gap-1">
+                        <input type="text" id="ui-goal-input" class="flex-1 text-xs p-2 rounded-xl border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Type today's study target...">
+                        <button onclick="addUserDailyGoalRecord()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 rounded-xl text-xs transition"><i class="fa-solid fa-plus"></i></button>
                     </div>
 
-                    <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <h3 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 select-none">
-                            <i class="fa-solid fa-square-check text-emerald-500"></i> दैनिक अध्ययन लक्ष्य (Daily Goals)
-                        </h3>
-                        <div class="space-y-1.5 max-h-48 overflow-y-auto pr-1" id="ui-local-goals-list"></div>
-                        <div class="mt-3 flex gap-1.5 select-none">
-                            <input type="text" id="ui-goal-input" placeholder="नयाँ लक्ष्य थप्नुहोस्..." class="flex-1 text-xs border dark:border-slate-800 rounded-xl px-3 py-2 outline-none focus:ring-1 focus:ring-indigo-500 dark:bg-slate-900 dark:text-white">
-                            <button onclick="addUserDailyGoalRecord()" class="bg-slate-900 dark:bg-indigo-600 text-white text-xs px-3 rounded-xl hover:bg-slate-800 dark:hover:bg-indigo-500 transition font-bold">+</button>
+                    <div id="ui-local-goals-list" class="space-y-1.5 pt-1">
                         </div>
-                    </div>
+                </div>
 
-                    <div class="bg-gradient-to-br from-amber-50/60 to-orange-50/40 dark:from-slate-950 dark:to-slate-950 p-5 rounded-2xl border border-amber-100/70 dark:border-slate-800 shadow-sm">
-                        <div class="flex items-center justify-between gap-2 mb-2 select-none">
-                            <span class="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
-                                <i class="fa-solid fa-lightbulb"></i> स्मरण सूत्र (Mnemonic Assistant)
-                            </span>
-                            <button onclick="rotateMnemonicDisplayCardData()" class="text-amber-700 hover:text-amber-900 dark:text-amber-400 text-xs transition" title="Next Mnemonic">
-                                <i class="fa-solid fa-rotate"></i>
+                <div id="sidebar-homepage-utilities" class="space-y-4">
+                    <div class="bg-gradient-to-br from-amber-500 to-orange-600 text-white p-4 rounded-2xl shadow-sm space-y-2 relative overflow-hidden group">
+                        <div class="absolute -right-6 -bottom-6 text-white/10 text-7xl font-bold font-mono transition-transform duration-500 group-hover:scale-110 select-none">MNE</div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-amber-100"><i class="fa-solid fa-bolt mr-1"></i> Quick Recall Mnemonic</h4>
+                        <p id="lbl-mnemonic-shortcut" class="text-lg font-black tracking-tight leading-tight pt-1">Loading system patterns...</p>
+                        <p id="lbl-mnemonic-details" class="text-xs text-amber-50 font-medium leading-relaxed pt-1 opacity-95">Syncing data matrix variables onto local arrays...</p>
+                        <div class="pt-2">
+                            <button onclick="rotateMnemonicDisplayCardData()" class="bg-white/10 hover:bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-sm transition">
+                                <i class="fa-solid fa-shuffle mr-1"></i> Shuffle Formula
                             </button>
                         </div>
-                        <div id="ui-mnemonic-card-box" class="space-y-1">
-                            <p class="text-xs font-bold text-amber-900 dark:text-amber-200 tracking-wide" id="lbl-mnemonic-shortcut">Loading...</p>
-                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-light" id="lbl-mnemonic-details">No shortcuts loaded yet.</p>
-                        </div>
                     </div>
-
                 </div>
-            </aside>
 
-            <main class="lg:col-span-3 space-y-4">
+                <div id="sidebar-subcat-container" class="hidden bg-white dark:bg-slate-950 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 py-1 mb-1"><i class="fa-regular fa-folder-open mr-1"></i> Sub-Topic Matrices</h4>
+                    <div id="ui-sidebar-subcategories" class="space-y-0.5">
+                        </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 space-y-4">
                 
-                <div id="ui-filter-status-bar" class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-sm select-none">
-                    <div>
-                        <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block" id="ui-bread-primary">CATEGORY</span>
-                        <h2 id="ui-current-heading" class="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">Loading Content Stream...</h2>
+                <nav id="ui-primary-navbar" class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full scrollbar-none select-none">
+                    </nav>
+
+                <div id="ui-filter-status-bar" class="flex flex-wrap gap-2 items-center justify-between bg-white dark:bg-slate-950 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-xs select-none">
+                    <div class="flex items-center gap-1.5 font-medium text-slate-500">
+                        <span id="ui-bread-primary" class="uppercase font-bold text-indigo-600 dark:text-indigo-400">Home</span>
+                        <i class="fa-solid fa-angle-right text-[10px] text-slate-300"></i>
+                        <span id="ui-current-heading" class="text-slate-700 dark:text-slate-300 font-bold">All Feeds</span>
                     </div>
-                    <span id="ui-total-articles-badge" class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs font-semibold px-3 py-1 rounded-full border dark:border-slate-800">0 Articles</span>
+                    <span id="ui-total-articles-badge" class="bg-slate-100 dark:bg-slate-900 text-slate-500 px-2.5 py-1 rounded-xl border dark:border-slate-800 font-medium font-mono text-[10px]">0 Elements</span>
                 </div>
 
-                <div id="ui-articles-stream-box" class="space-y-4"></div>
+                <div id="ui-articles-stream-box" class="space-y-4">
+                    </div>
 
-                <div id="ui-pagination-controls" class="flex justify-center items-center gap-1 pt-4 pb-8"></div>
-            </main>
-        </div>
-    </div>
+                <div id="ui-pagination-controls" class="flex items-center justify-center gap-1 pt-2 select-none">
+                    </div>
+            </div>
+        </main>
 
-    <div id="portal-admin-view" class="hidden flex-1 bg-slate-100 dark:bg-slate-900 p-4 sm:p-6">
-        
-        <div id="admin-auth-lock" class="max-w-md mx-auto my-20 bg-white dark:bg-slate-950 p-8 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 text-center space-y-4">
-            <div class="w-16 h-16 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-2xl">
-                <i class="fa-solid fa-vault"></i>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Protected Dashboard Vault</h3>
-                <p class="text-xs text-slate-500 mt-1">Authentication verified via cryptographic data matrices.</p>
-            </div>
-            <div class="space-y-2">
-                <input type="password" id="auth-input-password" placeholder="••••••••" class="w-full text-center border dark:border-slate-800 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-slate-900 dark:bg-slate-900 dark:text-white">
-                <div class="flex gap-2">
-                    <button onclick="navigateView('learner')" class="w-1/3 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold py-2.5 rounded-xl text-sm transition">
-                        Cancel
-                    </button>
-                    <button onclick="attemptAuthentication()" class="w-2/3 bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 text-white font-semibold py-2.5 rounded-xl text-sm transition">
-                        Decrypt & Unlock
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="admin-authenticated-workspace" class="hidden max-w-7xl mx-auto space-y-6">
+        <main id="portal-admin-view" class="hidden space-y-4 max-w-5xl mx-auto animate-fade-in">
             
-            <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 rounded-2xl text-white shadow-md flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b-4 border-emerald-500">
-                <div>
-                    <h2 class="text-xl font-bold flex items-center gap-2 text-amber-400"><i class="fa-solid fa-cloud-arrow-down"></i> Live Deployment Core Terminal</h2>
-                    <p class="text-xs text-slate-300 mt-1">Download your synchronized file and drop it directly into your GitHub repository to update all public nodes instantly.</p>
+            <div id="admin-auth-lock" class="bg-white dark:bg-slate-950 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg max-w-sm mx-auto text-center space-y-4 my-12">
+                <div class="w-12 h-12 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-vault"></i>
                 </div>
-                <button onclick="triggerDatabaseDownloadPipeline()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-xl font-bold text-sm shadow transition flex items-center gap-2 shrink-0">
-                    <i class="fa-solid fa-download text-base"></i> Export & Download database.json
+                <div>
+                    <h2 class="text-base font-extrabold text-slate-900 dark:text-white">Administrative Authentication Needed</h2>
+                    <p class="text-xs text-slate-400 mt-1">Enter cryptographic key sequence configuration variables to modify assets.</p>
+                </div>
+                <div class="space-y-2">
+                    <input type="password" id="auth-input-password" class="w-full text-center text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-mono tracking-widest" placeholder="••••••••••••" onkeydown="if(event.key==='Enter') attemptAuthentication()">
+                    <button onclick="attemptAuthentication()" class="w-full bg-slate-950 hover:bg-slate-900 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-sm">
+                        Verify Local Key Certificate
+                    </button>
+                </div>
+                <button onclick="navigateView('learner')" class="text-[11px] font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 block mx-auto pt-1 transition">
+                    <i class="fa-solid fa-arrow-left"></i> Return back to Reader Deck
                 </button>
             </div>
 
-            <section class="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-                <button onclick="togglePasswordSecurityPanel()" class="w-full bg-slate-50 dark:bg-slate-900 px-6 py-3.5 text-left text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 transition flex justify-between items-center border-b border-slate-100 dark:border-slate-800">
-                    <span class="flex items-center gap-2 text-slate-900 dark:text-white"><i class="fa-solid fa-key text-amber-500"></i> 🔐 SECURITY CONFIGURATION (CLICK TO SHOW/HIDE)</span>
-                    <i id="password-panel-chevron" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
-                </button>
-                <div id="password-panel-body" class="hidden p-6 grid grid-cols-1 md:grid-cols-3 gap-6 bg-white dark:bg-slate-950">
-                    <div class="md:col-span-1">
-                        <h4 class="text-xs font-bold text-slate-800 dark:text-white">Reconstruct Authentication Key</h4>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Generates a fresh irreversible SHA-256 fingerprint value.</p>
+            <div id="admin-authenticated-workspace" class="hidden space-y-6">
+                
+                <div class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <div>
+                        <h2 class="text-base font-black text-slate-900 dark:text-white"><i class="fa-solid fa-folder-tree text-indigo-500 mr-1"></i> Data Architecture Studio Control</h2>
+                        <p class="text-xs text-slate-400">Perform modifications on categories, curriculum nodes, exam track metrics, and mnemonics.</p>
                     </div>
-                    <div class="md:col-span-2 flex flex-col sm:flex-row items-end gap-3">
-                        <div class="flex-1 w-full">
-                            <input type="password" id="adm-security-pass-input" placeholder="Enter new secret password..." class="w-full text-xs border dark:border-slate-800 bg-slate-50 dark:bg-slate-900 rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-indigo-600 dark:text-white">
-                        </div>
-                        <button type="button" onclick="commitNewPasswordConfiguration()" class="w-full sm:w-auto bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 text-white text-xs px-5 py-2.5 font-bold rounded-lg transition whitespace-nowrap">
-                            Apply New Hash Signature
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <button onclick="triggerDatabaseDownloadPipeline()" class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Export database.json Asset Package
                         </button>
                     </div>
                 </div>
-            </section>
 
-            <section class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-                <div>
-                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-folder-tree text-indigo-600"></i> Menu Architecture & Path Mapping</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Primary Navigation Category (मेनु समूह)</label>
-                        <div class="flex gap-2">
-                            <select id="adm-manage-cat-select" onchange="syncAdminSubcatManagerOptions()" class="flex-1 border dark:border-slate-800 text-xs bg-white dark:bg-slate-950 rounded-lg p-2 outline-none dark:text-white"></select>
-                            <button onclick="editPrimaryCategory()" class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 rounded-lg text-xs hover:bg-slate-300 dark:hover:bg-slate-700 font-medium">Rename</button>
-                            <button onclick="addPrimaryCategory()" class="bg-slate-900 dark:bg-indigo-600 text-white px-3 rounded-lg text-xs hover:bg-slate-800 dark:hover:bg-indigo-500 font-medium">+ New Menu</button>
-                        </div>
+                <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"><i class="fa-solid fa-tags mr-1"></i> Curriculum Categories Directory Matrix Configurator</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+                        <button onclick="addPrimaryCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-square-plus text-indigo-500 text-sm"></i> Add New Main Heading</button>
+                        <button onclick="editPrimaryCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-blue-500 text-sm"></i> Rename Main Heading</button>
+                        <button onclick="addSubCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-circle-plus text-purple-500 text-sm"></i> Append New Sub-Topic</button>
+                        <button onclick="editSubCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-sliders text-amber-500 text-sm"></i> Rename Target Sub-Topic</button>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Subcategory Branch Mapping (उप-विषय विधा)</label>
-                        <div class="flex gap-2">
-                            <select id="adm-manage-subcat-select" class="flex-1 border dark:border-slate-800 text-xs bg-white dark:bg-slate-950 rounded-lg p-2 outline-none dark:text-white"></select>
-                            <button onclick="editSubCategory()" class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 rounded-lg text-xs hover:bg-slate-300 dark:hover:bg-slate-700 font-medium">Rename</button>
-                            <button onclick="addSubCategory()" class="bg-indigo-600 text-white px-3 rounded-lg text-xs hover:bg-indigo-500 font-medium">+ New Sub</button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border dark:border-slate-800/60">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target Working Heading Selection Context</label>
+                            <select id="adm-manage-cat-select" onchange="syncAdminSubcatManagerOptions()" class="w-full text-xs p-2 rounded-lg bg-white dark:bg-slate-950 border dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Child Linked Sub-Topic Parameters Array Node</label>
+                            <select id="adm-manage-subcat-select" class="w-full text-xs p-2 rounded-lg bg-white dark:bg-slate-950 border dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6">
-                <div class="xl:col-span-3 bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-                    <div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-file-pen text-blue-600"></i> Content Engine (Article Editor)</h3>
-                    </div>
-
-                    <form id="adm-article-form" onsubmit="saveArticleDataPipeline(event)" class="space-y-4">
-                        <input type="hidden" id="adm-field-id" value="">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                    
+                    <form id="adm-article-form" onsubmit="saveArticleDataPipeline(event)" class="lg:col-span-2 bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b dark:border-slate-800 pb-3">
+                            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-file-pen text-indigo-500"></i> Curriculum Module Content Designer</h3>
+                            <button type="button" onclick="resetFormState()" class="text-[11px] font-bold text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-rotate-left mr-0.5"></i> Reset Workspace Form</button>
+                        </div>
+                        
+                        <input type="hidden" id="adm-field-id">
                         
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Article Title / शीर्षक</label>
-                            <input type="text" id="adm-field-title" required placeholder="Type title here..." class="w-full border dark:border-slate-800 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-600 outline-none dark:bg-slate-900 dark:text-white">
+                            <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Article Module Knowledge Title Designation</label>
+                            <input type="text" id="adm-field-title" required class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-bold" placeholder="E.g., नेपाल राष्ट्र बैंक ऐन, २०५८ को विशेषताहरू">
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Main Menu Link</label>
-                                <select id="adm-field-cat" onchange="cascadeSubcategoryFieldOptions(this.value)" class="w-full border dark:border-slate-800 rounded-lg p-2 text-sm bg-white dark:bg-slate-900 outline-none dark:text-white"></select>
+                                <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Assign Main Heading Scope</label>
+                                <select id="adm-field-cat" onchange="cascadeSubcategoryFieldOptions(this.value)" class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Subcategory Link</label>
-                                <select id="adm-field-subcat" class="w-full border dark:border-slate-800 rounded-lg p-2 text-sm bg-white dark:bg-slate-900 outline-none dark:text-white"></select>
+                                <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Map to Sub-Topic Entity</label>
+                                <select id="adm-field-subcat" required class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Article Body Content</label>
-                            <div id="editor-workspace" class="bg-white text-slate-900 border rounded-lg"></div>
+                            <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Educational Material Module Text Content Body</label>
+                            <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border dark:border-slate-800">
+                                <div id="editor-workspace" class="min-h-[220px] max-h-[400px] overflow-y-auto text-sm"></div>
+                            </div>
                         </div>
 
-                        <div class="flex gap-2 pt-2">
-                            <button type="submit" id="adm-submit-btn-text" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg text-sm transition">
-                                <i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes
-                            </button>
-                            <button type="button" onclick="resetFormState()" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm transition">
-                                Clear Form
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="xl:col-span-2 bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
-                    <div class="mb-4">
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-server text-teal-600"></i> Local Memory Database Ledger</h3>
-                        <p class="text-xs text-slate-500">Inventory records ready to package and export downstream.</p>
-                    </div>
-
-                    <div class="flex-1 overflow-x-auto">
-                        <table class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-slate-50 dark:bg-slate-900 text-slate-400 uppercase tracking-wider border-b dark:border-slate-800">
-                                    <th class="p-2.5">Title Meta</th>
-                                    <th class="p-2.5">Mapping Path</th>
-                                    <th class="p-2.5 text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adm-data-table-rows" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
-                        </table>
-                        <div id="adm-empty-state-banner" class="text-center py-12 text-slate-400 hidden">
-                            <i class="fa-solid fa-folder-open text-3xl mb-2 block"></i> Storage Layer Empty.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <section class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-                <div>
-                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-500"></i> Mnemonic Formula Dashboard</h3>
-                    <p class="text-xs text-slate-500">Add or manage memory acronyms and formulas saved in the database layer.</p>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <form onsubmit="saveNewMnemonicPipeline(event)" class="lg:col-span-1 space-y-3 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border dark:border-slate-800">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Acronym / सूत्र कोड</label>
-                            <input type="text" id="adm-mne-shortcut" required placeholder="e.g., DAD U C O R..." class="w-full border dark:border-slate-800 rounded-lg p-2 text-xs outline-none dark:bg-slate-950 dark:text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Description / विस्तृत विवरण</label>
-                            <textarea id="adm-mne-desc" required rows="3" placeholder="Explain the mnemonic components..." class="w-full border dark:border-slate-800 rounded-lg p-2 text-xs outline-none dark:bg-slate-950 dark:text-white"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 rounded-lg text-xs transition">
-                            Save Mnemonic
+                        <button type="submit" class="w-full bg-slate-950 hover:bg-slate-900 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md shadow-indigo-500/10 flex items-center justify-center gap-1">
+                            <span id="adm-submit-btn-text"><i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes</span>
                         </button>
                     </form>
-                    <div class="lg:col-span-2 border dark:border-slate-800 rounded-xl overflow-hidden max-h-56 overflow-y-auto">
-                        <table class="w-full text-left text-xs border-collapse bg-white dark:bg-slate-950">
-                            <thead>
-                                <tr class="bg-slate-50 dark:bg-slate-900 text-slate-400 border-b dark:border-slate-800">
-                                    <th class="p-2">Formula Code</th>
-                                    <th class="p-2">Description</th>
-                                    <th class="p-2 text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adm-mnemonic-table-rows" class="divide-y dark:divide-slate-800"></tbody>
-                        </table>
+
+                    <div class="lg:col-span-1 bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"><i class="fa-solid fa-database mr-1"></i> Compiled Document Index Logs</h3>
+                        <div class="overflow-x-auto max-h-[460px] overflow-y-auto border dark:border-slate-800 rounded-xl scrollbar-thin">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50 dark:bg-slate-900 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
+                                    <tr>
+                                        <th class="p-2.5">Title</th>
+                                        <th class="p-2.5">Mapping Path</th>
+                                        <th class="p-2.5 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-data-table-rows" class="text-xs divide-y dark:divide-slate-800">
+                                    </tbody>
+                            </table>
+                            <div id="adm-empty-state-banner" class="hidden text-center p-8 text-xs text-slate-400 italic">No storage elements recorded inside system databases.</div>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-        </div>
-    </div>
+                <div class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 border-r border-slate-100 dark:border-slate-900 pr-0 md:pr-6">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">🔢 Add Mnemonic Formula</h3>
+                        <form id="adm-mnemonic-form" onsubmit="saveNewMnemonicPipeline(event)" class="space-y-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-500 mb-1">Shortcut Formula (e.g., DAD U C)</label>
+                                <input type="text" id="adm-mne-shortcut" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="E.g., DAD U C O R I O S E A F">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-500 mb-1">Description / Translation</label>
+                                <textarea id="adm-mne-desc" required rows="3" class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="Henri Fayol का 14 सिद्धान्तहरू..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-amber-600 text-white text-xs font-semibold py-2 rounded-lg hover:bg-amber-700 transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Save Formula
+                            </button>
+                        </form>
+                    </div>
 
-    <div id="pomodoro-floating-widget" class="fixed bottom-4 right-4 z-50 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden select-none transition-all duration-300 w-14 h-14 flex items-center justify-center cursor-pointer" onclick="togglePomodoroExpandedState(event)">
-        <div id="pomo-collapsed-view" class="text-red-500 text-xl flex items-center justify-center animate-pulse">
-            <i class="fa-solid fa-stopwatch"></i>
-        </div>
-        
-        <div id="pomo-expanded-view" class="hidden p-4 w-60 text-center space-y-3">
-            <div class="flex items-center justify-between border-b dark:border-slate-800 pb-1.5">
-                <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1"><i class="fa-solid fa-brain text-red-500"></i> POMODORO ENGINE</span>
-                <button onclick="minimizePomodoroWidget(event)" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-minus text-xs"></i></button>
+                    <div class="md:col-span-2">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">📋 Stored Mnemonics Ledger</h3>
+                        <div class="overflow-x-auto max-h-48 overflow-y-auto border dark:border-slate-800 rounded-xl">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50 dark:bg-slate-900 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
+                                    <tr>
+                                        <th class="p-2">Formula</th>
+                                        <th class="p-2">Description</th>
+                                        <th class="p-2 text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-mnemonic-table-rows">
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 border-r border-slate-100 dark:border-slate-900 pr-0 md:pr-6">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">📅 Track New Exam Schedule</h3>
+                        <form id="adm-exam-form" onsubmit="saveNewExamPipeline(event)" class="space-y-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-500 mb-1">Exam Designation Title</label>
+                                <input type="text" id="adm-exam-name" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="E.g., NRB Assistant Manager">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-500 mb-1">Target Examination Date</label>
+                                <input type="date" id="adm-exam-date" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500">
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white text-xs font-semibold py-2 rounded-lg hover:bg-indigo-700 transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Save Exam Metric
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">📋 Active Exam Tracker Schedules</h3>
+                        <div class="overflow-x-auto max-h-48 overflow-y-auto border dark:border-slate-800 rounded-xl">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50 dark:bg-slate-900 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
+                                    <tr>
+                                        <th class="p-2">Exam Description</th>
+                                        <th class="p-2">Scheduled Date</th>
+                                        <th class="p-2 text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-exam-table-rows">
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                    <button type="button" onclick="togglePasswordSecurityPanel()" class="w-full px-5 py-3 bg-slate-50 dark:bg-slate-900 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider select-none">
+                        <span><i class="fa-solid fa-shield-halved mr-1"></i> Advanced Authentication Variable Signatures</span>
+                        <i id="password-panel-chevron" class="fa-solid fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div id="password-panel-body" class="hidden p-5 border-t dark:border-slate-800/80 space-y-3">
+                        <p class="text-xs text-slate-400">Generate a new primary cryptographic fingerprint hash below to redefine systemic admin entry constraints.</p>
+                        <div class="flex gap-2 max-w-md">
+                            <input type="text" id="adm-security-pass-input" class="text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white flex-1 font-mono" placeholder="Input unhashed raw cleartext block string password...">
+                            <button type="button" onclick="commitNewPasswordConfiguration()" class="bg-slate-950 dark:bg-slate-800 text-white text-xs px-4 py-2.5 font-bold rounded-xl transition">Reconfigure Signature</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="pomo-time-display" class="text-3xl font-mono font-bold text-slate-900 dark:text-white">25:00</div>
-            <div class="flex justify-center gap-2">
-                <button id="pomo-control-btn" onclick="togglePomodoroClockPipeline(event)" class="bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">Start</button>
-                <button onclick="resetPomodoroClockPipeline(event)" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs px-3 py-1.5 rounded-lg hover:bg-slate-200 transition">Reset</button>
+        </main>
+
+        <div id="pomodoro-floating-widget" onclick="togglePomodoroExpandedState(event)" class="fixed bottom-5 right-5 w-14 h-14 rounded-full bg-slate-900 text-white dark:bg-indigo-600 shadow-xl flex items-center justify-center cursor-pointer z-40 transition-all duration-300 transform hover:scale-105 border border-white/10 select-none">
+            
+            <div id="pomo-collapsed-view" class="flex items-center justify-center">
+                <i class="fa-solid fa-stopwatch text-lg animate-pulse"></i>
+            </div>
+
+            <div id="pomo-expanded-view" class="hidden p-4 w-full space-y-3">
+                <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-200">Pomodoro Interval</span>
+                    <button onclick="minimizePomodoroWidget(event)" class="text-white/60 hover:text-white"><i class="fa-solid fa-circle-minus text-xs"></i></button>
+                </div>
+                <div class="text-center">
+                    <span id="pomo-time-display" class="text-2xl font-black font-mono tracking-tight text-white drop-shadow-sm">25:00</span>
+                </div>
+                <div class="flex gap-1 justify-center">
+                    <button id="pomo-control-btn" onclick="togglePomodoroClockPipeline(event)" class="bg-white text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-md transition hover:bg-slate-100">Start</button>
+                    <button onclick="resetPomodoroClockPipeline(event)" class="bg-white/10 text-white text-[10px] font-bold px-2.5 py-1 rounded-md transition hover:bg-white/20">Reset</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <footer class="bg-slate-900 border-t border-slate-800 text-center py-4 text-slate-500 text-xs mt-auto select-none">
-        <p>© 2026 Loksewa Cloud Portal Ecosystem Layer. All Core Functions Operational.</p>
-    </footer>
+        <div class="fixed top-0 left-0 w-full h-1 z-50 pointer-events-none select-none">
+            <div id="ui-reading-progress" class="h-full bg-indigo-500 w-0 transition-all duration-75"></div>
+        </div>
+
+        <footer class="text-center py-8 text-[11px] text-slate-400 font-medium select-none">
+            <p>© 2026 Loksewa Sarathi Matrix Studio. Secure Administrative Ledger Architecture.</p>
+        </footer>
+    </div>
 
     <script>
         const fallbackDefaultHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
@@ -363,7 +360,8 @@
         
         let dbStructure = {};
         let dbArticles = [];
-        let dbMnemonics = [];
+        let dbMnemonics = []; 
+        let dbExams = []; 
         let runningSearchFilteredCache = null; 
 
         let activePrimaryCategory = "Home"; 
@@ -397,7 +395,8 @@
                 if (data.security && data.security.admin_password_hash) adminPasswordHash = data.security.admin_password_hash;
                 dbStructure = data.structure || {};
                 dbArticles = data.articles || [];
-                dbMnemonics = data.mnemonics || [];
+                dbMnemonics = data.mnemonics || []; 
+                dbExams = data.exams || []; 
                 
                 renderFrontendInterfaceEngine();
             } catch (err) {
@@ -407,14 +406,10 @@
 
         function seedDefaultLocalBufferSchema() {
             adminPasswordHash = fallbackDefaultHash;
-            dbStructure = {
-                "१. वित्तीय लेखा (NFRS/NAS)": ["NFRS Cores", "वित्तीय विवरण विश्लेषण"],
-                "२. सरकारी लेखा प्रणाली": ["CGAS र TSA", "NPSAS Framework"]
-            };
+            dbStructure = { "१. वित्तीय लेखा (NFRS/NAS)": ["NFRS Cores"] };
             dbArticles = [];
-            dbMnemonics = [
-                { id: "1", shortcut: "DAD U C O R I O S E A F", desc: "Henri Fayol का 14 ओटा व्यवस्थापनका सिद्धान्तहरू सम्झिने सजिलो सुत्र।" }
-            ];
+            dbMnemonics = [{ id: "1", shortcut: "DAD U C O R I O S E A F", desc: "Henri Fayol का 14 ओटा सिद्धान्तहरू सम्झिने सजिलो सुत्र।" }];
+            dbExams = [{ id: "1", name: "🇳🇵 NRB Assistant Manager", date: "2026-07-15T09:00:00" }];
             renderFrontendInterfaceEngine();
         }
 
@@ -478,15 +473,35 @@
         }
 
         function runLiveSidebarCalculationsEngine() {
+            const countdownContainer = document.getElementById('ui-exam-countdown-list');
+            if (!countdownContainer) return;
+
+            if (dbExams.length === 0) {
+                countdownContainer.innerHTML = `<div class="text-[11px] text-slate-400 italic text-center py-2 select-none">No active exams tracked.</div>`;
+                return;
+            }
+
             const currentEpochTime = new Date().getTime();
-            const targetNRBExamEpoch = new Date("July 15, 2026 09:00:00").getTime();
-            const targetSecExamEpoch = new Date("August 28, 2026 13:00:00").getTime();
 
-            const nrbDelta = targetNRBExamEpoch - currentEpochTime;
-            const secDelta = targetSecExamEpoch - currentEpochTime;
+            countdownContainer.innerHTML = dbExams.map(exam => {
+                const targetEpoch = new Date(exam.date).getTime();
+                const delta = targetEpoch - currentEpochTime;
+                let displayTime = "";
 
-            document.getElementById('cd-nrb-days').textContent = nrbDelta > 0 ? `${Math.floor(nrbDelta / (1000 * 60 * 60 * 24))} Days Left` : "Exam Passed";
-            document.getElementById('cd-sec-days').textContent = secDelta > 0 ? `${Math.floor(secDelta / (1000 * 60 * 60 * 24))} Days Left` : "Exam Passed";
+                if (delta > 0) {
+                    const days = Math.floor(delta / (1000 * 60 * 60 * 24));
+                    displayTime = `${days} Days Left`;
+                } else {
+                    displayTime = "Exam Passed";
+                }
+
+                return `
+                    <div class="flex justify-between items-center bg-white/5 p-2 rounded-xl border border-white/10">
+                        <span class="text-xs text-slate-300 font-medium">${exam.name}</span>
+                        <span class="text-xs font-bold text-amber-400 font-mono">${displayTime}</span>
+                    </div>
+                `;
+            }).join('');
         }
 
         function reloadLocalGoalItemsFromBrowserStorage() {
@@ -494,7 +509,7 @@
             const currentGoalsArray = JSON.parse(localStorage.getItem('loksewa-portal-goals') || "[]");
 
             if(currentGoalsArray.length === 0) {
-                container.innerHTML = `<div class="text-[11px] text-slate-400 italic text-center py-3 select-none">No active goals set for today.</div>`;
+                container.innerHTML = `<div class="text-[11px] text-slate-400 italic text-center py-3 select-none">No active targets for today.</div>`;
                 return;
             }
 
@@ -540,7 +555,7 @@
 
         function rotateMnemonicDisplayCardData() {
             if (dbMnemonics.length === 0) {
-                document.getElementById('lbl-mnemonic-shortcut').textContent = "No Mnemonic Formula Set";
+                document.getElementById('lbl-mnemonic-shortcut').textContent = "No Formula Registered";
                 document.getElementById('lbl-mnemonic-details').textContent = "Use dashboard workspace to add parameters.";
                 return;
             }
@@ -603,7 +618,7 @@
                     let sideHtml = `
                         <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === 'All' ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
                             <span>🌐 All Sub-Topics</span>
-                            <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
+                            <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800 font-mono">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
                         </button>
                     `;
                     subcatArr.forEach(sub => {
@@ -611,7 +626,7 @@
                         sideHtml += `
                             <button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === sub ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
                                 <span>📁 ${sub}</span> 
-                                <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800">${itemsCount}</span>
+                                <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800 font-mono">${itemsCount}</span>
                             </button>
                         `;
                     });
@@ -632,7 +647,7 @@
                     <button onclick="exitArticleDetailSingleView()" class="bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-2 mb-2">
                         <i class="fa-solid fa-arrow-left"></i> फिर्ता जानुहोस्
                     </button>
-                    <article class="bg-white dark:bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md space-y-4">
+                    <article class="bg-white dark:bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md space-y-4 animate-fade-in">
                         <div class="flex flex-wrap items-center gap-2">
                             <span class="bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.category}</span>
                             <span class="bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.subcategory}</span>
@@ -650,11 +665,11 @@
             
             if (runningSearchFilteredCache !== null) {
                 dynamicFilteredDataset = [...runningSearchFilteredCache];
-                document.getElementById('ui-bread-primary').textContent = "SEARCH RESULTS MATCHES";
+                document.getElementById('ui-bread-primary').textContent = "SEARCH FILTER";
                 document.getElementById('ui-current-heading').textContent = `खोज परिणामहरू`;
             } else if (activePrimaryCategory === 'Home') {
                 dynamicFilteredDataset = [...dbArticles];
-                document.getElementById('ui-bread-primary').textContent = "PORTAL OVERVIEW FEED";
+                document.getElementById('ui-bread-primary').textContent = "OVERVIEW FEED";
                 document.getElementById('ui-current-heading').textContent = "भर्खरै थपिएका सम्पूर्ण पाठ्यसामग्रीहरू";
             } else {
                 dynamicFilteredDataset = dbArticles.filter(a => a.category === activePrimaryCategory);
@@ -665,7 +680,7 @@
 
             dynamicFilteredDataset.reverse();
             const totalRecords = dynamicFilteredDataset.length;
-            document.getElementById('ui-total-articles-badge').textContent = `${totalRecords} Articles Available`;
+            document.getElementById('ui-total-articles-badge').textContent = `${totalRecords} Elements Inside`;
 
             if (totalRecords === 0) {
                 streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-2xl">कुनै सामग्रीहरू फेला परेनन्।</div>`;
@@ -687,14 +702,14 @@
                 const readTime = Math.max(1, Math.ceil(extract.trim().split(/\s+/).length / 180));
 
                 return `
-                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transform-gpu hover:scale-[1.01] transition-all duration-300 flex flex-col justify-between group">
+                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transform-gpu hover:scale-[1.005] transition-all duration-200 flex flex-col justify-between group">
                         <div class="space-y-2">
                             <div class="flex items-center justify-between gap-2 select-none">
                                 <div class="flex items-center gap-1.5">
                                     <span class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-md border dark:border-slate-800">${art.category}</span>
                                     <span class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2 py-0.5 rounded-md border border-indigo-100 dark:border-indigo-950">${art.subcategory}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 font-medium">⏱️ ${readTime} मिनेट</span>
+                                <span class="text-[10px] text-slate-400 font-medium font-mono">⏱️ ${readTime} मिनेट</span>
                             </div>
                             <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
                             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">${cleanSummary}</p>
@@ -720,7 +735,7 @@
             `;
             for (let i = 1; i <= totalPages; i++) {
                 paginationHtml += `
-                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl transition ${currentActivePaginationPage === i ? 'bg-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 hover:bg-slate-50'}">
+                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl font-mono transition ${currentActivePaginationPage === i ? 'bg-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 hover:bg-slate-50'}">
                         ${i}
                     </button>
                 `;
@@ -803,12 +818,18 @@
             if (confirm("Apply security configuration modifications?")) {
                 adminPasswordHash = await convertStringIntoCryptographicHash(rawText.trim());
                 document.getElementById('adm-security-pass-input').value = "";
-                alert("Fingerprint configuration staged successfully.");
+                alert("Fingerprint signature reconfigured successfully.");
             }
         }
 
         function triggerDatabaseDownloadPipeline() {
-            const payload = { security: { admin_password_hash: adminPasswordHash }, structure: dbStructure, articles: dbArticles, mnemonics: dbMnemonics };
+            const payload = { 
+                security: { admin_password_hash: adminPasswordHash }, 
+                structure: dbStructure, 
+                articles: dbArticles, 
+                mnemonics: dbMnemonics,
+                exams: dbExams
+            };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 4));
             const anchor = document.createElement('a');
             anchor.setAttribute("href", dataStr); anchor.setAttribute("download", "database.json"); anchor.click();
@@ -835,7 +856,7 @@
         }
 
         function addPrimaryCategory() {
-            let name = prompt("Enter new primary menu navigation category label:");
+            let name = prompt("Enter new primary heading categorization string:");
             if (name && name.trim() !== "") {
                 name = name.trim();
                 if (!dbStructure[name]) { dbStructure[name] = []; syncAdminStructureManagerInterface(); }
@@ -844,7 +865,7 @@
 
         function editPrimaryCategory() {
             let target = document.getElementById('adm-manage-cat-select').value; if(!target) return;
-            let rename = prompt(`Rename main menu label "${target}" to:`, target);
+            let rename = prompt(`Rename heading layer label "${target}" to:`, target);
             if (rename && rename.trim() !== "" && rename.trim() !== target) {
                 rename = rename.trim(); dbStructure[rename] = dbStructure[target]; delete dbStructure[target];
                 dbArticles.forEach(a => { if (a.category === target) a.category = rename; });
@@ -855,7 +876,7 @@
 
         function addSubCategory() {
             let parent = document.getElementById('adm-manage-cat-select').value; if(!parent) return;
-            let subName = prompt(`Add new subcategory node under "${parent}":`);
+            let subName = prompt(`Add new sub-topic parameter under key context "${parent}":`);
             if (subName && subName.trim() !== "") {
                 subName = subName.trim();
                 if (!dbStructure[parent].includes(subName)) { dbStructure[parent].push(subName); syncAdminStructureManagerInterface(); }
@@ -865,7 +886,7 @@
         function editSubCategory() {
             let parent = document.getElementById('adm-manage-cat-select').value;
             let targetSub = document.getElementById('adm-manage-subcat-select').value; if (!targetSub) return;
-            let rename = prompt(`Rename subcategory label "${targetSub}" to:`, targetSub);
+            let rename = prompt(`Rename child sub-topic node "${targetSub}" inside hierarchy to:`, targetSub);
             if (rename && rename.trim() !== "" && rename.trim() !== targetSub) {
                 rename = rename.trim(); let idx = dbStructure[parent].indexOf(targetSub);
                 if (idx !== -1) {
@@ -887,8 +908,8 @@
                         <td class="p-2.5 font-medium text-slate-900 dark:text-slate-100 max-w-[140px] truncate">${art.title}</td>
                         <td class="p-2.5 text-[10px] text-slate-500 font-mono">${art.category} ➔ ${art.subcategory}</td>
                         <td class="p-2.5 text-right space-x-1 whitespace-nowrap">
-                            <button type="button" onclick="loadArticleToForm('${art.id}')" class="bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-pen"></i></button>
-                            <button type="button" onclick="purgeArticleEntry('${art.id}')" class="bg-red-50 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" onclick="loadArticleToForm('${art.id}')" class="bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-[11px] cursor-pointer"><i class="fa-solid fa-pen"></i></button>
+                            <button type="button" onclick="purgeArticleEntry('${art.id}')" class="bg-red-50 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded text-[11px] cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `).join('');
@@ -896,18 +917,33 @@
 
             const tbodyMne = document.getElementById('adm-mnemonic-table-rows');
             if (dbMnemonics.length === 0) {
-                tbodyMne.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No mnemonics stored.</td></tr>`;
-                return;
+                tbodyMne.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No structural formulas recorded.</td></tr>`;
+            } else {
+                tbodyMne.innerHTML = dbMnemonics.map(m => `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800 text-[11px]">
+                        <td class="p-2 font-bold text-amber-700 dark:text-amber-400 max-w-[100px] truncate">${m.shortcut}</td>
+                        <td class="p-2 text-slate-600 dark:text-slate-400 max-w-[200px] truncate">${m.desc}</td>
+                        <td class="p-2 text-right">
+                            <button type="button" onclick="purgeMnemonicEntry('${m.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer"><i class="fa-solid fa-circle-minus"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
             }
-            tbodyMne.innerHTML = dbMnemonics.map(m => `
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800 text-[11px]">
-                    <td class="p-2 font-bold text-amber-700 dark:text-amber-400 max-w-[100px] truncate">${m.shortcut}</td>
-                    <td class="p-2 text-slate-600 dark:text-slate-400 max-w-[200px] truncate">${m.desc}</td>
-                    <td class="p-2 text-right">
-                        <button type="button" onclick="purgeMnemonicEntry('${m.id}')" class="text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-circle-minus"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+
+            const tbodyExams = document.getElementById('adm-exam-table-rows');
+            if (dbExams.length === 0) {
+                tbodyExams.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No exams tracked.</td></tr>`;
+            } else {
+                tbodyExams.innerHTML = dbExams.map(ex => `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800 text-[11px]">
+                        <td class="p-2 font-bold text-indigo-600 dark:text-indigo-400 max-w-[120px] truncate">${ex.name}</td>
+                        <td class="p-2 text-slate-600 dark:text-slate-400 font-mono">${ex.date.split('T')[0]}</td>
+                        <td class="p-2 text-right">
+                            <button type="button" onclick="purgeExamEntry('${ex.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer"><i class="fa-solid fa-circle-minus"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
         }
 
         function saveArticleDataPipeline(e) {
@@ -918,7 +954,7 @@
             const subcategory = document.getElementById('adm-field-subcat').value;
             const content = quillEditorInstance.getSemanticHTML(); 
 
-            if (!subcategory) { alert("Missing mapping parameters."); return; }
+            if (!subcategory) { alert("Missing configuration parameters alignment mapping nodes."); return; }
             if (id) {
                 const idx = dbArticles.findIndex(a => a.id === id);
                 if (idx !== -1) dbArticles[idx] = { id, title, category, subcategory, content };
@@ -934,12 +970,12 @@
                 document.getElementById('adm-field-id').value = art.id; document.getElementById('adm-field-title').value = art.title;
                 document.getElementById('adm-field-cat').value = art.category; cascadeSubcategoryFieldOptions(art.category);
                 document.getElementById('adm-field-subcat').value = art.subcategory; quillEditorInstance.clipboard.dangerouslyPasteHTML(art.content);
-                document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-check mr-1"></i> Update Active Record`;
+                document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-check mr-1"></i> Update Active Record Entry`;
             }
         }
 
         function purgeArticleEntry(id) {
-            if (confirm("Discard this record layer from local system buffers?")) {
+            if (confirm("Discard this material payload from localized database blocks?")) {
                 dbArticles = dbArticles.filter(a => a.id !== id); renderBackendControlMatrix();
             }
         }
@@ -957,9 +993,28 @@
         }
 
         function purgeMnemonicEntry(id) {
-            if(confirm("Remove this formula snippet from database parameters?")) {
+            if(confirm("Remove this formula matrix sequence from storage parameters?")) {
                 dbMnemonics = dbMnemonics.filter(m => m.id !== id);
                 renderBackendControlMatrix(); rotateMnemonicDisplayCardData();
+            }
+        }
+
+        function saveNewExamPipeline(event) {
+            event.preventDefault();
+            const name = document.getElementById('adm-exam-name').value.trim();
+            const date = document.getElementById('adm-exam-date').value;
+            if(!name || !date) return;
+            
+            dbExams.push({ id: Date.now().toString(), name, date: date + "T09:00:00" });
+            document.getElementById('adm-exam-name').value = ""; document.getElementById('adm-exam-date').value = "";
+            
+            renderBackendControlMatrix(); runLiveSidebarCalculationsEngine();
+        }
+
+        function purgeExamEntry(id) {
+            if(confirm("Remove this target examination track scheduling data point?")) {
+                dbExams = dbExams.filter(ex => ex.id !== id);
+                renderBackendControlMatrix(); runLiveSidebarCalculationsEngine();
             }
         }
 
@@ -979,14 +1034,14 @@
             const w = document.getElementById('pomodoro-floating-widget');
             document.getElementById('pomo-collapsed-view').classList.add('hidden');
             document.getElementById('pomo-expanded-view').classList.remove('hidden');
-            w.classList.remove('w-14', 'h-14', 'rounded-full', 'cursor-pointer'); w.classList.add('w-64', 'h-auto');
+            w.classList.remove('w-14', 'h-14', 'rounded-full', 'cursor-pointer'); w.classList.add('w-64', 'h-auto', 'rounded-2xl');
             isPomodoroWidgetExpanded = true;
         }
 
         function minimizePomodoroWidget(event) {
             event.stopPropagation(); const w = document.getElementById('pomodoro-floating-widget');
             document.getElementById('pomo-expanded-view').classList.add('hidden'); document.getElementById('pomo-collapsed-view').classList.remove('hidden');
-            w.classList.remove('w-64', 'h-auto'); w.classList.add('w-14', 'h-14', 'cursor-pointer');
+            w.classList.remove('w-64', 'h-auto', 'rounded-2xl'); w.classList.add('w-14', 'h-14', 'rounded-full', 'cursor-pointer');
             isPomodoroWidgetExpanded = false;
         }
 
@@ -994,10 +1049,10 @@
             event.stopPropagation(); const btn = document.getElementById('pomo-control-btn');
             if (isPomodoroClockActive) {
                 clearInterval(pomodoroTimerObject); btn.textContent = "Start";
-                btn.className = "bg-slate-900 dark:bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
+                btn.className = "bg-white text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-md transition hover:bg-slate-100";
                 isPomodoroClockActive = false;
             } else {
-                isPomodoroClockActive = true; btn.textContent = "Pause"; btn.className = "bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
+                isPomodoroClockActive = true; btn.textContent = "Pause"; btn.className = "bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-md transition hover:bg-amber-600";
                 pomodoroTimerObject = setInterval(() => {
                     pomodoroRemainingSeconds--; updatePomodoroTimeDisplayString();
                     if (pomodoroRemainingSeconds <= 0) {
@@ -1011,7 +1066,7 @@
         function resetPomodoroClockPipeline(event) {
             event.stopPropagation(); clearInterval(pomodoroTimerObject); isPomodoroClockActive = false; pomodoroRemainingSeconds = 1500;
             updatePomodoroTimeDisplayString(); const btn = document.getElementById('pomo-control-btn'); btn.textContent = "Start";
-            btn.className = "bg-slate-900 dark:bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
+            btn.className = "bg-white text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-md transition hover:bg-slate-100";
         }
 
         function updatePomodoroTimeDisplayString() {
