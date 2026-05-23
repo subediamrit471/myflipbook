@@ -70,5 +70,8 @@
             "shortcut": "DAD U C O R I O S E A F",
             "desc": "Henri Fayol का 14 ओटा व्यवस्थापनका सिद्धान्तहरू सम्झिने सजिलो सुत्र।"
         }
+    ],
+"exams": [
+        { "id": "1", "name": "🇳🇵 NRB Assistant Manager", "date": "2026-07-15T09:00:00" }
     ]
 }
