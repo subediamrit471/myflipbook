@@ -366,7 +366,31 @@
             <p>© 2026 Loksewa Sarathi Matrix Studio. Secure Administrative Ledger Architecture.</p>
         </footer>
     </div>
-
+<footer class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-6 mt-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400">
+        <div>
+            &copy; 2026 लोकसेवा सारथी Studio. All rights reserved.
+        </div>
+        <div class="flex flex-wrap justify-center gap-6 font-medium">
+            <button onclick="openLegalModal('about')" class="hover:text-blue-600 dark:hover:text-blue-400 transition">About Us</button>
+            <button onclick="openLegalModal('contact')" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Contact Us</button>
+            <button onclick="openLegalModal('privacy')" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Privacy Policy</button>
+        </div>
+    </div>
+</footer>
+    <div id="legalModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden transform transition-all flex flex-col max-h-[85vh]">
+        <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-850">
+            <h3 id="legalModalTitle" class="text-xl font-bold text-gray-900 dark:text-white"></h3>
+            <button onclick="closeLegalModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-2xl font-semibold p-1">&times;</button>
+        </div>
+        <div id="legalModalContent" class="p-6 overflow-y-auto text-gray-600 dark:text-gray-300 space-y-4 text-sm leading-relaxed">
+            </div>
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end bg-gray-50 dark:bg-gray-850">
+            <button onclick="closeLegalModal()" class="px-5 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg font-medium transition text-xs">Close Window</button>
+        </div>
+    </div>
+</div>
     <script>
         const fallbackDefaultHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
         let adminPasswordHash = fallbackDefaultHash;
@@ -1114,6 +1138,75 @@
         function updatePomodoroTimeDisplayString() {
             document.getElementById('pomo-time-display').textContent = `${Math.floor(pomodoroRemainingSeconds / 60).toString().padStart(2, '0')}:${(pomodoroRemainingSeconds % 60).toString().padStart(2, '0')}`;
         }
+ // ⚡ Legal Modal Controller & Dynamic Compliance Data Engine
+const legalData = {
+    about: {
+        title: "About Us",
+        html: `
+            <p class="font-semibold text-base text-gray-800 dark:text-white">Welcome to लोकसेवा सारथी (Executive Management Studio)</p>
+            <p>Our platform is a dedicated web asset engineered to provide structured, deep-dive educational preparation resources for competitive examinations in Nepal, including high-level administrative service nodes, accounting matrices, banking regulation frame configurations, and advanced management methodology research frameworks.</p>
+            <p>Our mandate is to deliver precision-driven, high-yield learning dashboards, mnemonic formula frameworks, and tracking matrices to optimize strategic study patterns and corporate or state financial accounting standard tracking.</p>
+        `
+    },
+    contact: {
+        title: "Contact Us",
+        html: `
+            <p class="font-semibold text-base text-gray-800 dark:text-white">Get in Touch</p>
+            <p>If you have questions regarding our educational modules, systemic database updates, or information accuracy queries regarding Nepalese banking rules or financial frameworks, please connect with our primary administration terminal:</p>
+            <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg my-3 font-mono text-xs text-blue-600 dark:text-blue-400">
+                <p><strong>Terminal Administrator:</strong> Executive Management Director</p>
+                <p><strong>Primary Support Email:</strong> admin@yourusername.github.io</p>
+                <p><strong>Location Matrix:</strong> Kathmandu, Nepal</p>
+            </div>
+            <p>We aim to evaluate and resolve valid administrative or data inquiries within 48 business hours.</p>
+        `
+    },
+    privacy: {
+        title: "Privacy Policy",
+        html: `
+            <p><em>Last Updated: May 2026</em></p>
+            <p>This policy details how this studio interface handles user data and information metrics. Your privacy is structurally prioritized.</p>
+            
+            <p class="font-semibold text-gray-800 dark:text-white mt-3">1. Infrastructure Hosting Data</p>
+            <p>This platform is deployed across static environment architectures hosted via GitHub Pages. Automated technical server access logs are generated independently by GitHub Inc. to maintain networking integrity. We do not store or own tracking databases containing your personal access variables on any dedicated private servers.</p>
+            
+            <p class="font-semibold text-gray-800 dark:text-white mt-3">2. Web Storage & Administration Signatures</p>
+            <p>The system utilizes browser <strong>LocalStorage</strong> engines exclusively to retain running interface sessions, customized category arrays, and active menu frameworks. Your administrative control configuration operates entirely client-side using localized cryptographic SHA-256 signatures to lock deployment features; nothing is transmitted to unauthorized server hubs.</p>
+            
+            <p class="font-semibold text-gray-800 dark:text-white mt-3">3. Third-Party Advertisements & Cookie Disclosures</p>
+            <p>We cooperate with third-party vendors, most notably <strong>Google AdSense</strong>, to deliver operational banners on this site. Google utilizes specialized advertising tracking components (including the DoubleClick DART cookie mechanism) to serve context-relevant advertisements based on your browsing actions across this or external internet properties.</p>
+            <p>Users maintain full autonomy to adjust personalized data targeting preferences by editing parameters directly via the <a href="https://adssettings.google.com" target="_blank" class="text-blue-500 underline">Google Ads Settings Portal</a>.</p>
+        `
+    }
+};
+
+function openLegalModal(key) {
+    const modal = document.getElementById('legalModal');
+    const title = document.getElementById('legalModalTitle');
+    const content = document.getElementById('legalModalContent');
+    
+    if (legalData[key]) {
+        title.innerText = legalData[key].title;
+        content.innerHTML = legalData[key].html;
+        
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Lock background scrolling
+    }
+}
+
+function closeLegalModal() {
+    const modal = document.getElementById('legalModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = ''; // Restore background scrolling
+}
+
+// Close modal if user clicks outside the inner display content window block
+window.addEventListener('click', function(e) {
+    const modal = document.getElementById('legalModal');
+    if (e.target === modal) {
+        closeLegalModal();
+    }
+});
     </script>
 </body>
 </html>
