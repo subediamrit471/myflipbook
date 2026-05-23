@@ -27,7 +27,6 @@
         .article-rich-text h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; }
         .select-none { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         
-        /* Smooth Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
@@ -50,7 +49,7 @@
         <header class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-10 px-4 text-center border-b-4 border-amber-500 select-none relative shadow-inner">
             <div class="max-w-4xl mx-auto space-y-2">
                 <h1 class="text-3xl sm:text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 drop-shadow-sm">लोकसेवा आयोग तयारी पोर्टल</h1>
-                <p class="text-slate-400 text-xs sm:text-base font-light tracking-wide max-w-2xl mx-auto">उच्च-स्तरीय प्रशासनिक तथा वित्तीय क्षेत्र प्रतिस्पर्धात्मक परीक्षा तयारी केन्द्र</p>
+                <p class="text-slate-400 text-xs sm:text-base font-light tracking-wide max-w-2xl mx-auto">उच्च-स्तरीय प्रशासनिक, लेखा तथा वित्तीय क्षेत्र प्रतिस्पर्धात्मक परीक्षा तयारी केन्द्र</p>
             </div>
             
             <button onclick="toggleGlobalFocusMode()" class="absolute top-4 right-4 bg-slate-800/40 hover:bg-slate-800 border border-slate-700/60 p-2.5 rounded-xl transition-all text-slate-300 shadow-sm hover:text-white" title="Toggle Reading Focus Mode">
@@ -60,8 +59,7 @@
 
         <nav class="bg-white/95 dark:bg-slate-950/95 backdrop-blur shadow-sm border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 py-2.5 md:h-16">
-                
-                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto py-1 scrollbar-none" id="ui-primary-navbar"></div>
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto py-1" id="ui-primary-navbar"></div>
                 
                 <div class="relative w-full md:w-72 shrink-0 select-none">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
@@ -72,11 +70,70 @@
 
         <div class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
             
-            <aside class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 h-fit lg:sticky lg:top-24 shadow-sm">
-                <h3 class="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 select-none">
-                    <i class="fa-solid fa-sitemap text-indigo-500"></i> उप-विषय सूची (Subcategories)
-                </h3>
-                <div class="space-y-1" id="ui-sidebar-subcategories"></div>
+            <aside id="portal-left-sidebar" class="h-fit lg:sticky lg:top-24 space-y-5">
+                
+                <div id="sidebar-subcat-container" class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hidden">
+                    <h3 class="font-bold text-slate-900 dark:text-slate-100 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 select-none">
+                        <i class="fa-solid fa-sitemap text-indigo-500"></i> उप-विषय सूची (Subcategories)
+                    </h3>
+                    <div class="space-y-1" id="ui-sidebar-subcategories"></div>
+                </div>
+
+                <div id="sidebar-homepage-utilities" class="space-y-5">
+                    
+                    <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm select-none">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-amber-500"></i> परीक्षा घडी (Exam Countdown)
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                                    <span>NRB Assistant Manager</span>
+                                    <span class="text-indigo-600 dark:text-indigo-400 font-bold" id="cd-nrb-days">Calculating...</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-gradient-to-r from-indigo-500 to-blue-500 h-full rounded-full" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                                    <span>Up-Sachiv (Under Secretary)</span>
+                                    <span class="text-emerald-600 dark:text-emerald-400 font-bold" id="cd-sec-days">Calculating...</span>
+                                </div>
+                                <div class="w-full bg-slate-100 dark:bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-3 pb-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 select-none">
+                            <i class="fa-solid fa-square-check text-emerald-500"></i> दैनिक अध्ययन लक्ष्य (Daily Goals)
+                        </h3>
+                        <div class="space-y-1.5 max-h-48 overflow-y-auto pr-1" id="ui-local-goals-list"></div>
+                        <div class="mt-3 flex gap-1.5 select-none">
+                            <input type="text" id="ui-goal-input" placeholder="नयाँ लक्ष्य थप्नुहोस्..." class="flex-1 text-xs border dark:border-slate-800 rounded-xl px-3 py-2 outline-none focus:ring-1 focus:ring-indigo-500 dark:bg-slate-900 dark:text-white">
+                            <button onclick="addUserDailyGoalRecord()" class="bg-slate-900 dark:bg-indigo-600 text-white text-xs px-3 rounded-xl hover:bg-slate-800 dark:hover:bg-indigo-500 transition font-bold">+</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-amber-50/60 to-orange-50/40 dark:from-slate-950 dark:to-slate-950 p-5 rounded-2xl border border-amber-100/70 dark:border-slate-800 shadow-sm">
+                        <div class="flex items-center justify-between gap-2 mb-2 select-none">
+                            <span class="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
+                                <i class="fa-solid fa-lightbulb"></i> स्मरण सूत्र (Mnemonic Assistant)
+                            </span>
+                            <button onclick="rotateMnemonicDisplayCardData()" class="text-amber-700 hover:text-amber-900 dark:text-amber-400 text-xs transition" title="Next Mnemonic">
+                                <i class="fa-solid fa-rotate"></i>
+                            </button>
+                        </div>
+                        <div id="ui-mnemonic-card-box" class="space-y-1">
+                            <p class="text-xs font-bold text-amber-900 dark:text-amber-200 tracking-wide" id="lbl-mnemonic-shortcut">Loading...</p>
+                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-light" id="lbl-mnemonic-details">No shortcuts loaded yet.</p>
+                        </div>
+                    </div>
+
+                </div>
             </aside>
 
             <main class="lg:col-span-3 space-y-4">
@@ -240,6 +297,41 @@
                     </div>
                 </div>
             </div>
+
+            <section class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-500"></i> Mnemonic Formula Dashboard</h3>
+                    <p class="text-xs text-slate-500">Add or manage memory acronyms and formulas saved in the database layer.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <form onsubmit="saveNewMnemonicPipeline(event)" class="lg:col-span-1 space-y-3 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border dark:border-slate-800">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Acronym / सूत्र कोड</label>
+                            <input type="text" id="adm-mne-shortcut" required placeholder="e.g., DAD U C O R..." class="w-full border dark:border-slate-800 rounded-lg p-2 text-xs outline-none dark:bg-slate-950 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Description / विस्तृत विवरण</label>
+                            <textarea id="adm-mne-desc" required rows="3" placeholder="Explain the mnemonic components..." class="w-full border dark:border-slate-800 rounded-lg p-2 text-xs outline-none dark:bg-slate-950 dark:text-white"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 rounded-lg text-xs transition">
+                            Save Mnemonic
+                        </button>
+                    </form>
+                    <div class="lg:col-span-2 border dark:border-slate-800 rounded-xl overflow-hidden max-h-56 overflow-y-auto">
+                        <table class="w-full text-left text-xs border-collapse bg-white dark:bg-slate-950">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-900 text-slate-400 border-b dark:border-slate-800">
+                                    <th class="p-2">Formula Code</th>
+                                    <th class="p-2">Description</th>
+                                    <th class="p-2 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adm-mnemonic-table-rows" class="divide-y dark:divide-slate-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </div>
 
@@ -271,6 +363,7 @@
         
         let dbStructure = {};
         let dbArticles = [];
+        let dbMnemonics = [];
         let runningSearchFilteredCache = null; 
 
         let activePrimaryCategory = "Home"; 
@@ -298,19 +391,16 @@
         async function fetchCentralCloudRepositoryData() {
             try {
                 const response = await fetch(`./database.json?t=${Date.now()}`);
-                if (!response.ok) throw new Error("Missing database configuration file.");
+                if (!response.ok) throw new Error("Missing configuration.");
                 const data = await response.json();
                 
-                if (data.security && data.security.admin_password_hash) {
-                    adminPasswordHash = data.security.admin_password_hash;
-                }
-                
+                if (data.security && data.security.admin_password_hash) adminPasswordHash = data.security.admin_password_hash;
                 dbStructure = data.structure || {};
                 dbArticles = data.articles || [];
+                dbMnemonics = data.mnemonics || [];
                 
                 renderFrontendInterfaceEngine();
             } catch (err) {
-                console.warn("Seeding core syllabus structure matrices.", err);
                 seedDefaultLocalBufferSchema();
             }
         }
@@ -318,21 +408,12 @@
         function seedDefaultLocalBufferSchema() {
             adminPasswordHash = fallbackDefaultHash;
             dbStructure = {
-                "१. प्रथम पत्र": ["सामान्य ज्ञान (GK)", "इन्टेलिजेन्स टेस्ट (IQ)", "समसामयिक मामिला"],
-                "२. शासकीय प्रबन्ध": ["राज्य व्यवस्था", "सार्वजनिक प्रशासन", "सार्वजनिक नीति"],
-                "३. आर्थिक नीति": ["समष्टिगत अर्थशास्त्र", "वित्तीय प्रणाली", "बजेट तथा योजना"],
-                "४. बैंकिङ्ग र ऐन": ["NRB Unified Directives", "BAFIA २०७३", "लेखापरीक्षण र NFRS/NAS"],
-                "५. अनुसन्धान विधि": ["गुणात्मक अध्ययन", "परिमाणात्मक अध्ययन", "तथ्याङ्क संकलन"],
-                "६. परीक्षा रणनीति": ["पाठ्यक्रम (Syllabus)", "पुराना प्रश्नहरू", "लेखन शैली टिप्स"]
+                "१. वित्तीय लेखा (NFRS/NAS)": ["NFRS Cores", "वित्तीय विवरण विश्लेषण"],
+                "२. सरकारी लेखा प्रणाली": ["CGAS र TSA", "NPSAS Framework"]
             };
-            dbArticles = [
-                {
-                    id: "1",
-                    title: "सार्वजनिक प्रशासन र यसको बदलिँदो स्वरूप",
-                    category: "२. शासकीय प्रबन्ध",
-                    subcategory: "सार्वजनिक प्रशासन",
-                    content: "<h2>सार्वजनिक प्रशासनको परिचय</h2><p>सार्वजनिक प्रशासन राज्यको नीति र योजना कार्यान्वयन गर्ने मूल संयन्त्र हो। यसले विश्वव्यापीकरणको सन्दर्भमा नवीन स्वरूप अंगाल्दै आएको छ।</p>"
-                }
+            dbArticles = [];
+            dbMnemonics = [
+                { id: "1", shortcut: "DAD U C O R I O S E A F", desc: "Henri Fayol का 14 ओटा व्यवस्थापनका सिद्धान्तहरू सम्झिने सजिलो सुत्र।" }
             ];
             renderFrontendInterfaceEngine();
         }
@@ -360,6 +441,10 @@
                 document.documentElement.classList.add('dark');
                 updateThemeIconsMarkup(true);
             }
+
+            setInterval(runLiveSidebarCalculationsEngine, 1000);
+            runLiveSidebarCalculationsEngine();
+            reloadLocalGoalItemsFromBrowserStorage();
         });
 
         window.addEventListener('keydown', function(event) {
@@ -392,14 +477,85 @@
             progressIndicator.style.width = scrolled + "%";
         }
 
+        function runLiveSidebarCalculationsEngine() {
+            const currentEpochTime = new Date().getTime();
+            const targetNRBExamEpoch = new Date("July 15, 2026 09:00:00").getTime();
+            const targetSecExamEpoch = new Date("August 28, 2026 13:00:00").getTime();
+
+            const nrbDelta = targetNRBExamEpoch - currentEpochTime;
+            const secDelta = targetSecExamEpoch - currentEpochTime;
+
+            document.getElementById('cd-nrb-days').textContent = nrbDelta > 0 ? `${Math.floor(nrbDelta / (1000 * 60 * 60 * 24))} Days Left` : "Exam Passed";
+            document.getElementById('cd-sec-days').textContent = secDelta > 0 ? `${Math.floor(secDelta / (1000 * 60 * 60 * 24))} Days Left` : "Exam Passed";
+        }
+
+        function reloadLocalGoalItemsFromBrowserStorage() {
+            const container = document.getElementById('ui-local-goals-list');
+            const currentGoalsArray = JSON.parse(localStorage.getItem('loksewa-portal-goals') || "[]");
+
+            if(currentGoalsArray.length === 0) {
+                container.innerHTML = `<div class="text-[11px] text-slate-400 italic text-center py-3 select-none">No active goals set for today.</div>`;
+                return;
+            }
+
+            container.innerHTML = currentGoalsArray.map((goal, idx) => `
+                <div class="flex items-center justify-between gap-2 p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 group transition-colors">
+                    <label class="flex items-center gap-2 cursor-pointer select-none flex-1 overflow-hidden">
+                        <input type="checkbox" onchange="toggleLocalGoalCompletionStatus(${idx})" ${goal.done ? 'checked' : ''} class="rounded text-indigo-600 focus:ring-indigo-500 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+                        <span class="text-xs text-slate-600 dark:text-slate-300 truncate ${goal.done ? 'line-through text-slate-400 dark:text-slate-600' : ''}">${goal.text}</span>
+                    </label>
+                    <button onclick="purgeSingleLocalGoalItem(${idx})" class="text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addUserDailyGoalRecord() {
+            const inputNode = document.getElementById('ui-goal-input');
+            const newGoalText = inputNode.value.trim();
+            if(newGoalText === "") return;
+
+            const currentGoalsArray = JSON.parse(localStorage.getItem('loksewa-portal-goals') || "[]");
+            currentGoalsArray.push({ text: newGoalText, done: false });
+            localStorage.setItem('loksewa-portal-goals', JSON.stringify(currentGoalsArray));
+            
+            inputNode.value = "";
+            reloadLocalGoalItemsFromBrowserStorage();
+        }
+
+        function toggleLocalGoalCompletionStatus(index) {
+            const currentGoalsArray = JSON.parse(localStorage.getItem('loksewa-portal-goals') || "[]");
+            if(currentGoalsArray[index]) {
+                currentGoalsArray[index].done = !currentGoalsArray[index].done;
+                localStorage.setItem('loksewa-portal-goals', JSON.stringify(currentGoalsArray));
+                reloadLocalGoalItemsFromBrowserStorage();
+            }
+        }
+
+        function purgeSingleLocalGoalItem(index) {
+            let currentGoalsArray = JSON.parse(localStorage.getItem('loksewa-portal-goals') || "[]");
+            currentGoalsArray.splice(index, 1);
+            localStorage.setItem('loksewa-portal-goals', JSON.stringify(currentGoalsArray));
+            reloadLocalGoalItemsFromBrowserStorage();
+        }
+
+        function rotateMnemonicDisplayCardData() {
+            if (dbMnemonics.length === 0) {
+                document.getElementById('lbl-mnemonic-shortcut').textContent = "No Mnemonic Formula Set";
+                document.getElementById('lbl-mnemonic-details').textContent = "Use dashboard workspace to add parameters.";
+                return;
+            }
+            const randomPick = dbMnemonics[Math.floor(Math.random() * dbMnemonics.length)];
+            document.getElementById('lbl-mnemonic-shortcut').textContent = randomPick.shortcut;
+            document.getElementById('lbl-mnemonic-details').textContent = randomPick.desc;
+        }
+
         function executeLiveDatabaseQuery(queryString) {
             const cleanQuery = queryString.trim().toLowerCase();
             if (cleanQuery === "") {
                 runningSearchFilteredCache = null;
             } else {
                 runningSearchFilteredCache = dbArticles.filter(art => {
-                    const stringContentBuffer = (art.title + " " + art.category + " " + art.subcategory + " " + art.content).toLowerCase();
-                    return stringContentBuffer.includes(cleanQuery);
+                    return (art.title + " " + art.category + " " + art.subcategory + " " + art.content).toLowerCase().includes(cleanQuery);
                 });
             }
             activeSelectedArticleID = null; 
@@ -409,46 +565,58 @@
 
         function renderFrontendInterfaceEngine() {
             const topNavContainer = document.getElementById('ui-primary-navbar');
-            
-            // Premium Silicon Valley Navigation Underlines and Gradient Pills Styling Matrix
             let isHomeActive = activePrimaryCategory === 'Home' && runningSearchFilteredCache === null;
             let navHtml = `
-                <button onclick="resetToHomeFeed()" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all duration-300 transform active:scale-95 flex items-center gap-1.5 shadow-sm border dark:border-slate-800/80 ${isHomeActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}">
-                    <i class="fa-solid fa-house text-[11px]"></i> गृहपृष्ठ (Home)
+                <button onclick="resetToHomeFeed()" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all border dark:border-slate-800/80 ${isHomeActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}">
+                    <i class="fa-solid fa-house text-[11px] mr-1"></i> गृहपृष्ठ
                 </button>
             `;
             
             Object.keys(dbStructure).forEach(mainCat => {
                 const isActive = activePrimaryCategory === mainCat && runningSearchFilteredCache === null;
                 navHtml += `
-                    <button onclick="selectPrimaryFrontendCategory('${mainCat}')" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all duration-300 transform active:scale-95 shadow-sm border dark:border-slate-800/80 ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}">
+                    <button onclick="selectPrimaryFrontendCategory('${mainCat}')" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all border dark:border-slate-800/80 ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}">
                         ${mainCat}
                     </button>
                 `;
             });
             topNavContainer.innerHTML = navHtml;
 
+            const subcatMenuBox = document.getElementById('sidebar-subcat-container');
+            const homeUtilitiesBox = document.getElementById('sidebar-homepage-utilities');
             const sidePanelContainer = document.getElementById('ui-sidebar-subcategories');
-            if (activePrimaryCategory === 'Home' || runningSearchFilteredCache !== null) {
-                sidePanelContainer.innerHTML = `<div class="text-xs text-slate-400 dark:text-slate-500 p-2 italic text-center select-none">Select a category to view dynamic sub-topics lists.</div>`;
+            const centralSidebarWrapper = document.getElementById('portal-left-sidebar');
+
+            if (activeSelectedArticleID !== null) {
+                centralSidebarWrapper.classList.add('hidden');
             } else {
-                let subcatArr = dbStructure[activePrimaryCategory] || [];
-                let sideHtml = `
-                    <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === 'All' ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
-                        <span>🌐 All Sub-Topics</span>
-                        <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md font-bold border dark:border-slate-800">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
-                    </button>
-                `;
-                subcatArr.forEach(sub => {
-                    let itemsCount = dbArticles.filter(a => a.category === activePrimaryCategory && a.subcategory === sub).length;
-                    sideHtml += `
-                        <button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === sub ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
-                            <span>📁 ${sub}</span> 
-                            <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md font-bold border dark:border-slate-800">${itemsCount}</span>
+                centralSidebarWrapper.classList.remove('hidden');
+                if (activePrimaryCategory === 'Home' || runningSearchFilteredCache !== null) {
+                    subcatMenuBox.classList.add('hidden');
+                    homeUtilitiesBox.classList.remove('hidden');
+                    rotateMnemonicDisplayCardData();
+                } else {
+                    homeUtilitiesBox.classList.add('hidden');
+                    subcatMenuBox.classList.remove('hidden');
+
+                    let subcatArr = dbStructure[activePrimaryCategory] || [];
+                    let sideHtml = `
+                        <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === 'All' ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
+                            <span>🌐 All Sub-Topics</span>
+                            <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
                         </button>
                     `;
-                });
-                sidePanelContainer.innerHTML = sideHtml;
+                    subcatArr.forEach(sub => {
+                        let itemsCount = dbArticles.filter(a => a.category === activePrimaryCategory && a.subcategory === sub).length;
+                        sideHtml += `
+                            <button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === sub ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
+                                <span>📁 ${sub}</span> 
+                                <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800">${itemsCount}</span>
+                            </button>
+                        `;
+                    });
+                    sidePanelContainer.innerHTML = sideHtml;
+                }
             }
 
             const streamBox = document.getElementById('ui-articles-stream-box');
@@ -458,19 +626,14 @@
             if (activeSelectedArticleID !== null) {
                 filterStatusBar.classList.add('hidden');
                 paginationControlsBox.innerHTML = ''; 
-
                 const targetArticle = dbArticles.find(a => a.id === activeSelectedArticleID);
-                if (!targetArticle) {
-                    streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border rounded-xl">Article parameters missing.</div>`;
-                    return;
-                }
-
+                
                 streamBox.innerHTML = `
-                    <button onclick="exitArticleDetailSingleView()" class="bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-2 w-fit mb-2 select-none">
-                        <i class="fa-solid fa-arrow-left"></i> फिर्ता जानुहोस् (Back to Feed List)
+                    <button onclick="exitArticleDetailSingleView()" class="bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-arrow-left"></i> फिर्ता जानुहोस्
                     </button>
                     <article class="bg-white dark:bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md space-y-4">
-                        <div class="flex flex-wrap items-center gap-2 select-none">
+                        <div class="flex flex-wrap items-center gap-2">
                             <span class="bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.category}</span>
                             <span class="bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.subcategory}</span>
                         </div>
@@ -483,143 +646,117 @@
             }
 
             filterStatusBar.classList.remove('hidden');
-            
             let dynamicFilteredDataset = [];
+            
             if (runningSearchFilteredCache !== null) {
                 dynamicFilteredDataset = [...runningSearchFilteredCache];
                 document.getElementById('ui-bread-primary').textContent = "SEARCH RESULTS MATCHES";
-                document.getElementById('ui-current-heading').textContent = `खोज परिणामहरू (Query Matches Found)`;
+                document.getElementById('ui-current-heading').textContent = `खोज परिणामहरू`;
             } else if (activePrimaryCategory === 'Home') {
                 dynamicFilteredDataset = [...dbArticles];
-                document.getElementById('ui-bread-primary').textContent = "PORTAL CENTRAL OVERVIEW FEED";
-                document.getElementById('ui-current-heading').textContent = "भर्खरै थपिएका सम्पूर्ण पाठ्यसामग्रीहरू (Recent Releases Feed)";
+                document.getElementById('ui-bread-primary').textContent = "PORTAL OVERVIEW FEED";
+                document.getElementById('ui-current-heading').textContent = "भर्खरै थपिएका सम्पूर्ण पाठ्यसामग्रीहरू";
             } else {
                 dynamicFilteredDataset = dbArticles.filter(a => a.category === activePrimaryCategory);
-                if (activeSubCategory !== 'All') {
-                    dynamicFilteredDataset = dynamicFilteredDataset.filter(a => a.subcategory === activeSubCategory);
-                }
+                if (activeSubCategory !== 'All') dynamicFilteredDataset = dynamicFilteredDataset.filter(a => a.subcategory === activeSubCategory);
                 document.getElementById('ui-bread-primary').textContent = activePrimaryCategory;
-                document.getElementById('ui-current-heading').textContent = activeSubCategory === 'All' ? 'सबै उप-विषयहरू समाहित' : activeSubCategory;
+                document.getElementById('ui-current-heading').textContent = activeSubCategory === 'All' ? 'सबै उप-विषयहरू' : activeSubCategory;
             }
 
             dynamicFilteredDataset.reverse();
-            const absoluteTotalFilteredRecordsCount = dynamicFilteredDataset.length;
-            document.getElementById('ui-total-articles-badge').textContent = `${absoluteTotalFilteredRecordsCount} Articles Available`;
+            const totalRecords = dynamicFilteredDataset.length;
+            document.getElementById('ui-total-articles-badge').textContent = `${totalRecords} Articles Available`;
 
-            if (absoluteTotalFilteredRecordsCount === 0) {
-                streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-2xl shadow-sm select-none">कुनै सामग्रीहरू फेला परेनन्।</div>`;
+            if (totalRecords === 0) {
+                streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-2xl">कुनै सामग्रीहरू फेला परेनन्।</div>`;
                 paginationControlsBox.innerHTML = '';
                 return;
             }
 
-            const totalRequiredCalculatedPages = Math.ceil(absoluteTotalFilteredRecordsCount / ARTICLES_PER_PAGE_LIMIT);
-            if (currentActivePaginationPage > totalRequiredCalculatedPages) currentActivePaginationPage = 1;
+            const totalPages = Math.ceil(totalRecords / ARTICLES_PER_PAGE_LIMIT);
+            if (currentActivePaginationPage > totalPages) currentActivePaginationPage = 1;
 
-            const targetStartingSliceIndexOffset = (currentActivePaginationPage - 1) * ARTICLES_PER_PAGE_LIMIT;
-            const targetEndingSliceIndexOffset = targetStartingSliceIndexOffset + ARTICLES_PER_PAGE_LIMIT;
-            const segmentedPageSliceDataset = dynamicFilteredDataset.slice(targetStartingSliceIndexOffset, targetEndingSliceIndexOffset);
+            const offset = (currentActivePaginationPage - 1) * ARTICLES_PER_PAGE_LIMIT;
+            const segmentedPageSliceDataset = dynamicFilteredDataset.slice(offset, offset + ARTICLES_PER_PAGE_LIMIT);
 
-            // Render Premium Cards with Microscopic Polish Lift Effects
             streamBox.innerHTML = segmentedPageSliceDataset.map(art => {
-                const tempDivNode = document.createElement('div');
-                tempDivNode.innerHTML = art.content;
-                const flattenedPlainTextExtract = tempDivNode.textContent || tempDivNode.innerText || "";
-                const optimizedCleanSummaryString = flattenedPlainTextExtract.slice(0, 160) + (flattenedPlainTextExtract.length > 160 ? "..." : "");
-
-                const wordLength = flattenedPlainTextExtract.trim().split(/\s+/).length;
-                const readTimeEstimate = Math.max(1, Math.ceil(wordLength / 180));
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = art.content;
+                const extract = tempDiv.textContent || tempDiv.innerText || "";
+                const cleanSummary = extract.slice(0, 160) + (extract.length > 160 ? "..." : "");
+                const readTime = Math.max(1, Math.ceil(extract.trim().split(/\s+/).length / 180));
 
                 return `
-                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transform-gpu hover:scale-[1.01] hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transform-gpu hover:scale-[1.01] transition-all duration-300 flex flex-col justify-between group">
                         <div class="space-y-2">
                             <div class="flex items-center justify-between gap-2 select-none">
                                 <div class="flex items-center gap-1.5">
-                                    <span class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase border dark:border-slate-800">${art.category}</span>
-                                    <span class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2 py-0.5 rounded-md tracking-wide uppercase border border-indigo-100 dark:border-indigo-950">${art.subcategory}</span>
+                                    <span class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-md border dark:border-slate-800">${art.category}</span>
+                                    <span class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2 py-0.5 rounded-md border border-indigo-100 dark:border-indigo-950">${art.subcategory}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 font-medium"><i class="fa-solid fa-clock mr-0.5"></i> ⏱️ ${readTimeEstimate} मिनेट</span>
+                                <span class="text-[10px] text-slate-400 font-medium">⏱️ ${readTime} मिनेट</span>
                             </div>
-                            <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white tracking-wide group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-light">${optimizedCleanSummaryString}</p>
+                            <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">${cleanSummary}</p>
                         </div>
                         <div class="pt-4 border-t border-slate-100 dark:border-slate-900 mt-3 flex justify-end">
-                            <button onclick="openArticleDetailSingleView('${art.id}')" class="text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 dark:group-hover:text-indigo-300 text-xs font-bold transition flex items-center gap-1 select-none">
-                                थप पढ्नुहोस् (Read Full Article) <i class="fa-solid fa-arrow-right-long transform group-hover:translate-x-1 transition-transform"></i>
+                            <button onclick="openArticleDetailSingleView('${art.id}')" class="text-indigo-600 dark:text-indigo-400 text-xs font-bold transition flex items-center gap-1">
+                                थप पढ्नुहोस् <i class="fa-solid fa-arrow-right-long transform group-hover:translate-x-1 transition-transform"></i>
                             </button>
                         </div>
                     </div>
                 `;
             }).join('');
 
-            if (totalRequiredCalculatedPages <= 1) {
+            if (totalPages <= 1) {
                 paginationControlsBox.innerHTML = '';
                 return;
             }
 
-            let paginationControlsMarkupHTML = '';
-            paginationControlsMarkupHTML += `
-                <button onclick="changePaginationTargetPage(${currentActivePaginationPage - 1})" ${currentActivePaginationPage === 1 ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 dark:text-slate-600 text-xs rounded-xl cursor-not-allowed select-none"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs rounded-xl transition select-none"'}>
+            let paginationHtml = `
+                <button onclick="changePaginationTargetPage(${currentActivePaginationPage - 1})" ${currentActivePaginationPage === 1 ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 text-xs rounded-xl cursor-not-allowed"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 text-xs rounded-xl transition"'}>
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
             `;
-            for (let i = 1; i <= totalRequiredCalculatedPages; i++) {
-                const isSelectedCurrentPageIndex = currentActivePaginationPage === i;
-                paginationControlsMarkupHTML += `
-                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl transition status-link vector-identity select-none ${isSelectedCurrentPageIndex ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900'}">
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `
+                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl transition ${currentActivePaginationPage === i ? 'bg-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 hover:bg-slate-50'}">
                         ${i}
                     </button>
                 `;
             }
-            paginationControlsMarkupHTML += `
-                <button onclick="changePaginationTargetPage(${currentActivePaginationPage + 1})" ${currentActivePaginationPage === totalRequiredCalculatedPages ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 dark:text-slate-600 text-xs rounded-xl cursor-not-allowed select-none"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs rounded-xl transition select-none"'}>
+            paginationHtml += `
+                <button onclick="changePaginationTargetPage(${currentActivePaginationPage + 1})" ${currentActivePaginationPage === totalPages ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 text-xs rounded-xl cursor-not-allowed"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 text-xs rounded-xl transition"'}>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             `;
-            paginationControlsBox.innerHTML = paginationControlsMarkupHTML;
+            paginationControlsBox.innerHTML = paginationHtml;
         }
 
         function resetToHomeFeed() {
-            activePrimaryCategory = "Home";
-            activeSubCategory = "All";
-            activeSelectedArticleID = null;
-            runningSearchFilteredCache = null;
-            document.getElementById('ui-search-input').value = "";
-            currentActivePaginationPage = 1;
-            renderFrontendInterfaceEngine();
+            activePrimaryCategory = "Home"; activeSubCategory = "All"; activeSelectedArticleID = null; runningSearchFilteredCache = null;
+            document.getElementById('ui-search-input').value = ""; currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
         }
 
         function selectPrimaryFrontendCategory(cat) {
-            activePrimaryCategory = cat;
-            activeSubCategory = "All";
-            activeSelectedArticleID = null;
-            runningSearchFilteredCache = null;
-            document.getElementById('ui-search-input').value = "";
-            currentActivePaginationPage = 1;
-            renderFrontendInterfaceEngine();
+            activePrimaryCategory = cat; activeSubCategory = "All"; activeSelectedArticleID = null; runningSearchFilteredCache = null;
+            document.getElementById('ui-search-input').value = ""; currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
         }
 
         function selectSubcatFrontendCategory(sub) {
-            activeSubCategory = sub;
-            activeSelectedArticleID = null;
-            currentActivePaginationPage = 1;
-            renderFrontendInterfaceEngine();
+            activeSubCategory = sub; activeSelectedArticleID = null; currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
         }
 
         function openArticleDetailSingleView(id) {
-            activeSelectedArticleID = id;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderFrontendInterfaceEngine();
+            activeSelectedArticleID = id; window.scrollTo({ top: 0, behavior: 'smooth' }); renderFrontendInterfaceEngine();
         }
 
         function exitArticleDetailSingleView() {
-            activeSelectedArticleID = null;
-            renderFrontendInterfaceEngine();
+            activeSelectedArticleID = null; renderFrontendInterfaceEngine();
         }
 
-        function changePaginationTargetPage(targetPageIndexNumber) {
-            currentActivePaginationPage = targetPageIndexNumber;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderFrontendInterfaceEngine();
+        function changePaginationTargetPage(pageNum) {
+            currentActivePaginationPage = pageNum; window.scrollTo({ top: 0, behavior: 'smooth' }); renderFrontendInterfaceEngine();
         }
 
         function navigateView(target) {
@@ -628,17 +765,12 @@
             const floatingExitBar = document.getElementById('admin-top-exit-bar');
 
             if (target === 'learner') {
-                learnerSection.classList.remove('hidden');
-                adminSection.classList.add('hidden');
-                floatingExitBar.classList.add('hidden'); 
+                learnerSection.classList.remove('hidden'); adminSection.classList.add('hidden'); floatingExitBar.classList.add('hidden');
                 renderFrontendInterfaceEngine();
             } else {
-                learnerSection.classList.add('hidden');
-                adminSection.classList.remove('hidden');
-                
-                if (isUserAuthenticated) {
-                    showAdminDashboardWorkspace();
-                } else {
+                learnerSection.classList.add('hidden'); adminSection.classList.remove('hidden');
+                if (isUserAuthenticated) showAdminDashboardWorkspace();
+                else {
                     document.getElementById('admin-auth-lock').classList.remove('hidden');
                     document.getElementById('admin-authenticated-workspace').classList.add('hidden');
                 }
@@ -647,16 +779,14 @@
 
         async function attemptAuthentication() {
             const passField = document.getElementById('auth-input-password');
-            const typedPasswordString = passField.value;
-            const hashedAttempt = await convertStringIntoCryptographicHash(typedPasswordString);
+            const hashedAttempt = await convertStringIntoCryptographicHash(passField.value);
             
             if (hashedAttempt === adminPasswordHash) {
                 isUserAuthenticated = true;
                 document.getElementById('admin-auth-lock').classList.add('hidden');
                 showAdminDashboardWorkspace();
             } else {
-                alert("Authentication mismatch.");
-                passField.value = '';
+                alert("Authentication mismatch."); passField.value = '';
             }
         }
 
@@ -668,30 +798,20 @@
         }
 
         async function commitNewPasswordConfiguration() {
-            const newPasswordRawText = document.getElementById('adm-security-pass-input').value;
-            if (!newPasswordRawText || newPasswordRawText.trim() === "") {
-                alert("Password field cannot be blank.");
-                return;
-            }
+            const rawText = document.getElementById('adm-security-pass-input').value;
+            if (!rawText || rawText.trim() === "") { alert("Password cannot be blank."); return; }
             if (confirm("Apply security configuration modifications?")) {
-                const updatedGeneratedHash = await convertStringIntoCryptographicHash(newPasswordRawText.trim());
-                adminPasswordHash = updatedGeneratedHash;
+                adminPasswordHash = await convertStringIntoCryptographicHash(rawText.trim());
                 document.getElementById('adm-security-pass-input').value = "";
                 alert("Fingerprint configuration staged successfully.");
             }
         }
 
         function triggerDatabaseDownloadPipeline() {
-            const packagePayload = {
-                security: { admin_password_hash: adminPasswordHash },
-                structure: dbStructure,
-                articles: dbArticles
-            };
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(packagePayload, null, 4));
-            const dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "database.json");
-            dlAnchorElem.click();
+            const payload = { security: { admin_password_hash: adminPasswordHash }, structure: dbStructure, articles: dbArticles, mnemonics: dbMnemonics };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 4));
+            const anchor = document.createElement('a');
+            anchor.setAttribute("href", dataStr); anchor.setAttribute("download", "database.json"); anchor.click();
         }
 
         function syncAdminStructureManagerInterface() {
@@ -699,78 +819,59 @@
             catSelect.innerHTML = Object.keys(dbStructure).map(c => `<option value="${c}">${c}</option>`).join('');
             const fieldCat = document.getElementById('adm-field-cat');
             fieldCat.innerHTML = Object.keys(dbStructure).map(c => `<option value="${c}">${c}</option>`).join('');
-            syncAdminSubcatManagerOptions();
-            cascadeSubcategoryFieldOptions(fieldCat.value);
+            syncAdminSubcatManagerOptions(); cascadeSubcategoryFieldOptions(fieldCat.value);
         }
 
         function syncAdminSubcatManagerOptions() {
-            const targetMainCat = document.getElementById('adm-manage-cat-select').value;
+            const target = document.getElementById('adm-manage-cat-select').value;
             const subcatSelect = document.getElementById('adm-manage-subcat-select');
-            if(!targetMainCat) return;
-            let subs = dbStructure[targetMainCat] || [];
-            subcatSelect.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
+            if(!target) return;
+            subcatSelect.innerHTML = (dbStructure[target] || []).map(s => `<option value="${s}">${s}</option>`).join('');
         }
 
         function cascadeSubcategoryFieldOptions(selectedMainCat) {
             const fieldSubcat = document.getElementById('adm-field-subcat');
-            let subs = dbStructure[selectedMainCat] || [];
-            fieldSubcat.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
+            fieldSubcat.innerHTML = (dbStructure[selectedMainCat] || []).map(s => `<option value="${s}">${s}</option>`).join('');
         }
 
         function addPrimaryCategory() {
             let name = prompt("Enter new primary menu navigation category label:");
             if (name && name.trim() !== "") {
                 name = name.trim();
-                if (!dbStructure[name]) {
-                    dbStructure[name] = [];
-                    syncAdminStructureManagerInterface();
-                }
+                if (!dbStructure[name]) { dbStructure[name] = []; syncAdminStructureManagerInterface(); }
             }
         }
 
         function editPrimaryCategory() {
-            let target = document.getElementById('adm-manage-cat-select').value;
-            if(!target) return;
+            let target = document.getElementById('adm-manage-cat-select').value; if(!target) return;
             let rename = prompt(`Rename main menu label "${target}" to:`, target);
             if (rename && rename.trim() !== "" && rename.trim() !== target) {
-                rename = rename.trim();
-                dbStructure[rename] = dbStructure[target];
-                delete dbStructure[target];
+                rename = rename.trim(); dbStructure[rename] = dbStructure[target]; delete dbStructure[target];
                 dbArticles.forEach(a => { if (a.category === target) a.category = rename; });
                 if (activePrimaryCategory === target) activePrimaryCategory = rename;
-                syncAdminStructureManagerInterface();
-                renderBackendControlMatrix();
+                syncAdminStructureManagerInterface(); renderBackendControlMatrix();
             }
         }
 
         function addSubCategory() {
-            let parent = document.getElementById('adm-manage-cat-select').value;
-            if(!parent) return;
+            let parent = document.getElementById('adm-manage-cat-select').value; if(!parent) return;
             let subName = prompt(`Add new subcategory node under "${parent}":`);
             if (subName && subName.trim() !== "") {
                 subName = subName.trim();
-                if (!dbStructure[parent].includes(subName)) {
-                    dbStructure[parent].push(subName);
-                    syncAdminStructureManagerInterface();
-                }
+                if (!dbStructure[parent].includes(subName)) { dbStructure[parent].push(subName); syncAdminStructureManagerInterface(); }
             }
         }
 
         function editSubCategory() {
             let parent = document.getElementById('adm-manage-cat-select').value;
-            let targetSub = document.getElementById('adm-manage-subcat-select').value;
-            if (!targetSub) return;
+            let targetSub = document.getElementById('adm-manage-subcat-select').value; if (!targetSub) return;
             let rename = prompt(`Rename subcategory label "${targetSub}" to:`, targetSub);
             if (rename && rename.trim() !== "" && rename.trim() !== targetSub) {
-                rename = rename.trim();
-                let idx = dbStructure[parent].indexOf(targetSub);
+                rename = rename.trim(); let idx = dbStructure[parent].indexOf(targetSub);
                 if (idx !== -1) {
                     dbStructure[parent][idx] = rename;
-                    dbArticles.forEach(a => {
-                        if (a.category === parent && a.subcategory === targetSub) a.subcategory = rename;
-                    });
-                    syncAdminStructureManagerInterface();
-                    renderBackendControlMatrix();
+                    dbArticles.forEach(a => { if (a.category === parent && a.subcategory === targetSub) a.subcategory = rename; });
+                    syncAdminStructureManagerInterface(); renderBackendControlMatrix();
                 }
             }
         }
@@ -778,18 +879,32 @@
         function renderBackendControlMatrix() {
             const tbody = document.getElementById('adm-data-table-rows');
             if (dbArticles.length === 0) {
-                tbody.innerHTML = '';
-                document.getElementById('adm-empty-state-banner').classList.remove('hidden');
+                tbody.innerHTML = ''; document.getElementById('adm-empty-state-banner').classList.remove('hidden');
+            } else {
+                document.getElementById('adm-empty-state-banner').classList.add('hidden');
+                tbody.innerHTML = dbArticles.map(art => `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800">
+                        <td class="p-2.5 font-medium text-slate-900 dark:text-slate-100 max-w-[140px] truncate">${art.title}</td>
+                        <td class="p-2.5 text-[10px] text-slate-500 font-mono">${art.category} ➔ ${art.subcategory}</td>
+                        <td class="p-2.5 text-right space-x-1 whitespace-nowrap">
+                            <button type="button" onclick="loadArticleToForm('${art.id}')" class="bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-pen"></i></button>
+                            <button type="button" onclick="purgeArticleEntry('${art.id}')" class="bg-red-50 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            const tbodyMne = document.getElementById('adm-mnemonic-table-rows');
+            if (dbMnemonics.length === 0) {
+                tbodyMne.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No mnemonics stored.</td></tr>`;
                 return;
             }
-            document.getElementById('adm-empty-state-banner').classList.add('hidden');
-            tbody.innerHTML = dbArticles.map(art => `
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b border-slate-100 dark:border-slate-800">
-                    <td class="p-2.5 font-medium text-slate-900 dark:text-slate-100 max-w-[140px] truncate">${art.title}</td>
-                    <td class="p-2.5 text-[10px] text-slate-500 font-mono">${art.category} ➔ ${art.subcategory}</td>
-                    <td class="p-2.5 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="loadArticleToForm('${art.id}')" class="bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="purgeArticleEntry('${art.id}')" class="bg-red-50 dark:bg-slate-800 text-red-600 dark:text-red-400 px-2 py-1 rounded text-[11px]"><i class="fa-solid fa-trash"></i></button>
+            tbodyMne.innerHTML = dbMnemonics.map(m => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800 text-[11px]">
+                    <td class="p-2 font-bold text-amber-700 dark:text-amber-400 max-w-[100px] truncate">${m.shortcut}</td>
+                    <td class="p-2 text-slate-600 dark:text-slate-400 max-w-[200px] truncate">${m.desc}</td>
+                    <td class="p-2 text-right">
+                        <button type="button" onclick="purgeMnemonicEntry('${m.id}')" class="text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-circle-minus"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -803,124 +918,104 @@
             const subcategory = document.getElementById('adm-field-subcat').value;
             const content = quillEditorInstance.getSemanticHTML(); 
 
-            if (!subcategory) {
-                alert("Missing mapping paths parameters config.");
-                return;
-            }
+            if (!subcategory) { alert("Missing mapping parameters."); return; }
             if (id) {
                 const idx = dbArticles.findIndex(a => a.id === id);
                 if (idx !== -1) dbArticles[idx] = { id, title, category, subcategory, content };
             } else {
                 dbArticles.push({ id: Date.now().toString(), title, category, subcategory, content });
             }
-            resetFormState();
-            renderBackendControlMatrix();
+            resetFormState(); renderBackendControlMatrix();
         }
 
         function loadArticleToForm(id) {
             const art = dbArticles.find(a => a.id === id);
             if (art) {
-                document.getElementById('adm-field-id').value = art.id;
-                document.getElementById('adm-field-title').value = art.title;
-                document.getElementById('adm-field-cat').value = art.category;
-                cascadeSubcategoryFieldOptions(art.category);
-                document.getElementById('adm-field-subcat').value = art.subcategory;
-                quillEditorInstance.clipboard.dangerouslyPasteHTML(art.content);
+                document.getElementById('adm-field-id').value = art.id; document.getElementById('adm-field-title').value = art.title;
+                document.getElementById('adm-field-cat').value = art.category; cascadeSubcategoryFieldOptions(art.category);
+                document.getElementById('adm-field-subcat').value = art.subcategory; quillEditorInstance.clipboard.dangerouslyPasteHTML(art.content);
                 document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-check mr-1"></i> Update Active Record`;
             }
         }
 
         function purgeArticleEntry(id) {
             if (confirm("Discard this record layer from local system buffers?")) {
-                dbArticles = dbArticles.filter(a => a.id !== id);
-                renderBackendControlMatrix();
+                dbArticles = dbArticles.filter(a => a.id !== id); renderBackendControlMatrix();
+            }
+        }
+
+        function saveNewMnemonicPipeline(event) {
+            event.preventDefault();
+            const shortcut = document.getElementById('adm-mne-shortcut').value.trim();
+            const desc = document.getElementById('adm-mne-desc').value.trim();
+            if(!shortcut || !desc) return;
+            
+            dbMnemonics.push({ id: Date.now().toString(), shortcut, desc });
+            document.getElementById('adm-mne-shortcut').value = ""; document.getElementById('adm-mne-desc').value = "";
+            
+            renderBackendControlMatrix(); rotateMnemonicDisplayCardData();
+        }
+
+        function purgeMnemonicEntry(id) {
+            if(confirm("Remove this formula snippet from database parameters?")) {
+                dbMnemonics = dbMnemonics.filter(m => m.id !== id);
+                renderBackendControlMatrix(); rotateMnemonicDisplayCardData();
             }
         }
 
         function togglePasswordSecurityPanel() {
-            const panelBody = document.getElementById('password-panel-body');
-            const chevron = document.getElementById('password-panel-chevron');
-            if(panelBody.classList.contains('hidden')) {
-                panelBody.classList.remove('hidden');
-                chevron.classList.add('rotate-180');
-            } else {
-                panelBody.classList.add('hidden');
-                chevron.classList.remove('rotate-180');
-            }
+            const body = document.getElementById('password-panel-body');
+            const chev = document.getElementById('password-panel-chevron');
+            body.classList.toggle('hidden'); chev.classList.toggle('rotate-180');
         }
 
         function resetFormState() {
-            document.getElementById('adm-field-id').value = '';
-            document.getElementById('adm-article-form').reset();
-            quillEditorInstance.setContents([]);
-            document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes`;
+            document.getElementById('adm-field-id').value = ''; document.getElementById('adm-article-form').reset();
+            quillEditorInstance.setContents([]); document.getElementById('adm-submit-btn-text').innerHTML = `<i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes`;
         }
 
         function togglePomodoroExpandedState(event) {
             if (isPomodoroWidgetExpanded) return; 
-            const widget = document.getElementById('pomodoro-floating-widget');
+            const w = document.getElementById('pomodoro-floating-widget');
             document.getElementById('pomo-collapsed-view').classList.add('hidden');
             document.getElementById('pomo-expanded-view').classList.remove('hidden');
-            widget.classList.remove('w-14', 'h-14', 'rounded-full', 'justify-center', 'cursor-pointer');
-            widget.classList.add('w-64', 'h-auto', 'rounded-2xl');
+            w.classList.remove('w-14', 'h-14', 'rounded-full', 'cursor-pointer'); w.classList.add('w-64', 'h-auto');
             isPomodoroWidgetExpanded = true;
         }
 
         function minimizePomodoroWidget(event) {
-            event.stopPropagation(); 
-            const widget = document.getElementById('pomodoro-floating-widget');
-            document.getElementById('pomo-expanded-view').classList.add('hidden');
-            document.getElementById('pomo-collapsed-view').classList.remove('hidden');
-            widget.classList.remove('w-64', 'h-auto');
-            widget.classList.add('w-14', 'h-14', 'cursor-pointer');
+            event.stopPropagation(); const w = document.getElementById('pomodoro-floating-widget');
+            document.getElementById('pomo-expanded-view').classList.add('hidden'); document.getElementById('pomo-collapsed-view').classList.remove('hidden');
+            w.classList.remove('w-64', 'h-auto'); w.classList.add('w-14', 'h-14', 'cursor-pointer');
             isPomodoroWidgetExpanded = false;
         }
 
         function togglePomodoroClockPipeline(event) {
-            event.stopPropagation();
-            const btn = document.getElementById('pomo-control-btn');
+            event.stopPropagation(); const btn = document.getElementById('pomo-control-btn');
             if (isPomodoroClockActive) {
-                clearInterval(pomodoroTimerObject);
-                btn.textContent = "Start";
+                clearInterval(pomodoroTimerObject); btn.textContent = "Start";
                 btn.className = "bg-slate-900 dark:bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
                 isPomodoroClockActive = false;
             } else {
-                isPomodoroClockActive = true;
-                btn.textContent = "Pause";
-                btn.className = "bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
-                
+                isPomodoroClockActive = true; btn.textContent = "Pause"; btn.className = "bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
                 pomodoroTimerObject = setInterval(() => {
-                    pomodoroRemainingSeconds--;
-                    updatePomodoroTimeDisplayString();
-                    
+                    pomodoroRemainingSeconds--; updatePomodoroTimeDisplayString();
                     if (pomodoroRemainingSeconds <= 0) {
-                        clearInterval(pomodoroTimerObject);
-                        isPomodoroClockActive = false;
-                        alert("Focus block complete!");
-                        pomodoroRemainingSeconds = 1500;
-                        updatePomodoroTimeDisplayString();
-                        btn.textContent = "Start";
+                        clearInterval(pomodoroTimerObject); isPomodoroClockActive = false; alert("Focus block complete!");
+                        pomodoroRemainingSeconds = 1500; updatePomodoroTimeDisplayString(); btn.textContent = "Start";
                     }
                 }, 1000);
             }
         }
 
         function resetPomodoroClockPipeline(event) {
-            event.stopPropagation();
-            clearInterval(pomodoroTimerObject);
-            isPomodoroClockActive = false;
-            pomodoroRemainingSeconds = 1500;
-            updatePomodoroTimeDisplayString();
-            const btn = document.getElementById('pomo-control-btn');
-            btn.textContent = "Start";
+            event.stopPropagation(); clearInterval(pomodoroTimerObject); isPomodoroClockActive = false; pomodoroRemainingSeconds = 1500;
+            updatePomodoroTimeDisplayString(); const btn = document.getElementById('pomo-control-btn'); btn.textContent = "Start";
             btn.className = "bg-slate-900 dark:bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg";
         }
 
         function updatePomodoroTimeDisplayString() {
-            const mins = Math.floor(pomodoroRemainingSeconds / 60);
-            const secs = pomodoroRemainingSeconds % 60;
-            document.getElementById('pomo-time-display').textContent = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('pomo-time-display').textContent = `${Math.floor(pomodoroRemainingSeconds / 60).toString().padStart(2, '0')}:${(pomodoroRemainingSeconds % 60).toString().padStart(2, '0')}`;
         }
     </script>
 </body>
