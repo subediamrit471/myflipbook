@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarkari Portal — Executive Management Studio</title>
+    <title>Learning Platform — Executive Management Studio</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class' // RESTORES SYSTEMIC DARK MODE COMPATIBILITY BASED ON CLASS RULES
+        }
+    </script>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
     <style>
+        /* Re-implements custom scrollbar aesthetics */
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+        
         .article-rich-text ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 0.75rem; }
         .article-rich-text ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 0.75rem; }
         .article-rich-text p { margin-bottom: 0.75rem; }
@@ -22,7 +32,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen font-sans antialiased selection:bg-indigo-500/30 transition-colors duration-200">
 
-    <div id="admin-top-exit-bar" class="hidden bg-slate-900 border-b border-slate-800 text-white px-4 py-2 flex items-center justify-between shadow-md sticky top-0 z-50 animate-fade-in">
+    <div id="admin-top-exit-bar" class="hidden bg-slate-900 border-b border-slate-800 text-white px-4 py-2 flex items-center justify-between shadow-md fixed top-0 left-0 w-full z-50">
         <div class="flex items-center gap-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span class="text-xs font-mono tracking-wider uppercase text-slate-400">Authenticated Studio Terminal Workspace</span>
@@ -32,30 +42,34 @@
         </button>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
+    <div id="sticky-header-wrapper" class="fixed top-0 left-0 w-full z-40 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/60 dark:border-slate-800/60 transition-all duration-250">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-3 cursor-pointer select-none" onclick="resetToHomeFeed()">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+                        <i class="fa-solid fa-gavel text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-black tracking-tight sm:text-xl text-slate-900 dark:text-white">लोकसेवा सारथी</h1>
+                        <p class="text-[11px] text-slate-400 font-medium font-mono uppercase tracking-wider">Strategic Knowledge Engine</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <div class="relative flex-1 sm:flex-initial">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+                        <input type="text" id="ui-search-input" oninput="executeLiveDatabaseQuery(this.value)" class="w-full sm:w-64 text-xs pl-9 pr-4 py-2 rounded-xl bg-slate-100 border border-transparent focus:bg-white dark:bg-slate-800 dark:focus:bg-slate-900 focus:border-slate-200 dark:focus:border-slate-700 focus:outline-none transition-all placeholder:text-slate-400 dark:text-white" placeholder="शीर्षक वा विषयवस्तु खोज्नुहोस्...">
+                    </div>
+                    <button onclick="toggleGlobalFocusMode()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition text-slate-600 dark:text-slate-400">
+                        <i id="theme-toggle-icon" class="fa-solid fa-moon text-sm"></i>
+                    </button>
+                </div>
+            </header>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 sm:pt-28 pb-4 space-y-4">
         
-        <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-950 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
-                    <i class="fa-solid fa-gavel text-lg"></i>
-                </div>
-                <div>
-                    <h1 class="text-lg font-black tracking-tight sm:text-xl">लोकसेवा सारथी</h1>
-                    <p class="text-[11px] text-slate-400 font-medium font-mono uppercase tracking-wider">Strategic Knowledge Engine</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2 w-full sm:w-auto">
-                <div class="relative flex-1 sm:flex-initial">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
-                    <input type="text" id="ui-search-input" oninput="executeLiveDatabaseQuery(this.value)" class="w-full sm:w-64 text-xs pl-9 pr-4 py-2 rounded-xl bg-slate-100 border border-transparent focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-950 focus:border-slate-200 dark:focus:border-slate-800 focus:outline-none transition-all placeholder:text-slate-400" placeholder="शीर्षक वा विषयवस्तु खोज्नुहोस्...">
-                </div>
-                <button onclick="toggleGlobalFocusMode()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition text-slate-600 dark:text-slate-400">
-                    <i id="theme-toggle-icon" class="fa-solid fa-moon text-sm"></i>
-                </button>
-            </div>
-        </header>
-
         <main id="portal-learner-view" class="grid grid-cols-1 lg:grid-cols-4 gap-4 items-start">
             
             <div id="portal-left-sidebar" class="lg:col-span-1 space-y-4">
@@ -66,14 +80,14 @@
                         </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 flex justify-between items-center">
                         <span>🎯 Daily Focus Goals</span>
                         <i class="fa-solid fa-list-check"></i>
                     </h4>
                     
                     <div class="flex gap-1">
-                        <input type="text" id="ui-goal-input" class="flex-1 text-xs p-2 rounded-xl border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Type today's study target...">
+                        <input type="text" id="ui-goal-input" class="flex-1 text-xs p-2 rounded-xl border dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Type today's study target...">
                         <button onclick="addUserDailyGoalRecord()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 rounded-xl text-xs transition"><i class="fa-solid fa-plus"></i></button>
                     </div>
 
@@ -86,7 +100,7 @@
                         <div class="absolute -right-6 -bottom-6 text-white/10 text-7xl font-bold font-mono transition-transform duration-500 group-hover:scale-110 select-none">MNE</div>
                         <h4 class="text-xs font-bold uppercase tracking-widest text-amber-100"><i class="fa-solid fa-bolt mr-1"></i> Quick Recall Mnemonic</h4>
                         <p id="lbl-mnemonic-shortcut" class="text-lg font-black tracking-tight leading-tight pt-1">Loading system patterns...</p>
-                        <p id="lbl-mnemonic-details" class="text-xs text-amber-50 font-medium leading-relaxed pt-1 opacity-95">Syncing data matrix variables onto local arrays...</p>
+                        <p id="lbl-mnemonic-details" class="text-xs text-amber-50 font-medium leading-relaxed pt-1 opacity-95">Syncing data matrix variables...</p>
                         <div class="pt-2">
                             <button onclick="rotateMnemonicDisplayCardData()" class="bg-white/10 hover:bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg backdrop-blur-sm transition">
                                 <i class="fa-solid fa-shuffle mr-1"></i> Shuffle Formula
@@ -95,7 +109,7 @@
                     </div>
                 </div>
 
-                <div id="sidebar-subcat-container" class="hidden bg-white dark:bg-slate-950 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
+                <div id="sidebar-subcat-container" class="hidden bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-1">
                     <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 py-1 mb-1"><i class="fa-regular fa-folder-open mr-1"></i> Sub-Topic Matrices</h4>
                     <div id="ui-sidebar-subcategories" class="space-y-0.5">
                         </div>
@@ -107,13 +121,13 @@
                 <nav id="ui-primary-navbar" class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full scrollbar-none select-none">
                     </nav>
 
-                <div id="ui-filter-status-bar" class="flex flex-wrap gap-2 items-center justify-between bg-white dark:bg-slate-950 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-xs select-none">
+                <div id="ui-filter-status-bar" class="flex flex-wrap gap-2 items-center justify-between bg-white dark:bg-slate-900 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-xs select-none">
                     <div class="flex items-center gap-1.5 font-medium text-slate-500">
                         <span id="ui-bread-primary" class="uppercase font-bold text-indigo-600 dark:text-indigo-400">Home</span>
                         <i class="fa-solid fa-angle-right text-[10px] text-slate-300"></i>
                         <span id="ui-current-heading" class="text-slate-700 dark:text-slate-300 font-bold">All Feeds</span>
                     </div>
-                    <span id="ui-total-articles-badge" class="bg-slate-100 dark:bg-slate-900 text-slate-500 px-2.5 py-1 rounded-xl border dark:border-slate-800 font-medium font-mono text-[10px]">0 Elements</span>
+                    <span id="ui-total-articles-badge" class="bg-slate-50 dark:bg-slate-950 text-slate-500 px-2.5 py-1 rounded-xl border dark:border-slate-800 font-medium font-mono text-[10px]">0 Elements</span>
                 </div>
 
                 <div id="ui-articles-stream-box" class="space-y-4">
@@ -124,9 +138,9 @@
             </div>
         </main>
 
-        <main id="portal-admin-view" class="hidden space-y-4 max-w-5xl mx-auto animate-fade-in">
+        <main id="portal-admin-view" class="hidden space-y-4 max-w-5xl mx-auto">
             
-            <div id="admin-auth-lock" class="bg-white dark:bg-slate-950 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg max-w-sm mx-auto text-center space-y-4 my-12">
+            <div id="admin-auth-lock" class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg max-w-sm mx-auto text-center space-y-4 my-12">
                 <div class="w-12 h-12 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl">
                     <i class="fa-solid fa-vault"></i>
                 </div>
@@ -135,7 +149,7 @@
                     <p class="text-xs text-slate-400 mt-1">Enter cryptographic key sequence configuration variables to modify assets.</p>
                 </div>
                 <div class="space-y-2">
-                    <input type="password" id="auth-input-password" class="w-full text-center text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-mono tracking-widest" placeholder="••••••••••••" onkeydown="if(event.key==='Enter') attemptAuthentication()">
+                    <input type="password" id="auth-input-password" class="w-full text-center text-xs p-2.5 rounded-xl border dark:bg-slate-800 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-mono tracking-widest" placeholder="••••••••••••" onkeydown="if(event.key==='Enter') attemptAuthentication()">
                     <button onclick="attemptAuthentication()" class="w-full bg-slate-950 hover:bg-slate-900 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-sm">
                         Verify Local Key Certificate
                     </button>
@@ -147,9 +161,9 @@
 
             <div id="admin-authenticated-workspace" class="hidden space-y-6">
                 
-                <div class="bg-white dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
                     <div>
-                        <h2 class="text-base font-black text-slate-900 dark:text-white"><i class="fa-solid fa-folder-tree text-indigo-500 mr-1"></i> Data Architecture Studio Control</h2>
+                        <h2 class="text-base font-black text-slate-900 dark:text-white"><i class="fa-solid fa-folder-tree text-indigo-500 mr-1"></i> Data Architecture Studio Control center</h2>
                         <p class="text-xs text-slate-400">Perform modifications on categories, curriculum nodes, exam track metrics, and mnemonics.</p>
                     </div>
                     <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -159,29 +173,29 @@
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"><i class="fa-solid fa-tags mr-1"></i> Curriculum Categories Directory Matrix Configurator</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
-                        <button onclick="addPrimaryCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-square-plus text-indigo-500 text-sm"></i> Add New Main Heading</button>
-                        <button onclick="editPrimaryCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-blue-500 text-sm"></i> Rename Main Heading</button>
-                        <button onclick="addSubCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-circle-plus text-purple-500 text-sm"></i> Append New Sub-Topic</button>
-                        <button onclick="editSubCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-sliders text-amber-500 text-sm"></i> Rename Target Sub-Topic</button>
+                        <button onclick="addPrimaryCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-square-plus text-indigo-500 text-sm"></i> Add New Main Heading</button>
+                        <button onclick="editPrimaryCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-blue-500 text-sm"></i> Rename Main Heading</button>
+                        <button onclick="addSubCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-circle-plus text-purple-500 text-sm"></i> Append New Sub-Topic</button>
+                        <button onclick="editSubCategory()" class="bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border dark:border-slate-800 p-2.5 rounded-xl text-xs font-semibold text-left flex items-center gap-2"><i class="fa-solid fa-sliders text-amber-500 text-sm"></i> Rename Target Sub-Topic</button>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border dark:border-slate-800/60">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border dark:border-slate-800">
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target Working Heading Selection Context</label>
-                            <select id="adm-manage-cat-select" onchange="syncAdminSubcatManagerOptions()" class="w-full text-xs p-2 rounded-lg bg-white dark:bg-slate-950 border dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
+                            <select id="adm-manage-cat-select" onchange="syncAdminSubcatManagerOptions()" class="w-full text-xs p-2 rounded-lg bg-white dark:bg-slate-900 border dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Child Linked Sub-Topic Parameters Array Node</label>
-                            <select id="adm-manage-subcat-select" class="w-full text-xs p-2 rounded-lg bg-white dark:bg-slate-950 border dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
+                            <select id="adm-manage-subcat-select" class="w-full text-xs p-2 rounded-lg bg-white dark:bg-slate-900 border dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                     
-                    <form id="adm-article-form" onsubmit="saveArticleDataPipeline(event)" class="lg:col-span-2 bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <form id="adm-article-form" onsubmit="saveArticleDataPipeline(event)" class="lg:col-span-2 bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
                         <div class="flex items-center justify-between border-b dark:border-slate-800 pb-3">
                             <h3 class="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-file-pen text-indigo-500"></i> Curriculum Module Content Designer</h3>
                             <button type="button" onclick="resetFormState()" class="text-[11px] font-bold text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-rotate-left mr-0.5"></i> Reset Workspace Form</button>
@@ -190,38 +204,38 @@
                         <input type="hidden" id="adm-field-id">
                         
                         <div>
-                            <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Article Module Knowledge Title Designation</label>
-                            <input type="text" id="adm-field-title" required class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-bold" placeholder="E.g., नेपाल राष्ट्र बैंक ऐन, २०५८ को विशेषताहरू">
+                            <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Article Title Designation</label>
+                            <input type="text" id="adm-field-title" required class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-800 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-bold" placeholder="E.g., नेपाल राष्ट्र बैंक ऐन, २०५८">
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Assign Main Heading Scope</label>
-                                <select id="adm-field-cat" onchange="cascadeSubcategoryFieldOptions(this.value)" class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
+                                <select id="adm-field-cat" onchange="cascadeSubcategoryFieldOptions(this.value)" class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-800 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Map to Sub-Topic Entity</label>
-                                <select id="adm-field-subcat" required class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
+                                <select id="adm-field-subcat" required class="w-full text-xs p-2.5 rounded-xl border dark:bg-slate-800 dark:border-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white font-medium"></select>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Educational Material Module Text Content Body</label>
-                            <div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border dark:border-slate-800">
+                            <label class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Educational Content Body</label>
+                            <div class="bg-white dark:bg-slate-950 rounded-xl overflow-hidden border dark:border-slate-800 text-slate-900 dark:text-white">
                                 <div id="editor-workspace" class="min-h-[220px] max-h-[400px] overflow-y-auto text-sm"></div>
                             </div>
                         </div>
 
-                        <button type="submit" class="w-full bg-slate-950 hover:bg-slate-900 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md shadow-indigo-500/10 flex items-center justify-center gap-1">
+                        <button type="submit" class="w-full bg-slate-950 hover:bg-slate-900 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold text-xs py-3 rounded-xl transition shadow-md flex items-center justify-center gap-1">
                             <span id="adm-submit-btn-text"><i class="fa-solid fa-square-plus mr-1"></i> Stage Article Changes</span>
                         </button>
                     </form>
 
-                    <div class="lg:col-span-1 bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                    <div class="lg:col-span-1 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"><i class="fa-solid fa-database mr-1"></i> Compiled Document Index Logs</h3>
                         <div class="overflow-x-auto max-h-[460px] overflow-y-auto border dark:border-slate-800 rounded-xl scrollbar-thin">
                             <table class="w-full text-left border-collapse">
-                                <thead class="bg-slate-50 dark:bg-slate-900 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
+                                <thead class="bg-slate-50 dark:bg-slate-950 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
                                     <tr>
                                         <th class="p-2.5">Title</th>
                                         <th class="p-2.5">Mapping Path</th>
@@ -231,22 +245,22 @@
                                 <tbody id="adm-data-table-rows" class="text-xs divide-y dark:divide-slate-800">
                                     </tbody>
                             </table>
-                            <div id="adm-empty-state-banner" class="hidden text-center p-8 text-xs text-slate-400 italic">No storage elements recorded inside system databases.</div>
+                            <div id="adm-empty-state-banner" class="hidden text-center p-8 text-xs text-slate-400 italic">No storage elements recorded.</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-1 border-r border-slate-100 dark:border-slate-900 pr-0 md:pr-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 border-r border-slate-100 dark:border-slate-800 pr-0 md:pr-6">
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">🔢 Add Mnemonic Formula</h3>
                         <form id="adm-mnemonic-form" onsubmit="saveNewMnemonicPipeline(event)" class="space-y-3">
                             <div>
                                 <label class="block text-[11px] font-medium text-slate-500 mb-1">Shortcut Formula (e.g., DAD U C)</label>
-                                <input type="text" id="adm-mne-shortcut" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="E.g., DAD U C O R I O S E A F">
+                                <input type="text" id="adm-mne-shortcut" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-950 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="E.g., DAD U C O R I O S E A F">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-medium text-slate-500 mb-1">Description / Translation</label>
-                                <textarea id="adm-mne-desc" required rows="3" class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="Henri Fayol का 14 सिद्धान्तहरू..."></textarea>
+                                <textarea id="adm-mne-desc" required rows="3" class="w-full text-xs p-2 rounded-lg border dark:bg-slate-950 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="Henri Fayol का 14 सिद्धान्तहरू..."></textarea>
                             </div>
                             <button type="submit" class="w-full bg-amber-600 text-white text-xs font-semibold py-2 rounded-lg hover:bg-amber-700 transition">
                                 <i class="fa-solid fa-plus mr-1"></i> Save Formula
@@ -258,7 +272,7 @@
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">📋 Stored Mnemonics Ledger</h3>
                         <div class="overflow-x-auto max-h-48 overflow-y-auto border dark:border-slate-800 rounded-xl">
                             <table class="w-full text-left border-collapse">
-                                <thead class="bg-slate-50 dark:bg-slate-900 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
+                                <thead class="bg-slate-50 dark:bg-slate-950 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
                                     <tr>
                                         <th class="p-2">Formula</th>
                                         <th class="p-2">Description</th>
@@ -272,17 +286,17 @@
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-1 border-r border-slate-100 dark:border-slate-900 pr-0 md:pr-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 border-r border-slate-100 dark:border-slate-800 pr-0 md:pr-6">
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">📅 Track New Exam Schedule</h3>
                         <form id="adm-exam-form" onsubmit="saveNewExamPipeline(event)" class="space-y-3">
                             <div>
                                 <label class="block text-[11px] font-medium text-slate-500 mb-1">Exam Designation Title</label>
-                                <input type="text" id="adm-exam-name" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="E.g., NRB Assistant Manager">
+                                <input type="text" id="adm-exam-name" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-950 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500" placeholder="E.g., NRB Assistant Manager">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-medium text-slate-500 mb-1">Target Examination Date</label>
-                                <input type="date" id="adm-exam-date" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-900 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500">
+                                <input type="date" id="adm-exam-date" required class="w-full text-xs p-2 rounded-lg border dark:bg-slate-950 dark:border-slate-800 dark:text-white focus:ring-1 focus:ring-indigo-500">
                             </div>
                             <button type="submit" class="w-full bg-indigo-600 text-white text-xs font-semibold py-2 rounded-lg hover:bg-indigo-700 transition">
                                 <i class="fa-solid fa-plus mr-1"></i> Save Exam Metric
@@ -294,7 +308,7 @@
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">📋 Active Exam Tracker Schedules</h3>
                         <div class="overflow-x-auto max-h-48 overflow-y-auto border dark:border-slate-800 rounded-xl">
                             <table class="w-full text-left border-collapse">
-                                <thead class="bg-slate-50 dark:bg-slate-900 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
+                                <thead class="bg-slate-50 dark:bg-slate-950 text-[10px] uppercase font-bold text-slate-500 border-b dark:border-slate-800 sticky top-0">
                                     <tr>
                                         <th class="p-2">Exam Description</th>
                                         <th class="p-2">Scheduled Date</th>
@@ -308,15 +322,15 @@
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-                    <button type="button" onclick="togglePasswordSecurityPanel()" class="w-full px-5 py-3 bg-slate-50 dark:bg-slate-900 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider select-none">
-                        <span><i class="fa-solid fa-shield-halved mr-1"></i> Advanced Authentication Variable Signatures</span>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                    <button type="button" onclick="togglePasswordSecurityPanel()" class="w-full px-5 py-3 bg-slate-50 dark:bg-slate-950 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider select-none">
+                        <span><i class="fa-solid fa-shield-halved mr-1"></i> Advanced Security Encryption Signature Configuration</span>
                         <i id="password-panel-chevron" class="fa-solid fa-chevron-down transition-transform"></i>
                     </button>
-                    <div id="password-panel-body" class="hidden p-5 border-t dark:border-slate-800/80 space-y-3">
-                        <p class="text-xs text-slate-400">Generate a new primary cryptographic fingerprint hash below to redefine systemic admin entry constraints.</p>
+                    <div id="password-panel-body" class="hidden p-5 border-t dark:border-slate-800 space-y-3">
+                        <p class="text-xs text-slate-400">Generate a new primary cryptographic fingerprint hash below.</p>
                         <div class="flex gap-2 max-w-md">
-                            <input type="text" id="adm-security-pass-input" class="text-xs p-2.5 rounded-xl border dark:bg-slate-900 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white flex-1 font-mono" placeholder="Input unhashed raw cleartext block string password...">
+                            <input type="text" id="adm-security-pass-input" class="text-xs p-2.5 rounded-xl border dark:bg-slate-950 dark:border-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white flex-1 font-mono" placeholder="Input unhashed raw password context...">
                             <button type="button" onclick="commitNewPasswordConfiguration()" class="bg-slate-950 dark:bg-slate-800 text-white text-xs px-4 py-2.5 font-bold rounded-xl transition">Reconfigure Signature</button>
                         </div>
                     </div>
@@ -325,11 +339,9 @@
         </main>
 
         <div id="pomodoro-floating-widget" onclick="togglePomodoroExpandedState(event)" class="fixed bottom-5 right-5 w-14 h-14 rounded-full bg-slate-900 text-white dark:bg-indigo-600 shadow-xl flex items-center justify-center cursor-pointer z-40 transition-all duration-300 transform hover:scale-105 border border-white/10 select-none">
-            
             <div id="pomo-collapsed-view" class="flex items-center justify-center">
                 <i class="fa-solid fa-stopwatch text-lg animate-pulse"></i>
             </div>
-
             <div id="pomo-expanded-view" class="hidden p-4 w-full space-y-3">
                 <div class="flex items-center justify-between border-b border-white/10 pb-2">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-200">Pomodoro Interval</span>
@@ -408,7 +420,7 @@
             adminPasswordHash = fallbackDefaultHash;
             dbStructure = { "१. वित्तीय लेखा (NFRS/NAS)": ["NFRS Cores"] };
             dbArticles = [];
-            dbMnemonics = [{ id: "1", shortcut: "DAD U C O R I O S E A F", desc: "Henri Fayol का 14 ओटा सिद्धान्तहरू सम्झिने सजिलो सुत्र।" }];
+            dbMnemonics = [{ id: "1", shortcut: "DAD U C O R I O S E A F", desc: "Henri Fayol का 14 ओटा व्यवस्थापनका सिद्धान्तहरू सम्झिने सजिलो सुत्र।" }];
             dbExams = [{ id: "1", name: "🇳🇵 NRB Assistant Manager", date: "2026-07-15T09:00:00" }];
             renderFrontendInterfaceEngine();
         }
@@ -442,13 +454,6 @@
             reloadLocalGoalItemsFromBrowserStorage();
         });
 
-        window.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'a') {
-                event.preventDefault(); 
-                navigateView('admin');
-            }
-        });
-
         function toggleGlobalFocusMode() {
             const isDarkActive = document.documentElement.classList.toggle('dark');
             localStorage.setItem('focus-mode-enabled', isDarkActive);
@@ -457,7 +462,9 @@
 
         function updateThemeIconsMarkup(isDark) {
             const iconNode = document.getElementById('theme-toggle-icon');
-            iconNode.className = isDark ? "fa-solid fa-sun text-amber-400 text-sm" : "fa-solid fa-moon text-sm";
+            if (iconNode) {
+                iconNode.className = isDark ? "fa-solid fa-sun text-amber-400 text-sm" : "fa-solid fa-moon text-sm";
+            }
         }
 
         function calculateReadingProgressPercentage() {
@@ -506,6 +513,7 @@
 
         function reloadLocalGoalItemsFromBrowserStorage() {
             const container = document.getElementById('ui-local-goals-list');
+            if(!container) return;
             const currentGoalsArray = JSON.parse(localStorage.getItem('loksewa-portal-goals') || "[]");
 
             if(currentGoalsArray.length === 0) {
@@ -514,12 +522,12 @@
             }
 
             container.innerHTML = currentGoalsArray.map((goal, idx) => `
-                <div class="flex items-center justify-between gap-2 p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 group transition-colors">
+                <div class="flex items-center justify-between gap-2 p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors">
                     <label class="flex items-center gap-2 cursor-pointer select-none flex-1 overflow-hidden">
-                        <input type="checkbox" onchange="toggleLocalGoalCompletionStatus(${idx})" ${goal.done ? 'checked' : ''} class="rounded text-indigo-600 focus:ring-indigo-500 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+                        <input type="checkbox" onchange="toggleLocalGoalCompletionStatus(${idx})" ${goal.done ? 'checked' : ''} class="rounded text-indigo-600 focus:ring-indigo-500 dark:bg-slate-700 border-slate-200 dark:border-slate-700">
                         <span class="text-xs text-slate-600 dark:text-slate-300 truncate ${goal.done ? 'line-through text-slate-400 dark:text-slate-600' : ''}">${goal.text}</span>
                     </label>
-                    <button onclick="purgeSingleLocalGoalItem(${idx})" class="text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                    <button onclick="purgeSingleLocalGoalItem(${idx})" class="text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
                 </div>
             `).join('');
         }
@@ -554,14 +562,18 @@
         }
 
         function rotateMnemonicDisplayCardData() {
+            const mShortcut = document.getElementById('lbl-mnemonic-shortcut');
+            const mDetails = document.getElementById('lbl-mnemonic-details');
+            if(!mShortcut || !mDetails) return;
+
             if (dbMnemonics.length === 0) {
-                document.getElementById('lbl-mnemonic-shortcut').textContent = "No Formula Registered";
-                document.getElementById('lbl-mnemonic-details').textContent = "Use dashboard workspace to add parameters.";
+                mShortcut.textContent = "No Formula Registered";
+                mDetails.textContent = "Use dashboard workspace to add parameters.";
                 return;
             }
             const randomPick = dbMnemonics[Math.floor(Math.random() * dbMnemonics.length)];
-            document.getElementById('lbl-mnemonic-shortcut').textContent = randomPick.shortcut;
-            document.getElementById('lbl-mnemonic-details').textContent = randomPick.desc;
+            mShortcut.textContent = randomPick.shortcut;
+            mDetails.textContent = randomPick.desc;
         }
 
         function executeLiveDatabaseQuery(queryString) {
@@ -580,6 +592,8 @@
 
         function renderFrontendInterfaceEngine() {
             const topNavContainer = document.getElementById('ui-primary-navbar');
+            if(!topNavContainer) return;
+
             let isHomeActive = activePrimaryCategory === 'Home' && runningSearchFilteredCache === null;
             let navHtml = `
                 <button onclick="resetToHomeFeed()" class="px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all border dark:border-slate-800/80 ${isHomeActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold ring-2 ring-indigo-500/20' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}">
@@ -603,34 +617,34 @@
             const centralSidebarWrapper = document.getElementById('portal-left-sidebar');
 
             if (activeSelectedArticleID !== null) {
-                centralSidebarWrapper.classList.add('hidden');
+                if(centralSidebarWrapper) centralSidebarWrapper.classList.add('hidden');
             } else {
-                centralSidebarWrapper.classList.remove('hidden');
+                if(centralSidebarWrapper) centralSidebarWrapper.classList.remove('hidden');
                 if (activePrimaryCategory === 'Home' || runningSearchFilteredCache !== null) {
-                    subcatMenuBox.classList.add('hidden');
-                    homeUtilitiesBox.classList.remove('hidden');
+                    if(subcatMenuBox) subcatMenuBox.classList.add('hidden');
+                    if(homeUtilitiesBox) homeUtilitiesBox.classList.remove('hidden');
                     rotateMnemonicDisplayCardData();
                 } else {
-                    homeUtilitiesBox.classList.add('hidden');
-                    subcatMenuBox.classList.remove('hidden');
+                    if(homeUtilitiesBox) homeUtilitiesBox.classList.add('hidden');
+                    if(subcatMenuBox) subcatMenuBox.classList.remove('hidden');
 
                     let subcatArr = dbStructure[activePrimaryCategory] || [];
                     let sideHtml = `
-                        <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === 'All' ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
+                        <button onclick="selectSubcatFrontendCategory('All')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === 'All' ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}">
                             <span>🌐 All Sub-Topics</span>
-                            <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800 font-mono">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
+                            <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-700 font-mono">${dbArticles.filter(a => a.category === activePrimaryCategory).length}</span>
                         </button>
                     `;
                     subcatArr.forEach(sub => {
                         let itemsCount = dbArticles.filter(a => a.category === activePrimaryCategory && a.subcategory === sub).length;
                         sideHtml += `
-                            <button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === sub ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900/60'}">
+                            <button onclick="selectSubcatFrontendCategory('${sub}')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl font-medium flex justify-between items-center transition-all ${activeSubCategory === sub ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 font-bold border-l-4 border-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}">
                                 <span>📁 ${sub}</span> 
-                                <span class="bg-slate-100 dark:bg-slate-900 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-800 font-mono">${itemsCount}</span>
+                                <span class="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] px-2 py-0.5 rounded-md border dark:border-slate-700 font-mono">${itemsCount}</span>
                             </button>
                         `;
                     });
-                    sidePanelContainer.innerHTML = sideHtml;
+                    if(sidePanelContainer) sidePanelContainer.innerHTML = sideHtml;
                 }
             }
 
@@ -639,28 +653,30 @@
             const paginationControlsBox = document.getElementById('ui-pagination-controls');
 
             if (activeSelectedArticleID !== null) {
-                filterStatusBar.classList.add('hidden');
-                paginationControlsBox.innerHTML = ''; 
+                if(filterStatusBar) filterStatusBar.classList.add('hidden');
+                if(paginationControlsBox) paginationControlsBox.innerHTML = ''; 
                 const targetArticle = dbArticles.find(a => a.id === activeSelectedArticleID);
                 
-                streamBox.innerHTML = `
-                    <button onclick="exitArticleDetailSingleView()" class="bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-arrow-left"></i> फिर्ता जानुहोस्
-                    </button>
-                    <article class="bg-white dark:bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md space-y-4 animate-fade-in">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.category}</span>
-                            <span class="bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.subcategory}</span>
-                        </div>
-                        <h2 class="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white border-b dark:border-slate-800 pb-4 leading-snug">${targetArticle.title}</h2>
-                        <div class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed article-rich-text">${targetArticle.content}</div>
-                    </article>
-                `;
+                if(streamBox) {
+                    streamBox.innerHTML = `
+                        <button onclick="exitArticleDetailSingleView()" class="bg-white dark:bg-slate-900 border dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-2 mb-2 cursor-pointer">
+                            <i class="fa-solid fa-arrow-left"></i> फिर्ता जानुहोस्
+                        </button>
+                        <article class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md space-y-4">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.category}</span>
+                                <span class="bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${targetArticle.subcategory}</span>
+                            </div>
+                            <h2 class="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white border-b dark:border-slate-800 pb-4 leading-snug">${targetArticle.title}</h2>
+                            <div class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed article-rich-text">${targetArticle.content}</div>
+                        </article>
+                    `;
+                }
                 calculateReadingProgressPercentage();
                 return;
             }
 
-            filterStatusBar.classList.remove('hidden');
+            if(filterStatusBar) filterStatusBar.classList.remove('hidden');
             let dynamicFilteredDataset = [];
             
             if (runningSearchFilteredCache !== null) {
@@ -683,8 +699,8 @@
             document.getElementById('ui-total-articles-badge').textContent = `${totalRecords} Elements Inside`;
 
             if (totalRecords === 0) {
-                streamBox.innerHTML = `<div class="bg-white dark:bg-slate-950 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-2xl">कुनै सामग्रीहरू फेला परेनन्।</div>`;
-                paginationControlsBox.innerHTML = '';
+                if(streamBox) streamBox.innerHTML = `<div class="bg-white dark:bg-slate-900 p-12 text-center text-slate-400 border dark:border-slate-800 rounded-2xl">कुनै सामग्रीहरू फेला परेनन्।</div>`;
+                if(paginationControlsBox) paginationControlsBox.innerHTML = '';
                 return;
             }
 
@@ -694,69 +710,80 @@
             const offset = (currentActivePaginationPage - 1) * ARTICLES_PER_PAGE_LIMIT;
             const segmentedPageSliceDataset = dynamicFilteredDataset.slice(offset, offset + ARTICLES_PER_PAGE_LIMIT);
 
-            streamBox.innerHTML = segmentedPageSliceDataset.map(art => {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = art.content;
-                const extract = tempDiv.textContent || tempDiv.innerText || "";
-                const cleanSummary = extract.slice(0, 160) + (extract.length > 160 ? "..." : "");
-                const readTime = Math.max(1, Math.ceil(extract.trim().split(/\s+/).length / 180));
+            if(streamBox) {
+                streamBox.innerHTML = segmentedPageSliceDataset.map(art => {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = art.content;
+                    const extract = tempDiv.textContent || tempDiv.innerText || "";
+                    const cleanSummary = extract.slice(0, 160) + (extract.length > 160 ? "..." : "");
+                    const readTime = Math.max(1, Math.ceil(extract.trim().split(/\s+/).length / 180));
 
-                return `
-                    <div class="bg-white dark:bg-slate-950 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transform-gpu hover:scale-[1.005] transition-all duration-200 flex flex-col justify-between group">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between gap-2 select-none">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-md border dark:border-slate-800">${art.category}</span>
-                                    <span class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2 py-0.5 rounded-md border border-indigo-100 dark:border-indigo-950">${art.subcategory}</span>
+                    return `
+                        <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col justify-between group">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between gap-2 select-none">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[9px] font-bold px-2 py-0.5 rounded-md border dark:border-slate-700">${art.category}</span>
+                                        <span class="bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2 py-0.5 rounded-md border dark:border-slate-800">${art.subcategory}</span>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium font-mono">⏱️ ${readTime} मिनेट</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 font-medium font-mono">⏱️ ${readTime} मिनेट</span>
+                                <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">${cleanSummary}</p>
                             </div>
-                            <h3 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors cursor-pointer" onclick="openArticleDetailSingleView('${art.id}')">${art.title}</h3>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">${cleanSummary}</p>
+                            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-3 flex justify-end">
+                                <button onclick="openArticleDetailSingleView('${art.id}')" class="text-indigo-600 dark:text-indigo-400 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+                                    थप पढ्नुहोस् <i class="fa-solid fa-arrow-right-long transform group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="pt-4 border-t border-slate-100 dark:border-slate-900 mt-3 flex justify-end">
-                            <button onclick="openArticleDetailSingleView('${art.id}')" class="text-indigo-600 dark:text-indigo-400 text-xs font-bold transition flex items-center gap-1">
-                                थप पढ्नुहोस् <i class="fa-solid fa-arrow-right-long transform group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+                    `;
+                }).join('');
+            }
 
             if (totalPages <= 1) {
-                paginationControlsBox.innerHTML = '';
+                if(paginationControlsBox) paginationControlsBox.innerHTML = '';
                 return;
             }
 
             let paginationHtml = `
-                <button onclick="changePaginationTargetPage(${currentActivePaginationPage - 1})" ${currentActivePaginationPage === 1 ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 text-xs rounded-xl cursor-not-allowed"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 text-xs rounded-xl transition"'}>
+                <button onclick="changePaginationTargetPage(${currentActivePaginationPage - 1})" ${currentActivePaginationPage === 1 ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-300 text-xs rounded-xl cursor-not-allowed"' : 'class="px-3 py-2 bg-white dark:bg-slate-900 border dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs rounded-xl transition cursor-pointer"'}>
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
             `;
             for (let i = 1; i <= totalPages; i++) {
                 paginationHtml += `
-                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl font-mono transition ${currentActivePaginationPage === i ? 'bg-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-600 hover:bg-slate-50'}">
+                    <button onclick="changePaginationTargetPage(${i})" class="w-9 h-9 text-xs font-bold rounded-xl font-mono transition cursor-pointer ${currentActivePaginationPage === i ? 'bg-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-900 border dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'}">
                         ${i}
                     </button>
                 `;
             }
             paginationHtml += `
-                <button onclick="changePaginationTargetPage(${currentActivePaginationPage + 1})" ${currentActivePaginationPage === totalPages ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-900 text-slate-300 text-xs rounded-xl cursor-not-allowed"' : 'class="px-3 py-2 bg-white dark:bg-slate-950 border dark:border-slate-800 text-slate-700 text-xs rounded-xl transition"'}>
+                <button onclick="changePaginationTargetPage(${currentActivePaginationPage + 1})" ${currentActivePaginationPage === totalPages ? 'disabled class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-300 text-xs rounded-xl cursor-not-allowed"' : 'class="px-3 py-2 bg-white dark:bg-slate-900 border dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs rounded-xl transition cursor-pointer"'}>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             `;
-            paginationControlsBox.innerHTML = paginationHtml;
+            if(paginationControlsBox) paginationControlsBox.innerHTML = paginationHtml;
         }
 
         function resetToHomeFeed() {
             activePrimaryCategory = "Home"; activeSubCategory = "All"; activeSelectedArticleID = null; runningSearchFilteredCache = null;
-            document.getElementById('ui-search-input').value = ""; currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
+            const sInput = document.getElementById('ui-search-input'); if(sInput) sInput.value = ""; 
+            currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
         }
 
         function selectPrimaryFrontendCategory(cat) {
             activePrimaryCategory = cat; activeSubCategory = "All"; activeSelectedArticleID = null; runningSearchFilteredCache = null;
-            document.getElementById('ui-search-input').value = ""; currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
+            const sInput = document.getElementById('ui-search-input'); if(sInput) sInput.value = ""; 
+            currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
         }
+
+        window.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'a') {
+                event.preventDefault(); 
+                navigateView('admin');
+            }
+        });
 
         function selectSubcatFrontendCategory(sub) {
             activeSubCategory = sub; activeSelectedArticleID = null; currentActivePaginationPage = 1; renderFrontendInterfaceEngine();
@@ -778,12 +805,18 @@
             const learnerSection = document.getElementById('portal-learner-view');
             const adminSection = document.getElementById('portal-admin-view');
             const floatingExitBar = document.getElementById('admin-top-exit-bar');
+            const stickyHeaderWrapper = document.getElementById('sticky-header-wrapper');
 
             if (target === 'learner') {
-                learnerSection.classList.remove('hidden'); adminSection.classList.add('hidden'); floatingExitBar.classList.add('hidden');
+                if(learnerSection) learnerSection.classList.remove('hidden'); 
+                if(adminSection) adminSection.classList.add('hidden'); 
+                if(floatingExitBar) floatingExitBar.classList.add('hidden');
+                if(stickyHeaderWrapper) stickyHeaderWrapper.classList.remove('hidden');
                 renderFrontendInterfaceEngine();
             } else {
-                learnerSection.classList.add('hidden'); adminSection.classList.remove('hidden');
+                if(learnerSection) learnerSection.classList.add('hidden'); 
+                if(adminSection) adminSection.classList.remove('hidden');
+                if(stickyHeaderWrapper) stickyHeaderWrapper.classList.add('hidden');
                 if (isUserAuthenticated) showAdminDashboardWorkspace();
                 else {
                     document.getElementById('admin-auth-lock').classList.remove('hidden');
@@ -899,12 +932,14 @@
 
         function renderBackendControlMatrix() {
             const tbody = document.getElementById('adm-data-table-rows');
+            if(!tbody) return;
+
             if (dbArticles.length === 0) {
                 tbody.innerHTML = ''; document.getElementById('adm-empty-state-banner').classList.remove('hidden');
             } else {
                 document.getElementById('adm-empty-state-banner').classList.add('hidden');
                 tbody.innerHTML = dbArticles.map(art => `
-                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800">
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition border-b dark:border-slate-800">
                         <td class="p-2.5 font-medium text-slate-900 dark:text-slate-100 max-w-[140px] truncate">${art.title}</td>
                         <td class="p-2.5 text-[10px] text-slate-500 font-mono">${art.category} ➔ ${art.subcategory}</td>
                         <td class="p-2.5 text-right space-x-1 whitespace-nowrap">
@@ -916,33 +951,37 @@
             }
 
             const tbodyMne = document.getElementById('adm-mnemonic-table-rows');
-            if (dbMnemonics.length === 0) {
-                tbodyMne.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No structural formulas recorded.</td></tr>`;
-            } else {
-                tbodyMne.innerHTML = dbMnemonics.map(m => `
-                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800 text-[11px]">
-                        <td class="p-2 font-bold text-amber-700 dark:text-amber-400 max-w-[100px] truncate">${m.shortcut}</td>
-                        <td class="p-2 text-slate-600 dark:text-slate-400 max-w-[200px] truncate">${m.desc}</td>
-                        <td class="p-2 text-right">
-                            <button type="button" onclick="purgeMnemonicEntry('${m.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer"><i class="fa-solid fa-circle-minus"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
+            if(tbodyMne) {
+                if (dbMnemonics.length === 0) {
+                    tbodyMne.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No structural formulas recorded.</td></tr>`;
+                } else {
+                    tbodyMne.innerHTML = dbMnemonics.map(m => `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition border-b dark:border-slate-800 text-[11px]">
+                            <td class="p-2 font-bold text-amber-700 dark:text-amber-400 max-w-[100px] truncate">${m.shortcut}</td>
+                            <td class="p-2 text-slate-600 dark:text-slate-400 max-w-[200px] truncate">${m.desc}</td>
+                            <td class="p-2 text-right">
+                                <button type="button" onclick="purgeMnemonicEntry('${m.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer"><i class="fa-solid fa-circle-minus"></i></button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
             }
 
             const tbodyExams = document.getElementById('adm-exam-table-rows');
-            if (dbExams.length === 0) {
-                tbodyExams.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No exams tracked.</td></tr>`;
-            } else {
-                tbodyExams.innerHTML = dbExams.map(ex => `
-                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-900 transition border-b dark:border-slate-800 text-[11px]">
-                        <td class="p-2 font-bold text-indigo-600 dark:text-indigo-400 max-w-[120px] truncate">${ex.name}</td>
-                        <td class="p-2 text-slate-600 dark:text-slate-400 font-mono">${ex.date.split('T')[0]}</td>
-                        <td class="p-2 text-right">
-                            <button type="button" onclick="purgeExamEntry('${ex.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer"><i class="fa-solid fa-circle-minus"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
+            if(tbodyExams) {
+                if (dbExams.length === 0) {
+                    tbodyExams.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic">No exams tracked.</td></tr>`;
+                } else {
+                    tbodyExams.innerHTML = dbExams.map(ex => `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition border-b dark:border-slate-800 text-[11px]">
+                            <td class="p-2 font-bold text-indigo-600 dark:text-indigo-400 max-w-[120px] truncate">${ex.name}</td>
+                            <td class="p-2 text-slate-600 dark:text-slate-400 font-mono">${ex.date.split('T')[0]}</td>
+                            <td class="p-2 text-right">
+                                <button type="button" onclick="purgeExamEntry('${ex.id}')" class="text-red-500 hover:text-red-700 font-bold cursor-pointer"><i class="fa-solid fa-circle-minus"></i></button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
             }
         }
 
@@ -954,7 +993,7 @@
             const subcategory = document.getElementById('adm-field-subcat').value;
             const content = quillEditorInstance.getSemanticHTML(); 
 
-            if (!subcategory) { alert("Missing configuration parameters alignment mapping nodes."); return; }
+            if (!subcategory) { alert("Missing sub-category mapping nodes."); return; }
             if (id) {
                 const idx = dbArticles.findIndex(a => a.id === id);
                 if (idx !== -1) dbArticles[idx] = { id, title, category, subcategory, content };
@@ -975,7 +1014,7 @@
         }
 
         function purgeArticleEntry(id) {
-            if (confirm("Discard this material payload from localized database blocks?")) {
+            if (confirm("Discard this material payload from database blocks?")) {
                 dbArticles = dbArticles.filter(a => a.id !== id); renderBackendControlMatrix();
             }
         }
@@ -1012,7 +1051,7 @@
         }
 
         function purgeExamEntry(id) {
-            if(confirm("Remove this target examination track scheduling data point?")) {
+            if(confirm("Remove this target examination tracking data point?")) {
                 dbExams = dbExams.filter(ex => ex.id !== id);
                 renderBackendControlMatrix(); runLiveSidebarCalculationsEngine();
             }
@@ -1021,7 +1060,9 @@
         function togglePasswordSecurityPanel() {
             const body = document.getElementById('password-panel-body');
             const chev = document.getElementById('password-panel-chevron');
-            body.classList.toggle('hidden'); chev.classList.toggle('rotate-180');
+            if(body && chev) {
+                body.classList.toggle('hidden'); chev.classList.toggle('rotate-180');
+            }
         }
 
         function resetFormState() {
