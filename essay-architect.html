@@ -752,14 +752,25 @@
         }
 
         function toggleAdminPanel() {
-            const pin = prompt("Enter Master Admin Verification Key to toggle database builder inputs:");
-            if(pin === "1234") { // Simple local custom security passkey parameter
-                const panel = document.getElementById('admin-secret-gate');
-                panel.classList.toggle('hidden');
-            } else if (pin !== null) {
-                alert("Unauthorized configuration password access keys!");
-            }
+    const adminPanel = document.getElementById('admin-secret-gate');
+    
+    // Check if it is currently hidden (has the 'hidden' class)
+    if (adminPanel.classList.contains('hidden')) {
+        
+        // Ask for the password BEFORE doing anything else
+        const password = prompt("Enter Admin Password:");
+        
+        // REPLACE 'YourSecretPassword' with your actual password
+        if (password === "thachhainamalai") { 
+            adminPanel.classList.remove('hidden');
+        } else {
+            alert("Incorrect password! Access denied.");
         }
+    } else {
+        // If it's already visible, hide it
+        adminPanel.classList.add('hidden');
+    }
+}
 
         function generateAdminCodePayload() {
             const cat = document.getElementById('adm-cat').value;
