@@ -1,30 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Executive Syllabus Master Matrix & Active Practice Canvas</title>
+    <title>Syllabus Master Matrix & Active Practice Canvas</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; }
-        .blurred-content { filter: blur(6px); pointer-events: none; transition: filter 0.3s ease; }
+        .blurred-content { filter: blur(7px); pointer-events: none; transition: filter 0.3s ease; }
         .unblurred-content { filter: blur(0); pointer-events: auto; }
+        @media print {
+            .no-print { display: none !important; }
+            .print-padding { padding: 0 !important; }
+        }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 min-h-screen p-4 sm:p-6 transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen p-3 sm:p-6 transition-colors duration-200">
 
-    <div class="w-full max-w-7xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md">
+    <div class="w-full max-w-7xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-6 shadow-md print-padding">
         
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-5 no-print">
             <div>
                 <h3 class="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
                     <span class="text-rose-500">🏆</span> उच्च-स्तरीय परीक्षा रणनीति केन्द्र (Executive Exam Strategy Workspace)
                 </h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Simulate real exam conditions, test your active recall, and master cross-cutting constitutional, administrative, and action-oriented frameworks.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">वास्तविक परीक्षाको वातावरण सिमुलेट गर्नुहोस्, कडा संस्मरण (Active Recall) को अभ्यास गर्नुहोस्, र परिपक्व प्रशासनिक कार्ययोजना र उत्तर ढाँचाहरूमा पकड बनाउनुहोस्।</p>
             </div>
-            <a href="index.html" class="self-start lg:self-center text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors decoration-none">
-                &larr; मुख्य ड्यासबोर्ड
-            </a>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="toggleAdminPanel()" class="text-xs font-bold px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors cursor-pointer">
+                    🔑 Admin Panel
+                </button>
+                <a href="index.html" class="text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors decoration-none">
+                    &larr; मुख्य ड्यासबोर्ड
+                </a>
+            </div>
         </div>
 
         <div class="w-full bg-slate-900 text-slate-100 border border-slate-800 rounded-xl p-5 mb-6 shadow-inner">
@@ -34,14 +43,14 @@
                 </span>
                 <span id="prompt-weight-badge" class="text-[10px] font-bold px-2 py-0.5 bg-rose-950 text-rose-400 border border-rose-800 rounded uppercase tracking-wide">10 MARKS</span>
             </div>
-            <div id="full-question-display" class="text-sm font-semibold leading-relaxed text-slate-200 whitespace-pre-line font-medium">
-                Select an exam topic from the control options below to load its complete A4-sized scenario prompt and strategic framework maps...
+            <div id="full-question-display" class="text-sm font-semibold leading-relaxed text-slate-200 whitespace-pre-line">
+                अभ्यास सुरु गर्न तलको विन्यास खण्डबाट विधा र प्रश्न छनोट गर्नुहोस्। त्यसपछि निर्धारित समयभित्र उत्तरको खाका कोर्नुहोस्।
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <div class="lg:col-span-5 space-y-5">
+            <div class="lg:col-span-5 space-y-5 no-print">
                 
                 <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-4">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">१. अभ्यास विन्यास (Practice Target Selection)</h4>
@@ -70,7 +79,7 @@
                     <div class="text-[11px] space-y-2 text-slate-400 font-medium" id="milestone-timeline-container">
                         </div>
                     <button onclick="toggleExamTimer()" id="timer-action-btn" class="w-full py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all">
-                        Start Simulation Timer
+                        बजेट समय तालिका सिमुलेसन सुरु गर्नुहोस्
                     </button>
                 </div>
 
@@ -79,72 +88,151 @@
                         <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">📝 Active Recall Outline Canvas</h4>
                         <button onclick="exportDraftOutline()" class="text-[10px] font-bold text-rose-500 hover:underline bg-transparent border-none cursor-pointer">💾 Save/Export Outline</button>
                     </div>
-                    <p class="text-[10px] text-slate-400 font-medium leading-tight">Force your brain to recall the legal provisions and main points *before* you unblur the recommended model answer architecture on the right.</p>
-                    <textarea id="user-scratchpad" placeholder="Type your core structural outline points, specific articles, and laws here to evaluate your recall speed..." rows="5" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs font-medium text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 resize-none shadow-inner"></textarea>
-                    <button onclick="revealModelBlueprint()" class="w-full py-2 bg-slate-800 dark:bg-slate-700 hover:bg-emerald-600 dark:hover:bg-emerald-600 text-white text-xs font-bold rounded-lg cursor-pointer transition-all">
-                        🔓 Unblur Model Architecture & Verify Match
-                    </button>
+                    <p class="text-[10px] text-slate-400 font-medium leading-tight">दाहिने पट्टीको आधिकारिक नमूना उत्तर अनब्लर गर्नु अगाडि आफ्नो दिमागलाई बल गरी यहाँ बुँदाहरू र कानुनी धाराहरू कोर्नुहोस्।</p>
+                    <textarea id="user-scratchpad" placeholder="तपाईँको बुँदागत खाका, कानुनी ऐनका दफाहरू यहाँ ड्राफ्ट गर्नुहोस्..." rows="5" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs font-medium text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 resize-none shadow-inner"></textarea>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <button onclick="revealModelBlueprint()" class="py-2 bg-slate-800 dark:bg-slate-700 hover:bg-emerald-600 dark:hover:bg-emerald-600 text-white text-xs font-bold rounded-lg cursor-pointer transition-all">
+                            🔓 नमूना उत्तर खोल्नुहोस्
+                        </button>
+                        <button onclick="openCompiledModal()" class="py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg cursor-pointer transition-all flex items-center justify-center gap-1">
+                            🖨️ एकीकृत रूपमा हेर्नुहोस् / Print
+                        </button>
+                    </div>
                 </div>
 
             </div>
 
-            <div class="lg:col-span-7 space-y-4">
+            <div class="lg:col-span-7 space-y-4 print-padding">
                 
-                <div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-xl p-3.5 flex items-start gap-3">
+                <div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-xl p-3.5 flex items-start gap-3 no-print">
                     <span class="text-xl">💡</span>
                     <div>
-                        <span class="text-[10px] font-black tracking-widest text-emerald-600 dark:text-emerald-400 block uppercase">पाठ्यक्रम समन्वय विस्तार बुँदा (Syllabus Synergy Expansion Bullet)</span>
+                        <span class="text-[10px] font-black tracking-widest text-emerald-600 dark:text-emerald-400 block uppercase">पाठ्यक्रम समन्वय विस्तार बुँदा (Syllabus Synergy Expansion)</span>
                         <p id="synergy-bonus-text" class="text-xs text-slate-700 dark:text-slate-300 font-medium mt-0.5 leading-relaxed">...</p>
                     </div>
                 </div>
 
-                <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">🏛️ Mandatory Legal Anchors for your Paper</h4>
+                <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 no-print">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">🏛️ अनिवार्य कानुनी एवं संवैधानिक आधारहरू (Mandatory Legal Anchors)</h4>
                     <div id="legal-anchors-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-medium text-slate-600 dark:text-slate-400">
                         </div>
                 </div>
 
-                <div class="space-y-4 relative">
-                    <div id="blueprint-blur-shield" class="space-y-4 blurred-content">
+                <div class="space-y-4 relative print-padding">
+                    <div id="blueprint-blur-shield" class="space-y-4 blurred-content print-padding">
                         
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
-                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड क: परिचय खण्ड (Introduction & System Context)</div>
-                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium" id="section-1-desc">...</p>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase no-print">खण्ड क: परिचय खण्ड (Introduction & Context Alignment)</div>
+                            <div class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-semibold whitespace-pre-line" id="section-1-desc">...</div>
                         </div>
 
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-2">
-                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड ख: मुख्य विश्लेषणात्मक आयाम (Core Evaluation Metrics)</div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-3">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase no-print">खण्ड ख: मुख्य विश्लेषणात्मक आयाम (Core Examination Analysis Grid)</div>
                             <h5 class="text-xs font-bold text-slate-800 dark:text-white" id="section-2-title">...</h5>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-[11px]" id="section-2-grid">
+                            <div id="section-2-long-content" class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed whitespace-pre-line font-medium">...</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-[11px] no-print" id="section-2-grid">
                                 </div>
                         </div>
 
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
-                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड ग: नीतिगत तथा व्यावहारिक सुझावहरू (Prescriptive Recommendations)</div>
-                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium" id="section-3-desc">...</p>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase no-print">खण्ड ग: नीतिगत तथा व्यावहारिक सुझावहरू (Prescriptive Policy Recommendations)</div>
+                            <div class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-semibold whitespace-pre-line" id="section-3-desc">...</div>
                         </div>
 
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
-                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड घ: कार्यान्वयनयोग्य कार्ययोजना (Implementable Action Plan Roadmap)</div>
-                            <div id="section-4-action-plan" class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium whitespace-pre-line">
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-2">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase no-print">खण्ड घ: कार्यान्वयनयोग्य कार्ययोजना (Implementable Action Plan Roadmap)</div>
+                            <div id="action-plan-dynamic-target" class="overflow-x-auto">
                                 </div>
                         </div>
 
-                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
-                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड ङ: निष्कर्ष (Pragmatic Conclusion Alignment)</div>
-                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium" id="section-5-desc">...</p>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase no-print">खण्ड ङ: निष्कर्ष (Pragmatic Strategic Conclusion)</div>
+                            <div class="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-semibold whitespace-pre-line" id="section-5-desc">...</div>
                         </div>
 
                     </div>
                 </div>
 
             </div>
+        </div>
 
+        <div id="admin-secret-gate" class="mt-8 p-5 bg-slate-100 dark:bg-slate-950 border-2 border-dashed border-amber-500/40 rounded-2xl hidden no-print">
+            <div class="flex items-center justify-between border-b border-amber-500 pb-2 mb-4">
+                <h4 class="text-sm font-bold text-amber-600 flex items-center gap-2">⚙️ Admin Master Database Controller Panel</h4>
+                <button onclick="toggleAdminPanel()" class="text-xs font-bold text-slate-400 hover:text-slate-600">Close ✕</button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">You can dynamically build code payloads for new questions without corrupting existing code arrays. Follow instructions to insert below.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div>
+                    <label class="block font-bold mb-1">Target Category Key</label>
+                    <select id="adm-cat" class="w-full p-2 rounded bg-white border border-slate-300">
+                        <option value="audit">audit</option>
+                        <option value="governance">governance</option>
+                        <option value="banking">banking</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Short Menu Title (Dropdown view label)</label>
+                    <input type="text" id="adm-short" placeholder="e.g., Q16: वित्तीय सदाचार" class="w-full p-2 rounded bg-white border border-slate-300">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block font-bold mb-1">Full Exam Target Question Text (A4 Prompt Copy)</label>
+                    <textarea id="adm-text" rows="2" class="w-full p-2 rounded bg-white border border-slate-300"></textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block font-bold mb-1">Introduction Content (Nepali Full Paragraph)</label>
+                    <textarea id="adm-intro" rows="2" class="w-full p-2 rounded bg-white border border-slate-300"></textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block font-bold mb-1">Core Analytical Section text (Body Explanation Text)</label>
+                    <textarea id="adm-body" rows="4" class="w-full p-2 rounded bg-white border border-slate-300"></textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block font-bold mb-1">Policy Recommendations Content (Nepali Detailed)</label>
+                    <textarea id="adm-recom" rows="2" class="w-full p-2 rounded bg-white border border-slate-300"></textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block font-bold mb-1">Action Plan Content (Raw text or comma separated array mappings)</label>
+                    <textarea id="adm-action" rows="2" class="w-full p-2 rounded bg-white border border-slate-300" placeholder="१. अल्पकालीन: ... \n२. मध्यकालीन: ..."></textarea>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Conclusion Paragraph</label>
+                    <textarea id="adm-conc" rows="2" class="w-full p-2 rounded bg-white border border-slate-300"></textarea>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Syllabus Synergy Bullet text</label>
+                    <textarea id="adm-syn" rows="2" class="w-full p-2 rounded bg-white border border-slate-300"></textarea>
+                </div>
+            </div>
+            <button onclick="generateAdminCodePayload()" class="mt-4 w-full py-2 bg-amber-500 text-white font-bold text-xs rounded-lg cursor-pointer">Generate Code Object Block</button>
+            <textarea id="admin-output-code" readonly rows="4" class="mt-3 w-full p-2 rounded bg-slate-900 text-emerald-400 font-mono text-[10px]" placeholder="Generated JSON element code will display here... Copy and insert into script."></textarea>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 text-center no-print">
+            <p class="text-[10px] font-bold text-slate-400 dark:text-slate-600 tracking-wide uppercase">
+                ⚠️ शैक्षिक अस्वीकरण (Disclaimer): यो प्रणाली उच्च-स्तरीय प्रतिस्पर्धी परीक्षाको अभ्यास सुदृढीकरणका लागि तयार पारिएको शैक्षिक सहयोगी प्लेटफर्म मात्र हो। यहाँ प्रस्तुत गरिएका नमूना उत्तरहरू, कानुनी व्याख्याहरू, र रणनीतिक ढाँचाहरू परीक्षार्थीको विश्लेषणात्मक क्षमता अभिवृद्धिका लागि मार्गदर्शक सामग्री हुन्। यसमा समाविष्ट सामग्रीहरूले परीक्षामा सफलता वा अङ्क प्राप्तिको कुनै पनि प्रकारको ग्यारेन्टी (No Guaranteed Success or Marks Outcomes) प्रदान गर्दैनन्। संसद्का ऐन, नेपाल राष्ट्र बैंकका एकीकृत निर्देशनहरू, र लोक सेवा आयोगको आधिकारिक पाठ्यक्रमलाई नै अन्तिम र प्रमाणिक आधार मान्नुपर्दछ।
+            </p>
+        </div>
+
+    </div>
+
+    <div id="compiled-print-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 no-print">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-4xl h-[85vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-800">
+            <div class="p-4 bg-slate-900 text-white flex justify-between items-center shrink-0">
+                <h3 class="text-sm font-bold flex items-center gap-2">🖨️ एकीकृत पूर्ण उत्तर विन्डो (Compiled Exam-Ready Master Sheet)</h3>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="px-3 py-1 bg-emerald-600 text-xs font-bold rounded hover:bg-emerald-500 transition-colors cursor-pointer">Print / Save as PDF</button>
+                    <button onclick="closeCompiledModal()" class="px-3 py-1 bg-slate-700 text-xs font-bold rounded hover:bg-slate-600 transition-colors cursor-pointer">बन्द गर्नुहोस् ✕</button>
+                </div>
+            </div>
+            <div class="p-6 overflow-y-auto text-slate-800 dark:text-slate-200 space-y-6 text-xs whitespace-pre-line leading-relaxed font-medium" id="modal-scroll-content">
+                </div>
         </div>
     </div>
 
     <script>
-        // System Database containing 15 high-fidelity questions (including 25-mark complex case profiles)
+        // Master Repository: 15 High-Fidelity Long-form Past-Exam Questions & 25-Mark Comprehensive Case Profiles
         const questionBank = {
             audit: [
                 {
@@ -154,38 +242,32 @@
                     synergy: "कर्मचारी अवकाश दायित्व लेखांकन (NAS 19) र पारदर्शिता मापदण्डलाई वित्तीय अनुशासनको आधारस्तम्भ मान्दै आन्तरिक नियन्त्रण प्रणाली सुदृढ गर्नुपर्छ।",
                     legal: [
                         { title: "नेपालको संविधान", details: "भाग १९ (आर्थिक कार्यप्रणाली) र महालेखा परीक्षकको क्षेत्राधिकार (धारा २४३)।" },
-                        { title: "आर्थिक कार्यविधि ऐन", details: "लेखा उत्तरदायी अधिकृतको व्यक्तिगत आर्थिक जवाफदेहिता र वित्तीय दायित्व।" }
+                        { title: "आर्थिक कार्यविधि ऐन", details: "लेखा उत्तरदायी अधिकृतको व्यक्तिगत आर्थिक जिम्मेवारी र वित्तीय दायित्व सम्बन्धी सीमाहरू।" }
                     ],
-                    intro: "Define 'Beruju' as a systemic procedural gap rather than automatic corruption. Highlight its impact on macro-fiscal balance and federal budget allocation credibility.",
-                    bodyTitle: "Structural, Functional & Behavioral Causality Vectors",
-                    bodyGrid: [
-                        { title: "⚠️ Structural (संरचनात्मक)", desc: "Fragmented accounting sub-units at local levels and inadequate pre-appraisal screening systems." },
-                        { title: "⚙️ Functional (कार्यगत)", desc: "Package splitting to bypass e-GP thresholds and rushing procurement execution during the final month of Ashadh." },
-                        { title: "🧠 Behavioral (व्यवहारगत)", desc: "Low commitment to audit recommendations and absence of rigorous financial consequences for accounting officers." }
-                    ],
-                    recommendations: "Automate all sub-national internal auditees via unified software integrations, strictly apply the Financial Accountability Act penalties, and enforce timely execution limits.",
-                    actionPlan: "१. अल्पकालीन (३ महिना): स्थानीय तहका लेखा शाखाहरूमा इलेक्ट्रोनिक सरकारी लेखा प्रणाली (SuTRA) अनिवार्य र सुदृढ गर्ने।\n२. मध्यकालीन (६ महिना): बजेट रकमान्तर सीमा उल्लंघन गर्ने अधिकारीलाई आर्थिक कार्यविधि ऐन बमोजिम जरिवाना प्रक्रिया सुरु गर्ने।\n३. दीर्घकालीन (१ वर्ष): आन्तरिक लेखापरीक्षणको नतिजालाई कार्यालय प्रमुखको कार्यसम्पादन मूल्यांकन (Performance Appraisal) सँग जोड्ने।",
-                    conclusion: "Minimizing financial irregularities preserves state institutional trust and guarantees that public funds directly translate into targeted citizen capital wealth."
+                    intro: "नेपालको सार्वजनिक वित्तीय व्यवस्थापन (Public Financial Management - PFM) मा कानून बमोजिम रीत नपुऱ्याई गरिएका खर्च वा आर्थिक कारोबारहरू नै बेरुजू हुन्। बेरुजू भ्रष्टाचारको प्रत्यक्ष सूचक नभए पनि यो व्यवस्थापकीय विचलन र वित्तीय अनुशासनहीनताको उपज हो। उप-राष्ट्रिय तह (प्रदेश र स्थानीय सरकार) मा स्रोतको विनियोजन र खर्च गर्ने क्षमता सबल नहुँदा समष्टिगत आर्थिक स्थायित्व र संघीय व्यवस्थाको विश्वसनीयतामा चुनौती थपिएको छ।",
+                    bodyTitle: "बेरुजूका संरचनात्मक, कार्यगत र व्यवहारगत कारणहरूको विश्लेषण",
+                    bodyLong: "१. संरचनात्मक कारणहरू (Structural Deficits):\n- स्थानीय तहमा योग्य र दक्ष लेखा जनशक्तिको अभाव हुनु र एकीकृत सरकारी लेखा प्रणाली (SuTRA) को प्राविधिक पूर्वाधार सुदृढ नहुनु।\n- आन्तरिक लेखापरीक्षण (Internal Audit) शाखालाई स्वतन्त्र र अधिकारसम्पन्न बनाउनुको सट्टा कार्यकारी प्रमुखको छायाँमा राखिनु।\n- आयोजनाहरूको पूर्व-तयारी (Pre-appraisal) र संभाव्यता अध्ययन बिना नै राजनीतिक दबाबमा खुद्रे योजनाहरूमा बजेट छर्नु।\n\n२. कार्यगत कारणहरू (Functional/Procedural Gaps):\n- सार्वजनिक खरिद ऐनको सीमा छल्न एउटै खरिद कार्यलाई टुक्रा-टुक्रा पारी सोझै खरिद (Direct Procurement) गर्ने प्रवृत्ति बढ्नु।\n- आर्थिक वर्षको अन्त्यमा बजेट रकमान्तर गरी असारे विकास (Rushed Year-end Spending) को माध्यमबाट बजेट सिध्याउने परिपाटी रहनु।\n- निर्माण कार्य नसकिँदै वा गुणस्तर यकिन नगरी नक्कली नापी किताब (Measurement Book) खडा गरी भुक्तानी दिनु।\n\n३. व्यवहारगत र कानुनी कमजोरीहरू (Behavioral & Compliance Failures):\n- लेखा उत्तरदायी अधिकृत र आर्थिक प्रशासन प्रमुखमा वित्तीय जवाफदेहिता वहन गर्ने व्यक्तिगत जिम्मेवारीको अभाव रहनु।\n- महालेखा परीक्षकको प्रतिवेदनले औंल्याएका कैफियतहरूमाथि कारबाही नगर्ने र असुलउपर गर्नुपर्ने रकम समयमै असुल नगर्दा दण्डहीनता संस्थागत हुनु।",
+                    recommendations: "१. सुशासन र कानुनी परिपालना: आर्थिक कार्यविधि तथा वित्तीय उत्तरदायित्व ऐनको बर्खिलाप खर्च गर्ने अधिकारीलाई व्यक्तिगत रूपमा जिम्मेवार ठहऱ्याई विभागीय र आर्थिक कारबाही गरिनुपर्छ।\n२. प्रविधिमा आधारित अनुगमन: उपभोक्ता समिति मार्फत गरिने कामको सीमा तोक्ने र सबै उप-राष्ट्रिय तहमा अनलाइन भुक्तानी र End-to-End इलेक्ट्रोनिक खरिद (e-GP) प्रणाली पूर्ण रूपमा अनिवार्य गर्नुपर्छ।\n३. आन्तरिक नियन्त्रण प्रणाली: प्रत्येक स्थानीय तहमा आन्तरिक नियन्त्रण निर्देशिका जारी गरी मासिक रूपमा बेरुजू फछ्र्यौटको समीक्षा बैठक बस्ने र त्रैमासिक प्रतिवेदन प्रदेश कोष तथा लेखा नियन्त्रक कार्यालय (कोलेनिका) मा पठाउने प्रणाली बसालिनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन रणनीति (Immediate Action): आगामी ३ महिनाभित्र सबै स्थानीय तहका आर्थिक प्रशासन प्रमुखहरूलाई ऐन बमोजिमको व्यक्तिगत वित्तीय दायित्व र SuTRA प्रणाली सम्बन्धी पुनश्चर्या अभिमुखीकरण दिने।\n२. मध्यकालीन रणनीति (6 Months): बजेट रकमान्तरको सीमालाई कडा बनाउने र असारको अन्तिम हप्तामा हुने खर्चलाई ७ प्रतिशत भन्दा माथि जान नदिने कानुनी संयन्त्र स्वचालित बनाउने।\n३. दीर्घकालीन रणनीति (1 Year): बेरुजू फछ्र्यौटको दरलाई स्थानीय तहको अन्तर-सरकारी वित्तीय समानीकरण अनुदान र कार्यसम्पादन मूल्यांकन (Performance Appraisal) को मुख्य सूचकको रूपमा समावेश गर्ने।",
+                    conclusion: "सार्वजनिक खर्चमा पारदर्शिता र वित्तीय अनुशासन कायम नभई संघीयताको लाभांश जनतासम्म पुग्न सक्दैन। तसर्थ, उप-राष्ट्रिय तहमा खर्च गर्ने संरचनात्मक क्षमता बढाउँदै दण्ड र पुरस्कारको सिद्धान्त अक्षरशः पालना गर्नु आजको मुख्य आवश्यकता हो।"
                 },
                 {
                     shortTitle: "Q2: पुँजीगत खर्च दक्षता र राष्ट्रिय गौरवका आयोजना",
                     marks: 10,
                     text: "नेपालमा राष्ट्रिय गौरवका आयोजनाहरूमा हुने वित्तीय विनियोजन र कम पुँजीगत खर्चका नीतिगत तथा प्रक्रियागत समस्याहरूलाई परिप्रेक्ष्यगत मुल्यांकन गर्नुहोस्। (१०)",
-                    synergy: "सम्पत्ति ह्रास र मूल्य ह्रास मापदण्ड (NAS 36 - Asset Impairment) अनुसार समयमै सम्पन्न नहुने आयोजनाले राष्ट्रिय लगानीको बजार मूल्य घटाउँछ भन्ने कोणबाट खर्च सुस्तताको समीक्षा हुनुपर्छ।",
+                    synergy: "सम्पत्ति ह्रास र मूल्य ह्रास मापदण्ड (NAS 36 - Asset Impairment) अनुसार समयमै सम्पन्न नहुने आयोजनाले राष्ट्रिय लगानीको आर्थिक प्रतिफल (Economic Yield) घटाउँछ भन्ने कोणबाट खर्च सुस्तताको समीक्षा हुनुपर्छ।",
                     legal: [
-                        { title: "१६ औं आवधिक योजना", details: "पुँजीगत खर्च रुपान्तरण रणनीति तथा पूर्वाधार आयोजना बैंक स्थापनाका माइलस्टोनहरू।" },
-                        { title: "सार्वजनिक खरिद नियमावली", details: "साइट क्लियरेन्स, मुआब्जा वितरण र पूर्व-तयारी चरण पूरा नगरी ठेक्का आह्वान गर्न नहुने प्रावधान।" }
+                        { title: "१६ औं आवधिक योजना", details: "पुँजीगत खर्च रुपान्तरण रणनीति तथा पूर्वाधार आयोजना बैंक (Project Bank) स्थापनाका राष्ट्रिय माइलस्टोनहरू।" },
+                        { title: "सार्वजनिक खरिद नियमावली", details: "जग्गा प्राप्ति, साइट क्लियरेन्स र मुआब्जा वितरण पूरा नगरी ठेक्का आह्वान गर्न नहुने बाध्यात्मक कानुनी व्यवस्था।" }
                     ],
-                    intro: "Frame the capital expenditure backlog as a major structural barrier that limits productive infrastructure assets and locks up liquid treasury reserves.",
-                    bodyTitle: "Macro Implementation & Administrative Grid",
-                    bodyGrid: [
-                        { title: "🏛️ Legal & Policy", desc: "Complex environmental clearances, land acquisition disputes, and frequent project manager transfers." },
-                        { title: "💰 Fiscal Design", desc: "Allocative inefficiencies where funds are distributed too thinly over non-priority local infrastructure." },
-                        { title: "⚙️ Execution Limits", desc: "Contractor capacity deficits, poor execution scheduling, and slow inter-agency resolution processing." }
-                    ],
-                    recommendations: "Enact a dedicated National Prime Infrastructure Act, institutionalize the Project Bank system to filter non-ready projects, and tie fund disbursement to concrete output milestones.",
-                    actionPlan: "१. अल्पकालीन: चालू आर्थिक वर्षभित्र जग्गा प्राप्ति र वन क्षेत्र फुकुवाको प्रक्रिया फिक्स गर्न अन्तर-मन्त्रालय डेस्क स्थापना गर्ने।\n२. मध्यकालीन: राष्ट्रिय गौरवका आयोजना प्रमुखहरूलाई न्यूनतम ३ वर्षसम्म स्थानान्तरण नगर्ने नीतिगत ग्यारेन्टी लागू गर्ने।\n३. दीर्घकालीन: रणनीतिक आयोजनाहरूको अनुगमनका लागि ड्रोन र सेटेलाइटमा आधारित डिजिटल प्रोजेक्ट ट्र्याकिङ सिस्टम जडान गर्ने।",
-                    conclusion: "Accelerating capital resource absorption transitions stagnant public reserves into long-term income-generating national infrastructure assets."
+                    intro: "नेपालको आर्थिक विकासको संवाहक मानिएका राष्ट्रिय गौरवका आयोजना र ठूला पूर्वाधारहरूमा कम पुँजीगत खर्च (Capital Expenditure Lag) हुनु एउटा गम्भीर समष्टिगत आर्थिक चुनौती हो। राष्ट्रिय बजेटको ठूलो हिस्सा विनियोजन गरिए पनि भौतिक र वित्तीय प्रगति सन्तोषजनक नहुँदा देशको उत्पादन क्षमता संकुचित भएको छ र सरकारी कोषमा तरलता निस्क्रिय बस्ने समस्या (Treasury Lockup) पैदा भएको छ।",
+                    bodyTitle: "कम पुँजीगत खर्च र आयोजना ढिलाइका नीतिगत र प्रक्रियागत कारकहरू",
+                    bodyLong: "१. नीतिगत तथा योजनागत समस्याहरू (Policy & Planning Bottlenecks):\n- आयोजना बैंक (Project Bank) को पूर्ण कार्यान्वयन नहुँदा पर्याप्त अध्ययन, पूर्व-तयारी र प्रतिफलको सुनिश्चितता बिना नै आयोजनाहरू घोषणा गरिनु।\n- भू-उपयोग नीति र जग्गा प्राप्ति सम्बन्धी ऐनहरूमा रहेका विरोधाभासका कारण जग्गा मुआब्जा निर्धारणमा वर्षौंसम्म विवाद कायम रहनु।\n- राजनीतिक उतारचढावसँगै आयोजना प्रमुखहरूको छोटो समयमै सरुवा (Frequent Institutional Turnover) गरिनु, जसले गर्दा जवाफदेहिता हराउने गर्दछ।\n\n२. प्रक्रियागत तथा खरिद सम्बन्धी अवरोधहरू (Procedural & Procurement Hurdles):\n- सार्वजनिक खरिद प्रक्रियामा सबैभन्दा कम बोलकबोल गर्ने (Lowest Bidder) लाई ठेक्का दिने व्यवस्थाका कारण प्राविधिक रूपमा अक्षम ठेकेदार छनोट हुनु र पछि उसले काम अलपत्र पार्नु।\n- वन क्षेत्रको रुख कटान स्वीकृति, वातावरणीय प्रभाव मूल्यांकन (EIA/IEE) को लामो र झन्झटिलो प्रशासनिक स्वीकृतिको चक्र रहनु।\n- ठेकेदारहरूले 'म्युचुअल सेटिङ' का आधारमा मोबिलाइजेसन पेश्की (Mobilization Advance) लिने र सो रकम अन्य अनुत्पादक वा घरजग्गा क्षेत्रमा डाइभर्ट गर्ने तर आयोजनास्थलमा काम नगर्ने प्रवृत्ति।\n\n३. अनुगमन र मूल्यांकनको कमजोरी (Supervisory Gaps):\n- प्राविधिक अनुगमन र कार्यसम्पादनमा आधारित भुक्तानी प्रणाली (Milestone-based Payout) को अभाव हुनु।",
+                    recommendations: "१. आयोजना तत्परता ऐन (Project Readiness Act): जग्गा प्राप्ति, रुख कटान, र मुआब्जाको काम कम्तीमा ८० प्रतिशत नसकी कुनै पनि ठेक्का आह्वान गर्न नपाउने गरी कानुनी बन्देज लगाउनुपर्छ।\n२. खरिद कानुनमा परिमार्जन: न्यूनतम् मूल्य मात्र नभई ठेकेदारको प्राविधिक क्षमता, वित्तीय स्वास्थ्य र विगतको कार्यसम्पादनको भार (Quality and Cost Based Selection - QCBS) बढाउनुपर्छ।\n३. नतिजा-उन्मुख नेतृत्व: राष्ट्रिय गौरवका आयोजना प्रमुखहरूसँग कार्यसम्पादन सम्झौता गरी आयोजना नसकिँदासम्म सरुवा नहुने नीतिगत स्थिरता कायम गर्नुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: चालू आर्थिक वर्षभित्र अलपत्र परेका ठूला आयोजनाहरूको वन र जग्गा विवाद सल्टाउन प्रधानमन्त्री कार्यालयको प्रत्यक्ष मातहतमा 'फास्ट-ट्र्याक समन्वय डेस्क' गठन गर्ने।\n२. मध्यकालीन: ठेकेदारहरूलाई दिइने मोबिलाइजेसन पेश्कीको बैंक ग्यारेन्टी कडा बनाउने र सो रकम केवल आयोजनाको सामाग्री खरिदमा मात्र खर्च हुने गरी 'इस्क्रौ एकाउन्ट' (Escrow Account) प्रणाली लागू गर्ने।\n३. दीर्घकालीन: राष्ट्रिय योजना आयोगको प्रोजेक्ट बैंकलाई पूर्ण डिजिटल बनाउँदै तयारी अवस्थामा रहेका आयोजनामा मात्र बजेट विनियोजन गर्ने परिपाटी बसाल्ने।",
+                    conclusion: "पुँजीगत खर्चको दक्षता बढाउनु केवल बजेट सिध्याउनु होइन, बरु पुँजी निर्माण मार्फत रोजगारी सिर्जना गर्नु र निजी क्षेत्रको लगानीलाई आकर्षित गर्नु हो। प्रक्रियागत बाधा हटाई ठूला आयोजना समयमै सक्नु नै अर्थतन्त्रको हितमा हुन्छ।"
                 },
                 {
                     shortTitle: "Q3: महालेखा परीक्षक (OAG) र कार्यसम्पादन परीक्षण",
@@ -196,16 +278,13 @@
                         { title: "नेपालको संविधान", details: "भाग २२, महालेखा परीक्षकको काम, कर्तव्य र अधिकार (धारा २४१) - कार्यक्षमता, दक्षता र प्रभावकारिताको परीक्षण।" },
                         { title: "लेखापरीक्षण ऐन, २०७५", details: "सरकारी निकायहरूको वित्तीय, सञ्चालन र कार्यसम्पादन परीक्षणको वैधानिक अधिकार र क्षेत्र।" }
                     ],
-                    intro: "Distinguish between checking basic arithmetic legality and assessing the operational value-for-money metrics (Economy, Efficiency, and Effectiveness) of public spending.",
-                    bodyTitle: "Comparative Audit Paradigm Vector",
-                    bodyGrid: [
-                        { title: "📊 Economy Matrix", desc: "Evaluating if inputs and resources were acquired at the minimum cost without compromising standard operational quality." },
-                        { title: "⚙️ Efficiency Rate", desc: "Analyzing the relationship between output targets achieved and resources consumed to find execution balance." },
-                        { title: "🎯 Effectiveness", desc: "Measuring the real-world socioeconomic baseline impacts against initial strategic policy goals." }
-                    ],
-                    recommendations: "Upgrade OAG specialized human resources with forensic and system auditors, transition to data-driven risk profiling models, and publish clear, simplified citizen report summaries.",
-                    actionPlan: "१. अल्पकालीन: ओएजी (OAG) भित्र सार्वजनिक क्षेत्रको लेखापरीक्षणका लागि छुट्टै 'फोरेन्सिक र आईटी अडिट' सेल गठन गर्ने।\n२. मध्यकालीन: कार्यसम्पादन लेखापरीक्षण प्रतिवेदनका मुख्य सिफारिसहरू संसद्को सार्वजनिक लेखा समिति (PAC) मा प्राथमिकताका साथ छलफल गराउने।\n३. दीर्घकालीन: प्रत्येक सरकारी मन्त्रालयमा खर्चको प्रभावकारिता नाप्ने 'KPI-Based Audit Framework' कार्यान्वयनमा ल्याउने।",
-                    conclusion: "Modernizing the national audit paradigm moves public sector accountability from static compliance monitoring to dynamic performance improvement."
+                    intro: "परम्परागत लेखापरीक्षणले वित्तीय कारोबारहरू कानुनसम्मत छन् कि छैनन् र स्रेस्ता दुरुस्त छ कि छैन भन्ने कुराको मात्र परीक्षण गर्दछ। तर, आधुनिक सार्वजनिक वित्तीय व्यवस्थापनमा खर्चको अंक मात्र सही भएर पुग्दैन; त्यो खर्चले लक्षित नतिजा दियो कि दिएन भन्ने हेर्नु आवश्यक हुन्छ। यसै सन्दर्भमा खर्चको मितव्ययिता, कार्यदक्षता र प्रभावकारिता (3Es) को मूल्यांकन गर्ने उद्देश्यले कार्यसम्पादन लेखापरीक्षण (Performance Audit) को अवधारणा आएको हो।",
+                    bodyTitle: "कार्यसम्पादन लेखापरीक्षणको महत्व र महालेखा परीक्षकको भूमिका",
+                    bodyLong: "१. कार्यसम्पादन लेखापरीक्षणको महत्व (Value for Money):\n- Economy (मितव्ययिता): न्यूनतम लागतमा उच्च गुणस्तरको वस्तु वा सेवा प्राप्त भयो कि भएन भनी जाँच्न।\n- Efficiency (कार्यदक्षता): उपलब्ध स्रोत, साधन र समयको अधिकतम उपयोग गरी निर्धारित लक्ष्य प्राप्त भयो कि भएन भनी सुनिश्चित गर्न।\n- Effectiveness (प्रभावकारिता): विनियोजित बजेट र सञ्चालित कार्यक्रमले जनताको जीवनस्तर वा लक्षित क्षेत्रमा कस्तो वास्तविक परिवर्तन ल्यायो भनी मापन गर्न।\n\n२. महालेखा परीक्षकको भूमिकाको समीक्षा (Evaluation of OAG):\n- संवैधानिक सबलता: धारा २४१ ले महालेखा परीक्षकलाई नियमितता, मितव्ययिता, कार्यदक्षता, प्रभावकारिता र औचित्यको आधारमा लेखापरीक्षण गर्ने पूर्ण अधिकार दिएको छ।\n- प्रतिवेदनको प्रभाव: ओएजीले वर्षेनी विभिन्न विषयगत क्षेत्रहरू (जस्तै स्वास्थ्य, शिक्षा, खरिद) मा कार्यसम्पादन प्रतिवेदन सार्वजनिक गर्दै आएको छ, जसले नीतिगत कमजोरी उजागर गर्छ।\n- कार्यान्वयनको चुनौती: महालेखा परीक्षकले औंल्याएका प्राविधिक र कार्यसम्पादन सम्बन्धी सिफारिसहरू सरकार र विषयगत मन्त्रालयहरूले बाध्यकारी रूपमा लागू नगर्दा प्रतिवेदन केवल 'वार्षिक दस्तावेज' मा सीमित हुने जोखिम छ। संसदको सार्वजनिक लेखा समिति (PAC) सँगको समन्वय अझै प्रभावकारी हुन सकेको छैन।",
+                    recommendations: "१. प्राविधिक सुदृढीकरण: महालेखा परीक्षकको कार्यालयमा वित्तीय लेखापरीक्षक मात्र नभई इन्जिनियर, डाक्टर, वातावरणविद् र आईटी विज्ञहरू सम्मिलित 'मल्टि-डिसिप्लिनरी अडिट टोली' निर्माण गरिनुपर्छ।\n२. कानुनी बाध्यात्मकता: कार्यसम्पादन प्रतिवेदनले दिएका मुख्य सिफारिसहरू कार्यान्वयन नगर्ने कार्यालय प्रमुख वा सचिवलाई दण्डित गर्ने कानुनी व्यवस्था थपिनुपर्छ।\n३. नागरिक समाजसँग सहकार्य: नागरिक समाज र सञ्चारमाध्यम मार्फत कार्यसम्पादन लेखापरीक्षणका निष्कर्षहरूलाई सार्वजनिक बहसको विषय बनाइनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: आगामी आर्थिक वर्षको कार्यतालिकामा कुल लेखापरीक्षणको कम्तीमा २५ प्रतिशत हिस्सा कार्यसम्पादन र फोरेन्सिक अडिट (Forensic Audit) का लागि सुरक्षित गर्ने।\n२. मध्यकालीन: संसद्को सार्वजनिक लेखा समितिसँग सहकार्य गरी कार्यसम्पादन अडिट रिपोर्टमाथि छुट्टै उपसमिति गठन गरेर दफावार छलफल चलाउने।\n३. दीर्घकालीन: सरकारी खर्च हुने सफ्टवेयर प्रणाली (CGAS/SuTRA) सँग ओएजीको अडिट सफ्टवेयर सीधा लिंक गरी रियल-टाइम कार्यसम्पादन अनुगमन गर्ने।",
+                    conclusion: "कार्यसम्पादन लेखापरीक्षणले परम्परागत त्रुटि औंल्याउने भूमिकाबाट माथि उठेर सरकारलाई रणनीतिक सुधारको मार्ग देखाउँछ। महालेखा परीक्षकको यो भूमिकालाई सुदृढ गर्नु नै सार्वजनिक स्रोतको न्यायोचित उपयोगको ग्यारेन्टी हो।"
                 },
                 {
                     shortTitle: "Q4: मध्यकालीन खर्च संरचना (MTEF) र बजेट विश्वसनीयता",
@@ -213,22 +292,19 @@
                     text: "नेपालमा मध्यकालीन खर्च संरचना (MTEF) ले बजेट अनुमान र योजना बीचको सम्बन्धलाई कसरी सुदृढ गर्छ? यसको कार्यान्वयनका चुनौतीहरू उल्लेख गर्नुहोस्। (५+५=१०)",
                     synergy: "बजेटको विश्वसनीयता सुनिश्चित गर्न समष्टिगत आर्थिक सूचकहरू (GDP, Inflation) सँग मध्यमकालीन खर्चको चक्रलाई तादात्म्यता मिलाउनु आवश्यक छ।",
                     legal: [
-                        { title: "आर्थिक कार्यविधि ऐन", details: "वार्षिक बजेट पेस गर्नुअघि ३ वर्षको मध्यमकालीन खर्च संरचना (MTEF) तयार गरी संसद्मा पेस गर्नुपर्ने बाध्यात्मक व्यवस्था।" },
-                        { title: "अन्तर-सरकारी वित्त ऐन", details: "प्रदेश र स्थानीय तहले समेत आफ्नो स्रोत अनुमानका आधारमा MTEF तर्जुमा गर्नुपर्ने कानूनी दायित्व।" }
+                        { title: "आर्थिक कार्यविधि ऐन", details: "वार्षिक बजेट पेस गर्नुअघि आगामी ३ वर्षको मध्यमकालीन खर्च संरचना (MTEF) तयार गरी संसद्मा पेस गर्नुपर्ने बाध्यात्मक व्यवस्था।" },
+                        { title: "अन्तर-सरकारी वित्त ऐन", details: "प्रदेश र स्थानीय तहले समेत आफ्नो स्रोत अनुमान र मध्यकालीन रणनीतिका आधारमा MTEF तर्जुमा गर्नुपर्ने कानूनी दायित्व।" }
                     ],
-                    intro: "Define MTEF as a rolling three-year expenditure framework that bridges the gap between long-term strategic plans and annual operational resource allocations.",
-                    bodyTitle: "Planning-Budgeting Realignment Dimensions",
-                    bodyGrid: [
-                        { title: "📋 Strategic Alignment", desc: "Binds annual budget choices directly to the long-term milestones of the periodic national development plan." },
-                        { title: "📉 Fiscal Predictability", desc: "Gives line ministries a multi-year resource blueprint to program multi-year procurement projects with confidence." },
-                        { title: "⚠️ Implementation Gaps", desc: "Treating MTEF as a formal compliance paperwork exercise rather than a binding strategic tool." }
-                    ],
-                    recommendations: "Enforce strict ceilings based on historical execution capacity, digitize line ministry tracking modules, and align resource projections with macroeconomic stability indices.",
-                    actionPlan: "१. अल्पकालीन: बजेट निर्माण सफ्टवेयर (LMBIS) मा MTEF डाटा इन्ट्रीलाई वार्षिक बजेट विनियोजनको अनिवार्य पूर्वशर्त बनाउने।\n२. मध्यकालीन: विषयगत मन्त्रालयका योजना अधिकारीहरूलाई समष्टिगत आर्थिक प्रक्षेपण र वित्तीय ढाँचा सम्बन्धी एड्भान्स तालिम दिने।\n३. दीर्घकालीन: वास्तविक राजस्व संकलन र MTEF अनुमान बीचको विचलन (Variance) ५ प्रतिशतभन्दा तल ल्याउने गरी वित्तीय अनुशासन कडा गर्ने।",
-                    conclusion: "A functional MTEF system upgrades public financial management by ensuring that national development commitments are consistently backed by realistic multi-year cash allocations."
+                    intro: "मध्यकालीन खर्च संरचना (Medium-Term Expenditure Framework - MTEF) बजेट तर्जुमा गर्ने एउटा रणनीतिक औजार हो, जसले सरकारको आवधिक योजना (Periodic Plan) का दीर्घकालीन लक्ष्यहरूलाई वार्षिक बजेट (Annual Budget) को सीमाभित्र जोड्ने पुलको काम गर्दछ। यसले आगामी ३ वर्षको उपलब्ध हुने स्रोत र हुने खर्चको अनुमानित प्रक्षेपण गरी बजेटलाई बढी विश्वसनीय र यथार्थपरक बनाउँछ।",
+                    bodyTitle: "MTEF का सबल पक्ष र कार्यान्वयनका मुख्य चुनौतीहरू",
+                    bodyLong: "१. योजना र बजेटको सम्बन्ध सुदृढीकरण (MTEF Reintegration Benefits):\n- आवधिक योजनाका प्राथमिकता प्राप्त (P1) आयोजनाहरूलाई स्रोतको अभाव हुन नदिई निरन्तर बजेट सुनिश्चितता (Multi-year Funding Predictability) प्रदान गर्दछ।\n- वार्षिक बजेट निर्माण गर्दा अनुमानको भरमा नभई विगतको खर्च क्षमता र भविष्यको स्रोत उपलब्धताको वैज्ञानिक प्रक्षेपणका आधारमा सिलिङ तोक्न मद्दत गर्दछ।\n- विषयगत मन्त्रालयहरूलाई आफ्नो क्षेत्रगत रणनीति अनुसार ३ वर्षको कार्यक्रम तय गर्न स्वायत्तता दिन्छ।\n\n२. कार्यान्वयनका चुनौतीहरू (Implementation Barriers in Nepal):\n- कर्मकाण्डी दस्तावेज: धेरैजसो मन्त्रालय र स्थानीय तहले MTEF लाई बजेट पास गराउनका लागि कानुनी औपचारिकता (Formal Compliance Art) को रूपमा मात्र लिने गरेका छन्, बजेट कार्यान्वयनमा यसको आधारमा प्रतिबद्धता देखिँदैन।\n- डाटाको अविश्वसनीयता: समष्टिगत आर्थिक सूचकहरू, राजस्व संकलनका लक्ष्यहरू, र वैदेशिक सहायताको प्रक्षेपण अस्थिर हुँदा MTEF का अनुमानहरू अर्थहीन हुन पुग्छन्।\n- उप-राष्ट्रिय तहमा क्षमताको अभाव: प्रदेश र स्थानीय तहमा प्राविधिक जनशक्तिको कमीका कारण मस्यौदा लेखन र स्रोत प्रक्षेपणमा गम्भीर विचलन आउने गरेको छ।",
+                    recommendations: "१. कानुनी बाध्यता: MTEF मा तोकिएको सिलिङ भन्दा बाहिर गएर वार्षिक बजेटमा नयाँ खुद्रे योजना थप्ने प्रवृत्तिलाई कानुनी रूपमै बन्द गरिनुपर्छ।\n२. प्रविधिमा आधारित प्रक्षेपण: अर्थ मन्त्रालयले समष्टिगत आर्थिक वित्तीय मोडलिङ सफ्टवेयर प्रयोग गरी डाटाको शुद्धता सुनिश्चित गर्नुपर्छ।\n३. क्षमता अभिवृद्धि: स्थानीय र प्रादेशिक योजना अधिकारीहरूका लागि MTEF तर्जुमा सम्बन्धी विशेष व्यावहारिक कार्यशाला सञ्चालन गर्नुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: आउँदो बजेट निर्माण चक्रदेखि नै Line Ministry Budget Information System (LMBIS) मा MTEF को डाटा प्रविष्टि नगरेसम्म बजेट प्रस्ताव दर्ता नहुने प्रणाली बनाउने।\n२. मध्यकालीन: राष्ट्रिय योजना आयोग र अर्थ मन्त्रालयको संयुक्त टोलीले प्रत्येक त्रैमासिकमा MTEF को प्रक्षेपण र वास्तविक खर्चको विचलन (Variance Analysis) प्रतिवेदन सार्वजनिक गर्ने।\n३. दीर्घकालीन: स्थानीय तहको सुधारेको SuTRA सफ्टवेयरमा MTEF मोड्युल पूर्ण रूपमा अनलाइन र एकीकृत गर्ने।",
+                    conclusion: "MTEF सार्वजनिक वित्तको अनुशासन जोगाउने कडी हो। यसलाई केवल औपचारिकतामा सीमित नगरी बजेट चक्रको अभिन्न अङ्ग बनाए मात्र विकास योजनाहरूको समयबद्ध र गुणस्तरीय कार्यान्वयन सम्भव हुन्छ।"
                 },
                 {
-                    shortTitle: "CS1: [25 MARKS CASE STUDY] खरिद विवाद र असार विकास संकट",
+                    shortTitle: "CS1: खरिद विवाद र असार विकास संकट",
                     marks: 25,
                     text: "CASE STUDY SCENARIO:\nएक प्रादेशिक भौतिक पूर्वाधार मन्त्रालय मातहत सञ्चालित रू. ५० करोड लागतको रणनीतिक सडक आयोजनामा आर्थिक वर्षको अन्त्यतिर तीव्र खरिद विवाद उत्पन्न हुन्छ। मुख्य ठेकेदारले जग्गा प्राप्ति र मुआब्जा विवाद देखाउँदै कार्य रोकेको छ भने मन्त्रालयका प्राविधिक अधिकारीहरूमाथि सार्वजनिक खरिद ऐन उल्लंघन गरी भेरिएसन अर्डर (Variation Order) स्वीकृत गरेको र असार महिनाको अन्तिम हप्तामा मात्रै कुल बजेटको ४० प्रतिशत रकम भुक्तानी (असार विकास) गरेको आरोप छ। अन्तिम लेखापरीक्षणमा महालेखा परीक्षकको टोलीले यस आयोजनामा गम्भीर कैफियत र सम्पत्ति मूल्य ह्रास (Asset Impairment) भएको औंल्याएको छ।\n\nयस परिदृश्यको आधारमा देहायका प्रश्नहरूको उत्तर दिनुहोस्:\n१. यस आयोजनामा वित्तीय अनुशासन र सार्वजनिक खरिद व्यवस्थापनका कुन-कुन गम्भीर कमजोरीहरू देखिन्छन्? विस्तृत विश्लेषण गर्नुहोस्। (१० मार्क्स)\n२. सार्वजनिक खरिद ऐन र आर्थिक कार्यविधि ऐनका व्यवस्थाहरूको आधारमा यस संकटको समाधानका उपायहरू प्रस्तुत गर्नुहोस्। (७ मार्क्स)\n३. यस प्रकारका आयोजनाहरूमा दिगो वित्तीय अनुशासन र समयमै बजेट खर्च सुनिश्चित गर्न एक व्यावहारिक, समयबद्ध र कार्यान्वयनयोग्य कार्ययोजना (Implementable Action Plan Matrix) तयार गर्नुहोस्। (८ मार्क्स)",
                     synergy: "यस परिदृश्यलाई सार्वजनिक खरिद नियमावलीको नियम र वित्तीय उत्तरदायित्व ऐनको दफा अनुसार लेखा उत्तरदायी अधिकृतको व्यक्तिगत जवाफदेहितासँग जोड्दै, ढिलाइ भएका आयोजनाको मूल्य ह्रास (NAS 36) गणना गर्नुपर्छ।",
@@ -236,16 +312,17 @@
                         { title: "सार्वजनिक खरिद ऐन, २०६३", details: "दफा ४५ (भेरिएसन अर्डर स्वीकृत गर्ने सीमा र सर्तहरू) र प्रतिस्पर्धात्मक खरिद सुनिश्चितता सम्बन्धी व्यवस्थाहरू।" },
                         { title: "आर्थिक कार्यविधि तथा वित्तीय उत्तरदायित्व ऐन, २०७६", details: "असार महिनाको अन्तिम हप्तामा रकमान्तर र भुक्तानी गर्न नहुने कानुनी बन्देज र त्रैमासिक विभाजन मापदण्ड।" }
                     ],
-                    intro: "Set up the baseline core context of the case. Highlight the operational collision between weak pre-project risk mitigation (land disputes), compliance failure (procedural procurement bypass), and systemic cash budgeting management flaws ('Ashadh Bikas' structural stress).",
-                    bodyTitle: "Tri-Partite Root Cause Structural Decomposition Matrix",
-                    bodyGrid: [
-                        { title: "⚠️ Procurement Management Failures", desc: "Issuing a formal bid tender without resolving initial ground site clearances, leading to legitimate contractor disputes and unmanaged contract delay dynamics." },
-                        { title: "⚙️ Executive Systemic Overlaps", desc: "Using high-risk subjective Variation Orders mid-way through execution without strong internal review logs, causing financial leakage risks." },
-                        { title: "🧠 Macro Budget Execution Irresponsibility", desc: "Breaching the legal quarterly spending framework by forcing massive balance payments in the final week of June, compromising output quality." }
+                    intro: "प्रस्तुत परिदृश्यले नेपालको सार्वजनिक खरिद व्यवस्थापन र पूर्वाधार निर्माणमा विद्यमान तीनवटा गम्भीर दीर्घकालीन रोगहरूलाई उजागर गर्छ: पहिलो, आयोजनाको फितलो पूर्व-तयारी (Weak Project Readiness); दोस्रो, कानुनी प्रक्रियाको मिचाइ (Procedural Bypassing); र तेस्रो, त्रैमासिक बजेट व्यवस्थापनको विफलता जसलाई आम रूपमा 'असार विकास' वा 'बजेट सक्ने प्रवृत्ति' (Year-end Cash Rushing) भनिन्छ। यी तत्वहरूले पुँजीको उत्पादकत्व घटाउने मात्र नभई सरकारी सम्पत्तिको मूल्य ह्रास (Asset Impairment) गराउँछन्।",
+                    bodyTitle: "१. वित्तीय अनुशासन र सार्वजनिक खरिद व्यवस्थापनका गम्भीर कमजोरीहरूको चिरफार",
+                    bodyLong: "क) पूर्व-तयारी र जग्गा प्राप्तिको विफलता (Procurement Design Deficits):\n- सार्वजनिक खरिद ऐन र नियमावलीको स्पष्ट निर्देशन विपरित जग्गाको मुआब्जा विवाद र 'साइट क्लियरेन्स' (Site Clearance) नसकिँदै हतार-हतार ठेक्का आह्वान गरिनु। यसले ठेकेदारलाई काम रोक्ने र कानुनी रूपमा 'हर्जाना' वा म्याद थप दाबी गर्ने वैधानिक बाटो खोलिदियो।\n\nख) नियम विपरित भेरिएसन अर्डर (Variation Order Approval Flaws):\n- खरिद ऐनको दफा ४५ को सीमा बाहिर गई प्राविधिक तथा आर्थिक औचित्य पुष्टि नगरी मन्त्रालयका अधिकारीहरूले भेरिएसन अर्डर स्वीकृत गर्नु। यसले डिजाइनमा भएको त्रुटि वा ठेकेदारसँगको मिलेमतो (Collusive Alignment) को सङ्केत गर्छ।\n\nग) असार विकास र वित्तीय अनुशासनहीनता (Macro-Budget Mismanagement):\n- आर्थिक कार्यविधि तथा वित्तीय उत्तरदायित्व ऐनले असार महिनाको अन्तिम साता भुक्तानी रोक्न स्पष्ट व्यवस्था गरे पनि कुल बजेटको ४० प्रतिशत रकम हतारमा भुक्तानी गर्नु। यसले निर्माण कार्यको गुणस्तर परीक्षण (Quality Testing) बिना नै सरकारी कोषको दोहन भएको पुष्टि गर्छ।\n\nघ) मूल्य ह्रास (Asset Impairment):\n- राष्ट्रिय लेखा मापदण्ड (NAS 36) को नजरबाट हेर्दा, समयमै सम्पन्न नभएको र विवादमा फसेको पूर्वाधारको आर्थिक उपयोगिता (Economic Value) घट्छ, जसले गर्दा राज्यको लगानी बालुवामा पानी सरह हुन पुग्छ।",
+                    recommendations: "१. प्राविधिक र आर्थिक अडिट (Technical & Forensic Audit): राष्ट्रिय सतर्कता केन्द्र वा महालेखा परीक्षकको विशेष प्राविधिक टोली मार्फत उक्त सडकको गुणस्तर ल्याब परीक्षण (Lab Testing) गराउने र कार्यप्रगति र भुक्तानीको अनुपात यकिन गर्ने।\n२. जवाफदेहिता निर्धारण: अनियमित रूपमा भेरिएसन अर्डर स्वीकृत गर्ने र असारमा हतार-हतार चेक काट्ने लेखा उत्तरदायी अधिकृत र प्राविधिक इन्जिनियरलाई निलम्बन गरी विभागीय कारबाही र अख्तियार दुरुपयोग अनुसन्धान आयोग मार्फत अनुसन्धान अघि बढाउने।\n३. खरिद विवाद निरूपण: ठेकेदारसँग भएको सम्झौता (Conditions of Contract) बमोजिम विवाद समाधानका लागि 'विवाद समाधान बोर्ड' (Dispute Resolution Board - DRB) तत्काल सक्रिय गराई जग्गा विवादको समाधान स्थानीय प्रशासनको सहयोगमा ३० दिनभित्र टुङ्ग्याउने।",
+                    actionPlanType: "table",
+                    actionPlanRows: [
+                        { phase: "🚨 अल्पकालीन (Immediate - 30 Days)", action: "• आयोजनाको भुक्तानी रोक्का राखी प्राविधिक गुणस्तर र नापी किताब (Measurement Book) को तेस्रो-पक्ष प्राविधिक अडिट गर्ने।\n• सीडीओ (CDO) को अध्यक्षतामा मुआब्जा विवाद समाधान गर्न स्थानीय सरोकारवालाको बैठक डाकी साइट खुलाउने।", unit: "• प्रादेशिक पूर्वाधार मन्त्रालय\n• जिल्ला प्रशासन कार्यालय\n• सतर्कता केन्द्र", metric: "• प्राविधिक अडिट प्रतिवेदन\n• विवादमुक्त सुचारु आयोजना स्थल" },
+                        { phase: "⚙️ मध्यकालीन (2 - 6 Months)", action: "• त्रुटिपूर्ण भेरिएसन अर्डर खारेज गरी परिमार्जित पारदर्शी डिजाइन स्वीकृत गर्ने।\n• सबै बिलिङ र कार्यप्रगति विवरणलाई इलेक्ट्रोनिक ट्रेजरी सिंगल एकाउन्ट (e-TSA) र SuTRA प्रणालीमा लिंक गरी भुक्तानी चक्र पारदर्शी बनाउने।", unit: "• मन्त्रालयको प्राविधिक समिति\n• कोष तथा लेखा नियन्त्रक कार्यालय", metric: "• स्वीकृत नयाँ कार्ययोजना\n• डिजिटल बिलिङ प्रणाली लागू" },
+                        { phase: "📈 दीर्घकालीन (6 - 12 Months)", action: "• प्रादेशिक स्तरमा 'आयोजना बैंक' (Project Bank) अनिवार्य गरी पूर्व-तयारी सकिएका आयोजनामा मात्र बजेट हाल्ने।\n• माइलस्टोनमा आधारित भुक्तानी (Milestone Payout Model) लागू गर्ने, जसले असारमा एकैपटक रकम निकासा गर्ने विकृति सदाका लागि अन्त्य गर्छ।", unit: "• प्रादेशिक योजना आयोग\n• मुख्यमन्त्री कार्यालय", metric: "• आयोजना बैंक कानुनी रूपमा कार्यान्वयन\n• असारे खर्च शून्य प्रतिशतमा झरेको" }
                     ],
-                    recommendations: "Enforce complete documentation tracking for all operational variations, audit real output value before approving rushed June claims, and freeze future budgetary windows for agencies that systematically skip standard procurement rule steps.",
-                    actionPlan: "🏆 CASE STUDY SPECIFIC IMPLEMENTABLE ACTION PLAN MATRIX:\n\n| Phase / Timeline | Strategic Corrective Action Required | Responsible Executive Unit | Key Output Metric / Deliverable |\n| :--- | :--- | :--- | :--- |\n| 🚨 SHORT-TERM\n(Immediate to 30 Days) | • Issue a formal project freeze and initiate a joint independent technical verification audit of physical progress vs funds paid.\n• Convene a local municipality coordination desk to clear the baseline land acquisition and compensation backlog. | • Provincial Project Director\n• OAG Special Audit Unit\n• Local Chief District Officer | • Physical-Financial Audit Log\n• Signed site clearance agreements |\n| ⚙️ MEDIUM-TERM\n(2 - 6 Months) | • Review the validity of the Variation Order under an independent engineering committee.\n• Automate all operational payment requests via the centralized electronic Treasury Single Account (TSA) engine. | • Ministry Technical Committee\n• Provincial Treasury Desk | • Approved Variation Report\n• Digital payment module rollout |\n| 📈 LONG-TERM\n(6 - 12 Months) | • Integrate a mandatory 'Project Readiness Index' into the sub-national Project Bank.\n• Implement Performance-Linked Contracts where payouts are tied to strict timeline milestones. | • Provincial Planning Commission\n• Public Procurement Monitoring Office (PPMO) | • Legal operationalization of Project Bank\n• Zero year-end cash rushes |",
-                    conclusion: "Resolving this crisis demands a transition from traditional compliance-driven processing to output-linked accountability, ensuring national infrastructure procurement translates directly into unimpaired economic capital values."
+                    conclusion: "यस केस स्टडीले देखाएको खरिद संकट समाधान गर्न तदर्थवादी निर्णय होइन, बरु कानुनी परिपालना र प्रविधिमा आधारित अनुगमनको खाँचो छ। कार्ययोजनाको अक्षरसः कार्यान्वयनले मात्र सरकारी सम्पत्तिको ह्रास रोक्न र सार्वजनिक खरिदमा सुशासन स्थापित गर्न सक्छ।"
                 }
             ],
             governance: [
@@ -258,16 +335,13 @@
                         { title: "नेपालको संविधान", details: "अनुसूची ७ र ९ (साझा अधिकारका सूचिहरू) र धारा २३२ (तहहरू बीचको सम्बन्ध सहकारिता, सहअस्तित्व र समन्वयमा आधारित हुने)।" },
                         { title: "संघ, प्रदेश र स्थानीय तह सम्बन्ध ऐन", details: "तहगत क्षेत्राधिकारको विवाद समाधान र नीतिगत समन्वयका लागि तय गरिएका कानूनी संयन्त्रहरू।" }
                     ],
-                    intro: "Introduce the structural reality of concurrent jurisdictions in a federal architecture. Emphasize that shared powers require high institutional maturity and collaborative administrative unbundling.",
-                    bodyTitle: "Administrative Overlap & Operational Friction Vectors",
-                    bodyGrid: [
-                        { title: "⚠️ Policy Ambiguity", desc: "Lack of specific sub-sector functional unbundling documents in areas like public health, primary education, and forest preservation." },
-                        { title: "⚙️ Institutional Clashes", desc: "Parallel institutional structures leading to duplication of resource expenses and confusion over final accountability." },
-                        { title: "🧠 Capability Friction", desc: "Varying administrative execution capacity at local tiers colliding with the historically centralized execution habits of central ministries." }
-                    ],
-                    recommendations: "Accelerate detailed functional unbundling exercises, pass unified sector umbrella legislation, and optimize data-sharing channels across administrative levels.",
-                    actionPlan: "१. अल्पकालीन: प्रधानमन्त्री कार्यालयको नेतृत्वमा साझा अधिकारको विषयगत 'प्रशासनिक क्षेत्राधिकार स्पष्टता कार्यदल' गठन गर्ने।\n२. मध्यकालीन: विषयगत क्षेत्रहरू (शिक्षा, स्वास्थ्य, वन) मा संघले छाता ऐन ल्याई प्रदेश र स्थानीय तहको सीमा रेखा किटान गर्ने।\n३. दीर्घकालीन: स्थानीय तहको जनशक्ति क्षमता विकासका लागि राष्ट्रिय प्रशासनिक प्रतिष्ठान (NASC) मार्फत निरन्तर तालिम सञ्चालन गर्ने।",
-                    conclusion: "True federal administrative success is unlocked when shared constitutional rights are translated into synchronized, conflict-free delivery maps across all state lines."
+                    intro: "नेपालको संविधानले राज्यशक्तिको प्रयोग तीनै तहका सरकारहरूबाट हुने गरी एकल र साझा अधिकार सूचीको व्यवस्था गरेको छ। अनुसूची ७ र ९ मा उल्लिखित साझा अधिकार (Concurrent Lists) का विषयहरू जस्तै शिक्षा, स्वास्थ्य, वन, र वातावरणको व्यवस्थापनका लागि तीनै तहको प्रशासनिक समन्वय अनिवार्य हुन्छ। तर, व्यावहारिक रूपमा कार्यविस्तृतीकरण स्पष्ट नहुँदा प्रशासनिक क्षेत्रमा ठूलो अस्पष्टता र अधिकार क्षेत्रको टकराव (Jurisdictional Friction) देखिएको छ।",
+                    bodyTitle: "साझा अधिकार सूची कार्यान्वयनका प्रशासनिक अस्पष्टता र चुनौतीहरू",
+                    bodyLong: "१. कानुनी र नीतिगत अस्पष्टता (Legislative Ambiguities):\n- संघीय सरकारले समयमै छाता कानुन (Umbrella Acts) हरू जस्तै संघीय शिक्षा ऐन र संघीय वन ऐन जारी नगर्दा प्रदेश र स्थानीय तहले आफ्नो सीमा निर्धारण गर्न सकेका छैनन्।\n- एकल अधिकार र साझा अधिकारका बुँदाहरू बीच आपसी अन्तरविरोध रहनु (जस्तै: स्थानीय तहको एकल अधिकारमा माध्यमिक शिक्षा छ भने साझा सूचीमा पनि शिक्षा छ, जसले नियमन कसले गर्ने भन्नेमा अन्योल छ)।\n\n२. संरचनात्मक र सांगठनिक दोहोरोपन (Institutional Duplication):\n- जिल्ला स्तरमा संघीय र प्रादेशिक प्रकृतिका समानान्तर कार्यालयहरू (जस्तै डिभिजन वन कार्यालय, कृषि ज्ञान केन्द्र) रहँदा स्थानीय तहको सेवा प्रवाहसँग समन्वय हुन सकेको छैन।\n- स्रोत, साधन र कर्मचारीको बाँडफाँडमा संघको एकाधिकारवादी सोच र उप-राष्ट्रिय तहमा संस्थागत क्षमताको कमी।\n\n३. व्यवहारगत र समन्वयको अभाव (Behavioral & Coordination Deficits):\n- धारा २३२ को सहकारिता, सहअस्तित्व र समन्वयको सिद्धान्तलाई प्रशासनिक नेतृत्वले आत्मसात गर्न नसक्नु। अन्तर-प्रदेश परिषद् र विषयगत समितिहरू नियमित सक्रिय नहुनु।",
+                    recommendations: "१. कार्य विस्तृतीकरणको परिमार्जन (Refining Functional Unbundling): साझा सूचीका प्रत्येक बुँदालाई कुन तहले कति रकमसम्मको र कस्तो प्रकृतिको काम गर्ने हो, सोको स्पष्ट प्रशासनिक कार्यविभाजन (Activity-wise Mapping) कार्यदल मार्फत परिमार्जन गर्नुपर्छ।\n२. छाता कानुनहरूको शिघ्र तर्जुमा: सङ्घीय संसद्ले तत्काल प्रादेशिक र स्थानीय तहको स्वायत्ततालाई सम्मान गर्दै साझा क्षेत्रका छाता ऐनहरू पारित गर्नुपर्छ।\n३. समन्वय संयन्त्रको संस्थागतिकरण: मुख्यमन्त्री र प्रधानमन्त्री कार्यालय बीचको प्रशासनिक संवादलाई तदर्थवादी नबनाई अनलाइन ट्र्याकिङ सहितको स्थायी सचिवालय मार्फत सञ्चालन गरिनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: आगामी ३ महिनाभित्र राष्ट्रिय प्राकृतिक स्रोत तथा वित्त आयोग र समन्वय परिषदको संयुक्त बैठक बसी शिक्षा र स्वास्थ्य क्षेत्रको विवादित प्रशासनिक कार्यक्षेत्रको विवाद टुङ्ग्याउने।\n२. मध्यकालीन: ६ महिनाभित्र सबै समानान्तर डिभिजनल कार्यालयहरूलाई स्थानीय तहको प्राविधिक शाखासँग मर्ज वा सुदृढ समन्वय ढाँचामा ढाल्ने।\n३. दीर्घकालीन: साझा अधिकारका आयोजनाहरूको सह-लगानी (Co-financing) मोडेल सम्बन्धी एकीकृत राष्ट्रिय निर्देशिका जारी गर्ने।",
+                    conclusion: "साझा अधिकार सूची संघीयतालाई जोड्ने कडी हो, न कि झगडाको बीउ। प्रशासनिक अस्पष्टता हटाई समन्वयात्मक प्रशासनिक क्षमता विकास गरेमा मात्र संघीय सुशासनको ढोका खुल्छ।"
                 },
                 {
                     shortTitle: "Q6: सङ्घीय निजामती सेवा ऐनको ढिलाइ र प्रादेशिक असर",
@@ -275,39 +349,33 @@
                     text: "सङ्घीय निजामती सेवा ऐन जारी हुन नपाउँदा प्रादेशिक र स्थानीय तहको प्रशासनिक सञ्चालन र वृत्तिविकासमा परेका प्रभावहरू केलाउनुहोस्। (१०)",
                     synergy: "कर्मचारीहरूको वृत्तिविकास र सरुवा प्रणाली व्यवस्थित नहुँदा स्थानीय तहमा 'संस्थागत सम्झना' (Institutional Memory) कमजोर भई सेवा प्रवाहमा ह्रास आउँछ।",
                     legal: [
-                        { title: "नेपालको संविधान", details: "धारा २२७ (स्थानीय तहको कर्मचारी व्यवस्थापन) र धारा २८५ (सरकारी सेवाहरूको गठन सम्बन्धी व्यवस्था)।" },
-                        { title: "निजामती सेवा ऐन, २०४९", details: "हालसम्म काम चलाउन प्रयोग भइरहेका परम्परागत व्यवस्था र त्यसका प्रादेशिक सिमितताहरू।" }
+                        { title: "नेपालको संविधान", details: "धारा २२७ (स्थानीय तहको कर्मचारी व्यवस्थापन) र धारा २८५ (सरकारी सेवाहरूको गठन र सञ्चालन सम्बन्धी मार्गदर्शन)।" },
+                        { title: "निजामती सेवा ऐन, २०४९", details: "हालसम्म काम चलाउन प्रयोग भइरहेका परम्परागत केन्द्रिकृत व्यवस्थाहरू र त्यसका प्रादेशिक सिमितताहरू।" }
                     ],
-                    intro: "Analyze how the statutory absence of a federal core civil service framework compromises sub-national administrative independence and dampens human capital placement efficiency.",
-                    bodyTitle: "Structural Sub-National Human Resource Impacts",
-                    bodyGrid: [
-                        { title: "⚠️ Career Stagnation", desc: "Creates severe policy confusion surrounding horizontal transfers, performance appraisal tracks, and promotion models." },
-                        { title: "⚙️ Staffing Deficits", desc: "Forces sub-national setups to operate with temporary acting officers, leading to critical delays in public spending choices." },
-                        { title: "🧠 Motivation Gaps", desc: "Generates cultural demotivation among assigned civil servants due to insecure terms of work and structural uncertainty." }
-                    ],
-                    recommendations: "Enact the comprehensive Federal Civil Service Framework immediately, allow customized provincial service alterations, and guarantee strict career path safety metrics.",
-                    actionPlan: "१. अल्पकालीन: संसद्मा विचाराधीन संघीय निजामती सेवा विधेयकलाई फास्ट-ट्र्याकबाट पारित गर्ने प्रक्रिया अघि बढाउने।\n२. मध्यकालीन: प्रदेश लोक सेवा आयोग (PSC) हरूलाई स्वायत्त रूपमा स्थानीय तहका रिक्त दरबन्दीमा स्थायी पदपूर्ति गर्न मार्गप्रशस्त गर्ने।\n३. दीर्घकालीन: नेपालभरिका निजामती कर्मचारीहरूको सरुवा र बढुवालाई पारदर्शी बनाउन एकीकृत 'HRM Digital Portal' स्थापना गर्ने।",
-                    conclusion: "A stable civil service system serves as the permanent administrative spine of the federal framework, stabilizing grassroots development delivery loops."
+                    intro: "सङ्घीय निजामती सेवा ऐन नेपालको संघीय प्रशासनिक व्यवस्थाको मूल मेरुदण्ड हो। संविधान जारी भएको लामो समय भइसक्दा पनि यो ऐन संघीय संसद्बाट पारित हुन नसक्नु सार्वजनिक प्रशासनको सबैभन्दा ठूलो नीतिगत विफलता (Policy Stagnation) हो। यसका कारण प्रादेशिक निजामती सेवा र स्थानीय सेवाका कानुनहरू निर्माण हुन सकेका छैनन् र समग्र राज्यको प्रशासनिक संयन्त्र तदर्थवादमा चलेको छ।",
+                    bodyTitle: "ऐनको अभावमा sub-national प्रशासन र मानव संसाधनमा परेका नकारात्मक प्रभावहरू",
+                    bodyLong: "१. प्रशासनिक सञ्चालनमा परेका अवरोधहरू (Administrative Operational Bottlenecks):\n- स्थानीय तहमा प्रमुख प्रशासकीय अधिकृत र प्रदेशमा सचिवहरू स्थायी रूपमा नखटिँदा वा निमित्तको भरमा चल्दा निर्णय प्रक्रिया ढिलो भएको छ र नीतिगत निरन्तरता टुटेको छ।\n- तीनवटै तहबीच कर्मचारी सरुवा-बढुवाको अन्तर-तह मापदण्ड नहुँदा कर्मचारीहरूमा 'केन्द्रमुखी' प्रवृत्ति बढेको छ र दुर्गमका स्थानीय तह सधैं जनशक्ति विहीन हुने स्थिति बनेको छ।\n- कर्मचारीको अनुशासन, आचरण र उत्तरदायित्व नियमन गर्ने छाता निकाय नहुँदा स्थानीय तहमा प्रशासनिक अराजकता बढेको छ।\n\n२. कर्मचारीहरूको वृत्तिविकासमा परेका असरहरू (Human Resource & Career Trajectory Friction):\n- प्रदेश लोक सेवा आयोगबाट सिफारिस भई आएका कर्मचारी र केन्द्रबाट खटिएका कर्मचारीबीच अन्तर-सम्बन्ध र ज्येष्ठता (Seniority Matrix) को विवाद सुल्झिन सकेको छैन।\n- स्थानीय र प्रादेशिक सेवामा प्रवेश गरेका जेहेन्दार कर्मचारीहरूको माथिल्लो तह (सङ्घीय निजामती सेवा) मा बढुवा र वृत्तिविकासको ढोका बन्द जस्तै भएको छ, जसले गर्दा चरम निराशा (Demotivation) छाएको छ।\n- वृत्तिविकासको अनिश्चितताले गर्दा सरकारी सेवा छोडेर दक्ष जनशक्ति वैदेशिक रोजगारी वा निजी क्षेत्रतर्फ पलायन हुने दर बढेको छ।",
+                    recommendations: "१. फास्ट-ट्र्याक ऐन जारी: राजनीतिक सहमति कायम गरी संसद्को चालू अधिवेशनबाटै संघीय निजामती सेवा विधेयकलाई प्राथमिकताका साथ पारित गरिनुपर्छ।\n२. अन्तर-तह सरुवाको स्पष्ट ढाँचा: ऐनमा संघ, प्रदेश र स्थानीय तहका कर्मचारीहरू निश्चित अवधि दुर्गममा बस्नै पर्ने र स्वचालित चक्रिय सरुवा प्रणाली (Automated Rotation Engine) को ग्यारेन्टी हुनुपर्छ।\n३. साझा ज्येष्ठता सूची: स्थानीय सेवाका कर्मचारीलाई पनि सङ्घीय प्रतियोगितामा भाग लिन पाउने गरी निश्चित प्रतिशत कोटा र ज्येष्ठता गणनाको प्रणाली सुरक्षित गरिनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: ऐन आउन लाग्ने समयसम्मका लागि कर्मचारी व्यवस्थापन गर्न सरकारले तत्काल 'अन्तरिम कर्मचारी परिचालन अध्यादेश वा निर्देशिका' परिमार्जन गर्ने।\n२. मध्यकालीन: ६ महिनाभित्र सबै प्रदेश लोक सेवा आयोगहरू सँग समन्वय गरी राष्ट्रिय स्तरको 'Civil Service HR Dashboard' निर्माण गर्ने।\n३. दीर्घकालीन: निजामती सेवालाई राजनीति निरपेक्ष र कार्यसम्पादन सापेक्ष बनाउन 'Competency-Based Recruitment' ढाँचा लागू गर्ने।",
+                    conclusion: "स्थायी सरकार मानिने कर्मचारीतन्त्र आफैं नीतिगत अस्थिरताको शिकार हुनु लोकतन्त्रका लागि शुभ सङ्केत होइन। सङ्घीय निजामती सेवा ऐन तत्काल ल्याएर मात्र संघीयताको प्रशासनिक जग बलियो बनाउन सकिन्छ।"
                 },
                 {
                     shortTitle: "Q7: सार्वजनिक खरिदमा सदाचार र खरिद अनुगमन कार्यालय",
                     marks: 10,
                     text: "सार्वजनिक खरिद प्रणालीमा सदाचारिता (Integrity) कायम गर्न सार्वजनिक खरिद अनुगमन कार्यालय (PPMO) को भूमिका र यसका नीतिगत चुनौतीहरू स्पष्ट पार्नुहोस्। (१०)",
-                    synergy: "सदाचारिता केवल नैतिक विषय होइन, यो ठेक्का व्यवस्थापन र वित्तीय जवाफदेहिता ऐनको परिपालना सुनिश्चित गर्ने बलियो कानूनी हतियार हो।",
+                    synergy: "सदाचारिता केवल नैतिक विषय होइन, यो ठेक्का व्यवस्थापन र वित्तीय जवाफदेहिता ऐनको परिपालना सुनिश्चित गर्ने बलियो कानुनी हतियार हो।",
                     legal: [
-                        { title: "सार्वजनिक खरिद ऐन", details: "दफा ६४ (सार्वजनिक खरिद अनुगमन कार्यालयको स्थापना, काम, कर्तव्य र अधिकार क्षेत्र)।" },
-                        { title: "सुशासन ऐन, २०६४", details: "प्रशासनिक काममा पारदर्शिता, स्वच्छता र निर्णय प्रक्रियामा व्यक्तिगत जवाफदेहिताको सिद्धान्त।" }
+                        { title: "सार्वजनिक खरिद ऐन", details: "दफा ६४, सार्वजनिक खरिद अनुगमन कार्यालय (PPMO) को स्थापना, कार्यक्षेत्र र प्राविधिक नियमनकारी अधिकारहरू।" },
+                        { title: "सुशासन ऐन, २०६४", details: "प्रशासनिक काममा पारदर्शिता, स्वच्छता र सरकारी निर्णय प्रक्रियामा व्यक्तिगत जवाफदेहिताको सिद्धान्त।" }
                     ],
-                    intro: "Position public procurement integrity as a key requirement for reducing system leakages and optimization of consumer returns on public capital funds.",
-                    bodyTitle: "PPMO Regulatory Evaluation Vectors",
-                    bodyGrid: [
-                        { title: "🏛️ Regulatory Power", desc: "PPMO functions primarily as a monitoring advisory setup rather than a strict prosecuting authority, reducing its immediate enforcement power." },
-                        { title: "⚙️ Technical Gaps", desc: "Challenges tracking non-competitive direct procurements and collusive cartels within sub-national tenders." },
-                        { title: "🧠 Market Resistance", desc: "Friction from political contractor cartels attempting to use structural loopholes to lower transparency expectations." }
-                    ],
-                    recommendations: "Transform PPMO into an independent regulatory commission, fully integrate end-to-end e-GP contract monitoring, and mandate public blacklisting logs for non-compliant bidders.",
-                    actionPlan: "१. अल्पकालीन: साना र टुक्रे खरिदलाई निरुत्साहित गर्न स्थानीय तहका लागि छुट्टै 'e-GP Direct Purchase Guidelines' जारी गर्ने।\n२. मध्यकालीन: कार्टेलिङ र मिलेमतो नियन्त्रण गर्न PPMO भित्र खरिद डाटाको मेशिन लर्निङमा आधारित 'Fraud Analytics Component' जडान गर्ने।\n३. दीर्घकालीन: खराब आचरण भएका ठेकेदारहरूलाई स्वचालित रूपमा ब्ल्याकलिस्ट गर्ने र उनीहरूको व्यावसायिक लाइसेन्स खारेज गर्नेसम्मको कानुनी अधिकार थप्ने।",
-                    conclusion: "Strengthening procurement monitoring frameworks transforms raw state spending flows into transparent, high-quality public assets."
+                    intro: "सार्वजनिक खरिद प्रणाली राज्यको पुँजीगत खर्च हुने र बजारसँग जोडिने मुख्य संयन्त्र हो। कुल बजेटको ठूलो हिस्सा खरिद प्रक्रिया मार्फत परिचालन हुने हुनाले यसमा सदाचारिता, पारदर्शिता र निष्पक्षता (Integrity & Non-collusion) कायम गर्नु सुशासनको पहिलो सर्त हो। नेपालमा सार्वजनिक खरिदलाई व्यवस्थित र अनुगमन गर्न प्रधानमन्त्री तथा मन्त्रिपरिषद् कार्यालय मातहत विशिष्टीकृत निकायको रूपमा सार्वजनिक खरिद अनुगमन कार्यालय (PPMO) क्रियाशील छ।",
+                    bodyTitle: "PPMO को भूमिका र यस क्षेत्रमा देखा परेका नीतिगत तथा संरचनागत चुनौतीहरू",
+                    bodyLong: "१. सदाचारिताका लागि PPMO को भूमिका (Core Operational Role):\n- e-GP को सञ्चालन: इलेक्ट्रोनिक सरकारी खरिद प्रणाली (Single National e-GP Portal) को निर्माण र सञ्चालन गरी ठेक्का प्रक्रियामा भौतिक सेटिङ र मिलेमतो (Cartelling) लाई कम गर्ने ऐतिहासिक काम गरेको छ।\n- निर्देशिका र मानक कागजात: सबै सरकारी निकायका लागि एउटै प्रकृतिको 'मानक बोलपत्र कागजात' (Standard Bidding Documents - SBD) र खरिद निर्देशिकाहरू तयार गर्ने।\n- कानुनी कारबाही (Blacklisting): सम्झौता उल्लंघन गर्ने, समयमा काम नगर्ने वा आचरण विपरित काम गर्ने ठेकेदारहरूलाई निश्चित अवधिका लागि कालोसूची (Blacklist) मा राख्ने।\n\n२. नीतिगत तथा व्यावहारिक चुनौतीहरू (Policy & Execution Challenges):\n- दन्तविहीन बाघ (Toothless Regulator): PPMO सँग अनुगमन गर्ने र सिफारिस गर्ने अधिकार मात्र छ; खरिद कानुन उल्लंघन गर्ने अधिकारी वा ठेकेदारलाई सिधै आर्थिक जरिवाना वा अभियोजन (Prosecution) गर्ने कार्यकारी अधिकार छैन।\n- राजनीतिक र आर्थिक कार्टेलिङ: ठूला ठेकेदारहरूको राजनीतिक पहुँचका कारण खरिद नियमावलीलाई वर्षमा पटक-पटक (हालसम्म दर्जनौं पटक परिमार्जन) संशोधन गराई आफ्नो अनुकूल बनाउने नीतिगत भ्रष्टाचारको जोखिम रहनु।\n- स्थानीय तहमा प्राविधिक क्षमताको कमी: उप-राष्ट्रिय तहमा e-GP को पूर्ण अडिट गर्ने जनशक्ति नहुँदा साना ठेक्कामा अझै पनि कागजी सेटिङ हुनु।",
+                    recommendations: "१. स्वायत्त नियमनकारी निकाय: PPMO लाई मन्त्रालयको शाखा जस्तो नराखी बीमा प्राधिकरण वा धितोपत्र बोर्ड जस्तै पूर्ण स्वायत्त र शक्तिशाली 'सार्वजनिक खरिद नियमन आयोग' (Procurement Regulatory Commission) मा रूपान्तरण गर्नुपर्छ।\n२. नियमावलीको बारम्बार संशोधनमा बन्देज: खरिद कानुनलाई ठेकेदारको हितमा नभई राज्यको प्रतिफल र गुणस्तरको हितमा स्थिर राखिनुपर्छ।\n३. डाटा एनेलिटिक्सको प्रयोग: e-GP प्रणालीमा Machine Learning र AI टूल्स जडान गरी एउटै आईपी ठेगानाबाट धेरै ठेक्का हाल्ने वा मिलेमतो गर्ने बोलपत्रदाताहरूलाई स्वचालित रूपमा फ्ल्याग (Red Flag) गर्ने प्रविधि भित्र्याउनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: आगामी ६ महिनाभित्र उपभोक्ता समिति मार्फत गरिने खरिदको सीमा रू. १ करोडबाट घटाएर अधिकतम २५ लाख बनाउने गरी कडा निर्देशिका जारी गर्ने।\n२. मध्यकालीन: सबै सार्वजनिक निकायका खरिद अधिकारीहरूका लागि अनिवार्य खरिद व्यवस्थापन प्रमाणीकरण (Procurement Certification Course) लागू गर्ने।\n३. दीर्घकालीन: 'कालोसूची' को कानुनी प्रक्रियालाई फास्ट-ट्र्याक बनाउन PPMO भित्रै छुट्टै खरिद न्यायाधीकरण (Procurement Tribunal) गठन गर्ने।",
+                    conclusion: "सार्वजनिक खरिदमा सदाचारिता स्थापित नभई राष्ट्रिय पुँजीको निर्माण गुणात्मक हुन सक्दैन। PPMO लाई स्रोत र अधिकारले सम्पन्न बनाई प्रविधिमैत्री अनुगमन बढाउनु नै राज्यको कोष जोगाउने सर्वोत्तम उपाय हो।"
                 },
                 {
                     shortTitle: "Q8: वित्तीय हस्तान्तरण ढाँचा र वित्तीय समानीकरण अनुदान",
@@ -316,38 +384,36 @@
                     synergy: "वित्तीय समानीकरण अनुदान (Equalization Grant) लाई स्थानीय तहको आन्तरिक राजस्व क्षमता र न्यूनतम वित्तीय परिसूचकसँग जोडेर मात्र वितरण गर्नुपर्छ।",
                     legal: [
                         { title: "नेपालको संविधान", details: "भाग २६, राष्ट्रिय प्राकृतिक स्रोत तथा वित्त आयोग (धारा २५०) र वित्तीय हस्तान्तरण सम्बन्धी सिफारिस प्रणाली।" },
-                        { title: "अन्तर-सरकारी वित्त व्यवस्थापन ऐन", details: "राजस्व बाँडफाँड, रोयल्टी वितरण र अनुदान परिचालनका वैधानिक आधारहरू।" }
+                        { title: "अन्तर-सरकारी वित्त व्यवस्थापन ऐन", details: "राजस्व बाँडफाँड, रोयल्टी वितरण र चार प्रकारका अनुदान (समानीकरण, ससर्त, समपूरक, विशेष) परिचालनका वैधानिक आधारहरू।" }
                     ],
-                    intro: "Define fiscal equalization grants as non-conditional resources allocated to reduce horizontal fiscal gaps across diverse sub-national jurisdictions.",
-                    bodyTitle: "Formula-Driven Grant Allocation Parameters",
-                    bodyGrid: [
-                        { title: "📈 Demographic Variables", desc: "Evaluating baseline human development metrics, population density, and local demographic indexing patterns." },
-                        { title: "⛰️ Geographical Constraints", desc: "Factoring in regional infrastructure accessibility constraints, terrain challenges, and baseline development spending costs." },
-                        { title: "💰 Fiscal Performance", desc: "Rewarding local administrative choices that boost internal revenue mobilization while reducing irregularities." }
-                    ],
-                    recommendations: "Utilize real-time census metrics for allocation equations, balance conditional grants with higher unconditional components, and verify local spending transparency outputs.",
-                    actionPlan: "१. अल्पकालीन: राष्ट्रिय प्राकृतिक स्रोत तथा वित्त आयोग (NNRFC) को एकीकृत डिजिटल पोर्टलमा स्थानीय तहको वास्तविक समयको वित्तीय डाटा लिंक गर्ने।\n२. मध्यकालीन: ससर्त अनुदान (Conditional Grant) को अंश घटाउँदै स्थानीय आवश्यकता अनुसार परिचालन हुने समानीकरण अनुदानको हिस्सा बढाउने।\n३. दीर्घकालीन: अनुदानको सूत्रमा 'वित्तीय अनुशासन' (Fiscal Discipline Matrix) सूचकको भार बढाई बेरुजू घटाउने स्थानीय तहलाई बढी बजेट दिने नीति लिने।",
-                    conclusion: "Transitioning to formula-driven, objective resource transfer systems prevents political bias and builds balanced economic development across all regions."
+                    intro: "संघीय शासन प्रणालीमा वित्तीय संघीयता (Fiscal Federalism) को वास्तविक मुटु भनेकै वित्तीय हस्तान्तरण प्रणाली हो। नेपालको संविधान बमोजिम संघबाट प्रदेश र स्थानीय तहमा जाने चार प्रकारका अनुदानहरू मध्ये वित्तीय समानीकरण अनुदान (Fiscal Equalization Grant) सबैभन्दा महत्त्वपूर्ण र स्वायत्त अनुदान हो। यो अनुदान उप-राष्ट्रिय तहको न्यूनतम खर्चको आवश्यकता र राजस्व क्षमताको खाडल (Fiscal Gap) पुर्नका लागि बिना कुनै सर्त (Unconditional) सुत्रका आधारमा वितरण गरिन्छ। यसको निर्धारण र सिफारिस गर्ने संवैधानिक जिम्मेवारी राष्ट्रिय प्राकृतिक स्रोत तथा वित्त आयोग (NNRFC) को हो।",
+                    bodyTitle: "NNRFC को सुत्रमा आधारित मापदण्ड र प्रादेशिक सन्तुलनमा यसको भूमिका",
+                    bodyLong: "१. अनुदान वितरणका वैज्ञानिक मापदण्डहरू (Formula-Driven Criteria Matrix):\n- मानव विकास सूचकाङ्क (HDI): पिछडिएका र कम विकसित स्थानीय/प्रादेशिक क्षेत्रलाई बढी भार दिने गरी स्वास्थ्य, शिक्षा र आयु सूचकको मापन।\n- भौगोलिक अवस्थिति र पूर्वाधारको अवस्था: विकटता, सडक संजालको पहुँच, विद्युत र खानेपानीको अभाव जस्ता सूचकका आधारमा लागत सूचकाङ्क (Cost Index) तय गरिन्छ।\n- जनसङ्ख्या र क्षेत्रफल: जनसंख्याको चाप र सेवा प्रवाह गर्नुपर्ने भूगालको क्षेत्रफललाई निश्चित भार (Weight) प्रदान गरिन्छ।\n- वित्तीय कार्यक्षमता र अनुशासन (Fiscal Performance Indices): स्थानीय तहले संकलन गरेको आन्तरिक राजस्वको वृद्धिदर र बेरुजूर्को अवस्था (जुन स्थानीय तहमा बेरुजू कम छ, उसले सुत्रमा बढी अंक पाउँछ)।\n\n२. सन्तुलित क्षेत्रीय विकासमा योगदान (Regional Balanced Development Balanced Vector):\n- राजनीतिक पूर्वाग्रहको अन्त्य: विगतको केन्द्रीकृत शासनमा जस्तो मन्त्री वा नेताको खल्तीका आधारमा बजेट बाँड्ने परिपाटीलाई यस सुत्रबद्ध प्रणालीले पूर्ण रूपमा रोक्छ।\n- न्यूनतम सेवाको ग्यारेन्टी: आर्थिक रूपमा कमजोर र आन्तरिक स्रोत नभएका कर्णाली वा सुदूरपश्चिमका विकट स्थानीय तहले पनि जनसङ्ख्या र भूगोलको आधारमा सम्मानजनक बजेट पाउँछन्, जसले गर्दा आधारभूत प्रादेशिक असमानता कम हुँदै जान्छ।",
+                    recommendations: "१. ससर्त अनुदानको कटौती: हाल बजेटमा ससर्त अनुदान (Conditional Grant) को हिस्सा बढी र समानीकरणको कम छ। संघले खुद्रे योजनामा ससर्त बजेट पठाउने बन्द गरी समानीकरण अनुदानको हिस्सा बढाउनुपर्छ।\n२. डाटाको सुदृढीकरण: आयोगले पुरानो डाटा प्रयोग गर्नुको सट्टा राष्ट्रिय जनगणना र रियल-टाइम वित्तीय सूचकहरू प्रयोग गर्नुपर्छ।\n३. पुरस्कार र दण्डको कडा कार्यान्वयन: वित्तीय अनुशासन सूचकको भार अझै बढाई बेरुजू बढाउने स्थानीय तहको अनुदानमा भारी कटौती गर्ने आँट आयोगले गर्नुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: आगामी आर्थिक वर्षको बजेट सिफारिस गर्दा स्थानीय तहको 'बजेट समयमै पारित गरेको वा नगरेको' सूचकलाई कडा रूपमा सुत्रमा लागू गर्ने।\n२. मध्यकालीन: ६ महिनाभित्र तीनवटै तहका राजस्व र खर्चको डाटा एकीकृत रूपमा विश्लेषण गर्न वित्त आयोगमा 'म्याक्रो-फिस्कल रिसर्च सेल' स्थापना गर्ने।\n३. दीर्घकालीन: स्थानीय तहहरू आत्मनिर्भर बन्दै गएपछि समानीकरण अनुदानको सुत्रमा 'आन्तरिक राजस्व परिचालन म्याचिङ फण्ड' को अवधारणा विकास गर्ने।",
+                    conclusion: "वित्तीय समानीकरण अनुदान प्रादेशिक न्याय र समानताको संवाहक हो। वित्त आयोगलाई साधनस्रोत सम्पन्न बनाउँदै सुत्रमा आधारित हस्तान्तरण पारदर्शी बनाउनु नै संघीय सुशासनको दिगो मार्ग हो।"
                 },
                 {
-                    shortTitle: "CS2: [25 MARKS CASE STUDY] स्थानीय तहमा प्रशासनिक र समन्वय संकट",
+                    shortTitle: "CS2: स्थानीय तहमा प्रशासनिक र समन्वय संकट",
                     marks: 25,
-                    text: "CASE STUDY SCENARIO:\nएक दुर्गम हिमाली जिल्लाको 'क' गाउँपालिकामा निर्वाचित जनप्रतिनिधिहरू र सङ्घीय सरकारबाट खटाइएका प्रमुख प्रशासकीय अधिकृतबीच चरम नीतिगत तथा प्रशासनिक द्वन्द्व चुलिएको छ। जनप्रतिनिधिहरूले आफ्नो चुनावी घोषणापत्र कार्यान्वयन गर्न उपभोक्ता समिति मार्फत रू. ५ करोडका योजना टुक्रा-टुक्रा पारेर कार्यान्वयन गर्न दबाब दिइरहेका छन्। प्रमुख प्रशासकीय अधिकृतले सार्वजनिक खरिद ऐन र आर्थिक कार्यविधि ऐन विपरीत हुने भन्दै उक्त प्रस्ताव अस्वीकार गर्दा गाउँपालिकाको कार्यपालिका बैठक ६ महिनादेखि बस्न सकेको छैन। नतिजास्वरूप, शिक्षक तथा स्वास्थ्यकर्मीहरूको तलब वितरण रोकिएको छ, स्थानीय विकास योजना ठप्प छन्, र जनतामा चरम असन्तोष फैलिएको छ।\n\nयस परिदृश्यको आधारमा देहायका प्रश्नहरूको उत्तर दिनुहोस्:\n१. यस गाउँपालिकामा देखिएको द्वन्द्वका मुख्य प्रशासनिक, कानूनी र व्यवहारगत कारणहरू विश्लेषण गर्नुहोस्। (१० मार्क्स)\n२. संघीय शासन प्रणालीको मर्म र प्रचलित कानूनको आधारमा यस गाउँपालिकाको प्रशासनिक निकासका विकल्पहरू सुझाउनुहोस्। (७ मार्क्स)\n३. जनप्रतिनिधि र कर्मचारीतन्त्रबीच सन्तुलन मिलाई सुशासन कायम गर्न तथा सेवा प्रवाह सुचारु गर्न एक विस्तृत र कार्यान्वयनयोग्य कार्ययोजना (Implementable Action Plan) प्रस्तुत गर्नुहोस्। (८ मार्क्स)",
-                    synergy: "यस संकटलाई सुशासन ऐनको दफा र स्थानीय सरकार सञ्चालन ऐनको क्षेत्राधिकारसँग जोड्दै, राजनीतिक नेतृत्व र स्थायी सरकार (प्रशासन) बीचको चेक एण्ड ब्यालेन्स (Check and Balance) को रूपमा हेर्नुपर्छ।",
+                    text: "CASE STUDY SCENARIO:\nएक दुर्गम हिमाली जिल्लाको 'क' गाउँपालिकामा निर्वाचित जनप्रतिनिधिहरू र सङ्घीय सरकारबाट खटाइएका प्रमुख प्रशासकीय अधिकृतबीच चरम नीतिगत तथा प्रशासनिक द्वन्द्व चुलिएको छ। जनप्रतिनिधिहरूले आफ्नो चुनावी घोषणापत्र कार्यान्वयन गर्न उपभोक्ता समिति मार्फत रू. ५ करोडका योजना टुक्रा-टुक्रा पारेर कार्यान्वयन गर्न दबाब दिइरहेका छन्। प्रमुख प्रशासकीय अधिकृतले सार्वजनिक खरिद ऐन र आर्थिक कार्यविधि ऐन विपरीत हुने भन्दै उक्त प्रस्ताव अस्वीकार गर्दा गाउँपालिकाको कार्यपालिका बैठक ६ महिनादेखि बस्न सकेको छैन। नतिजास्वरूप, शिक्षक तथा स्वास्थ्यकर्मीहरूको तलब वितरण रोकिएको छ, स्थानीय विकास योजना ठप्प छन्, र जनतामा चरम असन्तोष फैलिएको छ।\n\nयस परिदृश्यको आधारमा देहायका प्रश्नहरूको उत्तर दिनुहोस्:\n१. यस गाउँपालिकामा देखिएको द्वन्द्वका मुख्य प्रशासनिक, कानूनी र व्यवहारगत कारणहरू विश्लेषण गर्नुहोस्। (१० मार्क्स)\n२. सङ्घीय शासन प्रणालीको मर्म र प्रचलित कानूनको आधारमा यस गाउँपालिकाको प्रशासनिक निकासका विकल्पहरू सुझाउनुहोस्। (७ मार्क्स)\n३. जनप्रतिनिधि र कर्मचारीतन्त्रबीच सन्तुलन मिलाई सुशासन कायम गर्न तथा सेवा प्रवाह सुचारु गर्न एक विस्तृत र कार्यान्वयनयोग्य कार्ययोजना (Implementable Action Plan) प्रस्तुत गर्नुहोस्। (८ मार्क्स)",
+                    synergy: "यस संकटलाई सुशासन ऐनको दफा र स्थानीय सरकार सञ्चालन ऐनको क्षेत्राधिकारसँग जोड्दै, राजनीतिक leadership र स्थायी सरकार (प्रशासन) बीचको चेक एण्ड ब्यालेन्स (Check and Balance) को रूपमा हेर्नुपर्छ।",
                     legal: [
-                        { title: "स्थानीय सरकार सञ्चालन ऐन, २०७४", details: "गाउँपालिका अध्यक्ष, कार्यपालिका र प्रमुख प्रशासकीय अधिकृतको काम, कर्तव्य र अधिकार क्षेत्रको स्पष्ट कानुनी विभाजन।" },
-                        { title: "सुशासन (सञ्चालन तथा व्यवस्थापन) ऐन, २०६४", details: "सार्वजनिक सेवा प्रवाहमा निरन्तरता, पारदर्शिता, र तोकिएको समयभित्र कार्यसम्पादन गर्नुपर्ने अधिकारीको जिम्मेवारी।" }
+                        { title: "स्थानीय सरकार सञ्चालन ऐन, २०७४", details: "गाउँपालिका अध्यक्ष, उपाध्यक्ष र प्रमुख प्रशासकीय अधिकृतको काम, कर्तव्य, अधिकार र प्रशासनिक क्षेत्राधिकारको स्पष्ट वैधानिक विभाजन।" },
+                        { title: "सुशासन (सञ्चालन तथा व्यवस्थापन) ऐन, २०६४", details: "सार्वजनिक सेवा प्रवाहमा निरन्तरता, पारदर्शिता, र तोकिएको समयभित्र कार्यसम्पादन गर्नुपर्ने अधिकारीको जिम्मेवारी र राष्ट्रिय प्रतिबद्धता।" }
                     ],
-                    intro: "Analyze this administrative scenario as a classic institutional friction point where short-term political demands collide with statutory financial accountability regulations in sub-national federal structures.",
-                    bodyTitle: "Tri-Partite Friction Matrix & System Diagnostics",
-                    bodyGrid: [
-                        { title: "⚠️ Structural Framework Gaps", desc: "Absence of formalized internal dispute resolution desks within the local executive tier, allowing temporary operational stalemates to freeze basic public salaries." },
-                        { title: "⚙️ Legislative Violations", desc: "Attempting to completely bypass competitive procurement by forcing manual package fragmentation through local Consumer Committees." },
-                        { title: "🧠 Behavioral Resistance", desc: "A lack of structural understanding of personal fiscal liability under the Financial Accountability Act among elected officials." }
+                    intro: "प्रस्तुत परिदृश्यले संघीयताको सबैभन्दा संवेदनशील अङ्ग—स्थानीय तहमा राजनीतिक नेतृत्व (Elected Representatives) को लोकतान्त्रिक आकाङ्क्षा र निजामती कर्मचारीतन्त्र (Bureaucracy) को कानुनी परिपालनाको सीमा बीचको द्वन्द्व (Political-Administrative Friction) लाई देखाउँछ। उपभोक्ता समिति मार्फत योजना टुक्रा पार्ने राजनीतिक दबाब र आर्थिक जवाफदेहिता ऐनको परिपालना गर्ने अधिकृतको अडानले सिर्जना गरेको गतिरोधले अन्ततः नागरिकको मौलिक हक (तलब, स्वास्थ्य, शिक्षा) नै बन्धक बनेको छ। यो सङ्कट स्थानीय सुशासन र सार्वजनिक व्यवस्थापनको दृष्टिकोणबाट गम्भीर र चिन्ताजनक छ।",
+                    bodyTitle: "१. गाउँपालिकामा देखिएको द्वन्द्वका बहुआयामिक कारणहरूको विश्लेषण",
+                    bodyLong: "क) कानूनी र नीतिगत कारणहरू (Statutory Non-compliance Factors):\n- सार्वजनिक खरिद ऐन र आर्थिक कार्यविधि ऐनले प्रतिस्पर्धा संकुचित हुने गरी वा कोटेशनको सीमा छल्न योजना टुक्रा-टुक्रा पार्न (Package Splitting) कडा प्रतिबन्ध लगाएको छ। जनप्रतिनिधिहरूमा यो कानुनी सीमाको बुझाइ नहुनु वा बेवास्ता गर्नु मुख्य कानुनी कारण हो।\n- स्थानीय सरकार सञ्चालन ऐन, २०७४ ले प्रमुख प्रशासकीय अधिकृतलाई गाउँपालिकाको 'लेखा उत्तरदायी अधिकृत' को रूपमा तोकेको छ। भोलि बेरुजू निस्कँदा वा आर्थिक अनियमितता हुँदा संसद् र अख्तियारप्रति अधिकृत एक्लै जवाफदेही हुनुपर्छ, जनप्रतिनिधि बच्न सक्छन्। त्यसैले अधिकृतको अडान कानुनी रूपमा शतप्रतिशत जायज छ।\n\nख) प्रशासनिक कारणहरू (Administrative Structural Failures):\n- कार्यपालिकाको बैठक ६ महिनासम्म नबस्नुले स्थानीय सरकारको संस्थागत विफलता (Institutional Paralysis) लाई देखाउँछ। विवाद समाधान गर्ने आन्तरिक राजनीतिक-प्रशासनिक च्यानलहरू पूर्ण रूपमा बन्द हुनु।\n- बजेट चक्र र खर्च प्रणाली ठप्प हुँदा गैर-विकास खर्च (शिक्षक, स्वास्थ्यकर्मीको तलब) समेत रोक्नु प्रशासनिक अदूरदर्शिता हो।\n\nग) व्यवहारगत र सांस्कृतिक कारणहरू (Behavioral & Cultural Core Gaps):\n- जनप्रतिनिधिहरूमा 'हामी निर्वाचित हौं, हामीले जे पनि गर्न पाउनुपर्छ' भन्ने पपुलिष्ट अहम् र कर्मचारीहरूमा 'हामी मात्र कानुन बुझ्दछौं' भन्ने खालको समन्वयविहीन शास्त्रीय व्यवहार (Bureaucratic Rigidity) बीचको टकराव हुनु।",
+                    recommendations: "विकल्प १: मध्यस्थता र कानुनी सम्झौता (Mediation and Packaging Re-alignment) - जिल्ला समन्वय समिति (DCC) को प्रमुख र कोष तथा लेखा नियन्त्रक कार्यालयको रोहबरमा गाउँपालिका अध्यक्ष र अधिकृत बीच वार्ता गराउने। ५ करोडका खुद्रे योजनाहरूलाई खण्डिकरण गर्नुको सट्टा भौगोलिक क्लस्टरका आधारमा एकीकृत प्याकेज बनाई पारदर्शी रूपमा e-GP मार्फत ठेक्का आह्वान गर्ने र उपभोक्ता समितिलाई केवल अनुगमनको जिम्मा दिने गरी कार्यपालिकाबाट निर्णय गराउने।\nविकल्प २: विशेष सङ्कटकालीन प्रशासनिक निर्देशन (Emergency Directive Bypass) - शिक्षक र स्वास्थ्यकर्मीको तलब वितरण मौलिक हकसँग जोडिएको हुनाले कार्यपालिका बैठक नबसे पनि प्रमुख प्रशासकीय अधिकृतले स्थानीय सरकार सञ्चालन ऐनको विशेष अधिकार प्रयोग गरी वा प्रदेश सरकारको मन्त्रिपरिषद् कार्यालयको स्वीकृति लिई तलब कोष मात्र अनफ्रिज (Unfreeze) गरी तुरुन्त भुक्तानी गर्ने।\nविकल्प ३: नेतृत्व परिमार्जन (Administrative Personnel Re-assignment) - यदि दुई पक्षबीच व्यक्तिगत इगोका कारण वार्ता असम्भव भएमा, MoFAGA ले उक्त अधिकृतलाई फिर्ता बोलाई उत्तिकै क्षमतावान अर्को अधिकृत खटाउने। तर, खरिद कानुन उल्लंघन गर्ने जनप्रतिनिधिको मागलाई नयाँ अधिकृतले पनि मान्न नहुने स्पष्ट निर्देशन (Boundary Mandate) केन्द्रबाटै हुनुपर्छ।",
+                    actionPlanType: "table",
+                    actionPlanRows: [
+                        { phase: "🚨 अल्पकालीन (Immediate - 15 Days)", action: "• जिल्ला समन्वय समिति (DCC) Chief को नेतृत्वमा गाउँपालिकामा आपतकालीन मेलमिलाप बैठक आयोजना गर्ने।\n• कार्यपालिकाको विशेष बैठक डाकी रोकिराखेका शिक्षक, कर्मचारी र स्वास्थ्यकर्मीहरूको तलब भुक्तानी सम्बन्धी एकल प्रस्ताव तुरुन्त पारित गर्ने।", unit: "• जिल्ला समन्वय समिति (DCC)\n• गाउँपालिका कार्यपालिका\n• प्रमुख प्रशासकीय अधिकृत", metric: "• तलब निकासा फुकुवा\n• सुचारु सरकारी विद्यालय/अस्पताल" },
+                        { phase: "⚙️ मध्यकालीन (1 - 3 Months)", action: "• ५ करोडका सबै योजनाहरूलाई सार्वजनिक खरिद ऐन अनुरूप एकीकृत प्रतिष्पर्धात्मक प्याकेज (Contract Clustering) मा रूपान्तरण गरी e-GP सूचना निकाल्ने।\n• राष्ट्रिय प्रशासनिक प्रतिष्ठान (NASC) का विज्ञहरू झिकाई निर्वाचित जनप्रतिनिधिहरूलाई 'सार्वजनिक खरिद, बजेटिङ र वित्तीय जवाफदेहिता' सम्बन्धी अनिवार्य ३ दिने कानुनी कार्यशाला दिने।", unit: "• गाउँपालिका योजना शाखा\n• PPMO / NASC", metric: "• स्वीकृत प्याकेज खरिद योजना\n• जनप्रतिनिधिद्वारा कानुनी प्रतिबद्धता पत्र" },
+                        { phase: "📈 दीर्घकालीन (3 - 12 Months)", action: "• गाउँपालिका भित्र 'राजनीतिक-प्रशासनिक स्थायी सञ्चालन कार्यविधि' (SOP Guide) तर्जुमा गरी कार्यान्वयनमा ल्याउने।\n• उपभोक्ता समिति मार्फत गरिने कामको त्रैमासिक सार्वजनिक सुनुवाइ (Social Audit) अनिवार्य गर्ने र उपभोक्ता समितिको विकृति रोक्न प्राविधिक नाप-जाँच संयन्त्र बलियो बनाउने।", unit: "• गाउँपालिका उपाध्यक्ष (अनुगमन समिति)\n• नागरिक समाज", metric: "• कार्यविधि राजपत्रमा प्रकाशित\n• उपभोक्ता समितिको कार्य दक्षता ९०% पुगेको" }
                     ],
-                    recommendations: "Deploy an urgent regulatory mediation team from the Ministry of Federal Affairs, unfreeze public employee funds via emergency administrative orders, and run mandatory financial liability training for the local executive council.",
-                    actionPlan: "🏆 CASE STUDY SPECIFIC IMPLEMENTABLE ACTION PLAN MATRIX:\n\n| Phase / Timeline | Strategic Corrective Action Required | Responsible Executive Unit | Key Output Metric / Deliverable |\n| :--- | :--- | :--- | :--- |\n| 🚨 SHORT-TERM\n(Immediate to 30 Days) | • Deploy an emergency administrative directive from MoFAGA to release blocked non-development funds for teacher and health salaries.\n• Institute a formal mediation meeting between the District Coordination Committee (DCC) and the local executive council. | • MoFAGA / Ministry of Finance\n• District Coordination Committee (DCC) Chief | • Salary disbursement clearance slips\n• Signed minutes of reconciliation |\n| ⚙️ MEDIUM-TERM\n(2 - 6 Months) | • Restructure the fragmented local project proposals into an integrated contract cluster via open competitive e-GP tenders.\n• Conduct mandatory workshops on the Local Government Operation Act for elected representatives. | • Chief Administrative Officer\n• National Administrative Staff College (NASC) | • Registered bidding notices\n• Attendance logs of compliance training |\n| 📈 LONG-TERM\n(6 - 12 Months) | • Establish a permanent Citizen Grievance Redressal Desk at the municipality to balance political aims with transparent management tracks.\n• Implement a digital administrative file tracking system (e-Governance) to lower personal friction opportunities. | • Local Executive Board\n• Ministry of Communication & IT | • Public dashboard for public grievances\n• Active e-office implementation |",
-                    conclusion: "Resolving federal sub-national administrative standoffs requires aligning political intent with the rule of law, turning administrative friction into institutional checks and balances."
+                    conclusion: "स्थानीय तह जनताको सबैभन्दा नजिकको सरकार हो। राजनीतिक आकाङ्क्षा र कानुनी प्रक्रिया दुवै राज्यका अनिवार्य तत्व हुन्। तसर्थ, जनप्रतिनिधिले कानुनी सीमाको सम्मान गर्ने र कर्मचारीले विकासमैत्री समन्वयकारी भूमिका खेल्ने हो भने मात्र यस्ता सङ्कटहरू सुल्झिन्छन् र स्थानीय सुशासन दिगो हुन्छ।"
                 }
             ],
             banking: [
@@ -357,39 +423,33 @@
                     text: "नेपाल सरकारको विस्तारकारी वित्तीय नीति (Expansionary Fiscal Policy) र नेपाल राष्ट्र बैंकको स्थायित्वमुखी मौद्रिक नीति बीच समन्वय नहुँदा अर्थतन्त्रमा पर्ने असरहरू चर्चा गर्नुहोस्। (१०)",
                     synergy: "विस्तारकारी वित्तीय नीतिले बजारमा पैसा बढाउने र मौद्रिक नीतिले कर्जा संकुचन गर्दा निजी क्षेत्रको लगानी विस्थापित हुने (Crowding Out Effect) जोखिम उच्च रहन्छ।",
                     legal: [
-                        { title: "नेपाल राष्ट्र बैंक ऐन, २०५८", details: "दफा ४ (केन्द्रीय बैंकको स्वायत्तता, मूल्य र बाह्य क्षेत्र स्थायित्व कायम गर्ने कानूनी कार्यादेश)।" },
-                        { title: "नेपाल सरकारको बजेट वक्तव्य", details: "वित्तीय नीति र घाटा बजेट वित्तपोषणका लागि आन्तरिक ऋण संकलन सम्बन्धी सीमाहरू।" }
+                        { title: "नेपाल राष्ट्र बैंक ऐन, २०५८", details: "दफा ४, केन्द्रीय बैंकको स्वायत्तता, मौद्रिक नीति व्यवस्थापन र बाह्य क्षेत्र स्थायित्व (BOP Stability) कायम गर्ने कानूनी कार्यादेश।" },
+                        { title: "नेपाल सरकारको बजेट वक्तव्य", details: "राजस्व संकलन, वित्तीय नीति र घाटा बजेट वित्तपोषणका लागि देश भित्र उठाइने आन्तरिक ऋण सम्बन्धी सीमाहरू।" }
                     ],
-                    intro: "Introduce the structural tension within macroeconomics where fiscal deficit spending targets drive short-term growth goals, while central bank actions focus on protecting credit quality and inflation limits.",
-                    bodyTitle: "Macroeconomic Imbalance Channels (IS-LM Framework)",
-                    bodyGrid: [
-                        { title: "📉 Crowding-Out Vectors", desc: "Heavy domestic borrowing by the treasury to cover deficit goals drives up banking interest rates, pushing out private credit." },
-                        { title: "⚠️ BOP External Friction", desc: "Unchecked fiscal liquidity expansions leak directly into high import volumes, damaging national foreign exchange reserves." },
-                        { title: "🏛️ Regulatory Friction", desc: "Imbalance between structural loan targets and commercial bank credit-to-deposit (CD) limits." }
-                    ],
-                    recommendations: "Activate a permanent Fiscal-Monetary Coordination Committee, link treasury spending directly to core inflation bands, and synchronize domestic bond issuance schedules with banking liquidity cycles.",
-                    actionPlan: "१. अल्पकालीन: अर्थ मन्त्रालय र केन्द्रीय बैंकका उच्च अधिकारी सम्मिलित 'स्थायी मौद्रिक-वित्तीय समन्वय डेस्क' क्रियाशील बनाउने।\n२. मध्यकालीन: सरकारको आन्तरिक ऋण उठाउने तालिका (Internal Debt Calendar) लाई बैंकिङ प्रणालीको तरलता चक्रसँग टाइअप गर्ने।\n३. दीर्घकालीन: घाटा बजेटको आकारलाई वास्तुकला सूचक र विदेशी विनिमय सञ्चितिको सुरक्षित सीमा (न्यूनतम ७ महिनाको आयात धान्ने) भित्र नियन्त्रण गर्ने।",
-                    conclusion: "Coordinated fiscal and monetary policies operate like the dual wings of an economic aircraft, working together to keep macroeconomic growth on a stable path."
+                    intro: "समष्टिगत आर्थिक व्यवस्थापन (Macroeconomic Management) का दुईवटा मुख्य खम्बाहरू वित्तीय नीति (Fiscal Policy) र मौद्रिक नीति (Monetary Policy) हुन्। वित्तीय नीति सरकारले बजेट र कर मार्फत सञ्चालन गर्छ भने मौद्रिक नीति केन्द्रीय बैंकले ब्याजदर र मुद्रा आपूर्ति नियन्त्रण मार्फत चलाउँछ। यी दुई नीतिहरू एकै दिशामा सञ्चालित (Synchronized) हुनुपर्छ। यदि सरकारले भोटको राजनीति वा पपुलिजमका लागि विस्तारकारी नीति लिने र केन्द्रीय बैंकले मुद्रास्फीति रोक्न सङ्कुचनकारी नीति लिएमा अर्थतन्त्रमा गम्भीर असन्तुलन पैदा हुन्छ।",
+                    bodyTitle: "वित्तीय र मौद्रिक नीति बीच असन्तुलन हुँदा अर्थतन्त्रमा पर्ने बहुआयामिक असरहरू",
+                    bodyLong: "१. निजी क्षेत्रको लगानी विस्थापित हुनु (Crowding Out Effect):\n- सरकारले विस्तारकारी बजेटको घाटा पूर्ति गर्न बजारबाट आन्तरिक ऋण (Domestic Debt) उठाउँदा बैंकिङ प्रणालीको तरलता सरकारले तान्छ। यसले गर्दा ब्याजदर बढ्छ र निजी क्षेत्रले लगानीका लागि कर्जा नपाउने वा महँगो हुने स्थिति बन्छ।\n\n२. बाह्य क्षेत्रमा चाप र विदेशी विनिमय सञ्चितिमा ह्रास (BOP and Forex Depletion):\n- सरकारी खर्च बढ्दा बजारमा माग बढ्छ, जुन नेपाल जस्तो आयातमुखी अर्थतन्त्रमा सिधै आयात (Imports) मा परिणत हुन्छ। आयात बढ्दा व्यापार घाटा चुलिन्छ, शोधनान्तर स्थिति (BOP) ऋणत्मक हुन्छ र केन्द्रीय बैंकको विदेशी मुद्रा सञ्चिति तीव्र रूपमा घट्छ।\n\n३. नीतिगत अनिश्चितता र बजार मन्दी (Policy Stagflation Risks):\n- एकातिर सरकारले बजार चलायमान बनाउन खोज्ने, अर्कोतिर केन्द्रीय बैंकले कर्जा नियन्त्रण र चालु पूँजी कर्जा मार्गदर्शन मार्फत कडाइ गर्दा उद्योगी व्यवसायीहरू अलमलमा पर्छन्। यसले कुल माग घटाई अर्थतन्त्रलाई आर्थिक मन्दी (Recession) वा न्यून आर्थिक वृद्धिदर तर्फ धकेल्छ।\n\n४. मुद्रास्फीति नियन्त्रणमा कठिनाइ (High Structural Inflation):\n- विस्तारकारी नीतिले बढाएको बजारको तरलताले अनुत्पादक क्षेत्रमा मूल्य वृद्धि गराउँछ, जसलाई केन्द्रीय बैंकको ब्याजदर वृद्धिले मात्र रोक्न सक्दैन।",
+                    recommendations: "१. स्थायी समन्वय समिति: अर्थ मन्त्रालय र नेपाल राष्ट्र बैंकबीच नियमित संवादका लागि अर्थमन्त्री र गभर्नर सम्मिलित कानुनी रूपमै शक्तिशाली 'म्याक्रो-इकोनोमिक कोअर्डिनेसन काउन्सिल' सक्रिय हुनुपर्छ।\n२. यथार्थपरक बजेट निर्माण: सरकारले महत्वाकांक्षी र वितरणमुखी बजेट बनाउने प्रवृत्ति छोडी केन्द्रीय बैंकको मौद्रिक प्रक्षेपण र बैंकिङ प्रणालीको वास्तविक तरलता स्थिति (Liquidity Base) का आधारमा मात्र बजेटको आकार तय गर्नुपर्छ।\n३. ऋण परिचालनको सीमा: सरकारको आन्तरिक ऋण उठाउने तालिका (Debt Calendar) लाई राष्ट्र बैंकले बैंकिङ बजारमा तरलता बढी भएको समय पारेर मात्र स्वीकृत गर्नुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: आगामी त्रैमासिक भित्र अर्थ मन्त्रालयका योजना महाशाखा प्रमुख र राष्ट्र बैंकका अनुसन्धान विभाग प्रमुख रहने गरी रियल-टाइम डाटा सेयरिङ डेस्क स्थापना गर्ने।\n२. मध्यकालीन: आगामी मौद्रिक नीति तर्जुमा गर्नु अगाडि बजेट वक्तव्यको घाटा वित्तीयकरण ढाँचा र मुद्रास्फीतिको लक्ष्य बीच गणितीय तादात्म्यता मिलाउने।\n३. दीर्घकालीन: नेपाल राष्ट्र बैंकको स्वायत्तता (Institutional Autonomy) लाई कानुनी रूपमै अक्षुण्ण राख्दै वित्तीय घाटाको सीमालाई जिडिपीको निश्चित प्रतिशत भन्दा माथि जान नदिने गरी वित्तीय अनुशासन कडा गर्ने।",
+                    conclusion: "मौद्रिक र वित्तीय नीति अर्थतन्त्र रूपी रथका दुई पाङ्ग्रा हुन्। यी दुईबीच पूर्ण तादात्म्यता र समन्वय भए मात्र समष्टिगत आर्थिक स्थायित्व कायम भई दिगो आर्थिक वृद्धि हासिल हुन सक्छ।"
                 },
                 {
                     shortTitle: "Q10: चालु पूँजी कर्जा मार्गदर्शन (Working Capital Loan Guidelines)",
                     marks: 10,
                     text: "नेपाल राष्ट्र बैंकद्वारा जारी चालु पूँजी कर्जा मार्गदर्शनको मूल उद्देश्य के हो? यसले वाणिज्य बैंकहरूको कर्जा गुणस्तरमा पार्ने प्रभाव समीक्षा गर्नुहोस्। (४+६=१०)",
-                    synergy: "चालु पूँजी कर्जाको सदुपयोगिता सुनिश्चित हुँदा बैंकहरूको निष्क्रिय कर्जा (NPL) वास्तविक रूपमा वर्गीकरण भई वित्तीय प्रणालीको स्वास्थ्य मजबुत हुन्छ।",
+                    synergy: "चालु पूँजी कर्जाको सदुपयोगिता सुनिश्चित हुँदा बैंकहरूको निष्क्रिय कर्जा (NPL) वास्तविक रूपमा वर्गीकरण भई वित्तीय प्रणालीको स्वास्थ्य मजबुट हुन्छ।",
                     legal: [
-                        { title: "नेपाल राष्ट्र बैंक ऐन", details: "दफा ७९, बैंक तथा वित्तीय संस्थाहरूलाई एकीकृत निर्देशन र मार्गदर्शन जारी गर्ने केन्द्रीय बैंकको नियमनकारी अधिकार।" },
+                        { title: "नेपाल राष्ट्र बैंक ऐन", details: "दफा ७९, बैंक तथा वित्तीय संस्थाहरूलाई एकीकृत निर्देशन, विनियम र मार्गदर्शन जारी गर्ने केन्द्रीय बैंकको नियमनकारी कानूनी अधिकार।" },
                         { title: "BAFIA, २०७३", details: "बैंकहरूको निक्षेपकर्ताको हकहित संरक्षण र कर्जा लगानीको जोखिम न्यूनीकरण सम्बन्धी बाध्यात्मक कानुनी व्यवस्थाहरू।" }
                     ],
-                    intro: "Define working capital loans as credit extensions meant for short-term operating cycles. Explain the regulatory need to stop the risky habit of rolling over short-term funds into long-term fixed investments.",
-                    bodyTitle: "Credit Quality Transformation Matrix",
-                    bodyGrid: [
-                        { title: "📊 Genuine Credit Mapping", desc: "Forces borrowers to link credit extensions directly to real operating revenues and verifiable inventory turnover metrics." },
-                        { title: "📉 Rollover Risk Reduction", desc: "Blocks the systemic diversion of short-term banking loans into risky real estate asset plays or speculative stock investments." },
-                        { title: "⚠️ Operational Adaptation", desc: "Creates brief cash flow friction for business accounts adjusting to strict compliance metrics." }
-                    ],
-                    recommendations: "Implement the guidelines gradually to reduce market panic, upgrade credit monitoring systems at commercial banks, and penalize false statements of stock inventory values.",
-                    actionPlan: "१. अल्पकालीन: वाणिज्य बैंकहरूमा चालु पूँजी कर्जाको सीमा अनुगमन गर्न विशेष 'क्रेडिट अडिट सफ्टवेयर' इन्टिग्रेट गर्ने।\n२. मध्यकालीन: ऋणीहरूको वास्तविक स्टक र रिसिभेबल (Stock & Receivables) को आकस्मिक तेस्रो-पक्ष निरीक्षण गराउने प्रणाली लागू गर्ने।\n३. दीर्घकालीन: उद्योगहरूको सञ्चालन चक्र (Operating Cycle Analysis) का आधारमा कर्जाको सीमा स्वचालित रूपमा गणना हुने प्रणाली बनाउने।",
-                    conclusion: "Enforcing structural discipline in working capital allocations limits high-risk systemic exposure and protects the savings of public depositors across commercial bank spaces."
+                    intro: "नेपालको बैंकिङ प्रणालीबाट प्रवाह हुने कुल कर्जाको ठूलो हिस्सा चालु पूँजी कर्जा (Working Capital Loan) ले ओगटेको छ। ऋणीहरूले उद्योग व्यवसायको सञ्चालन चक्र (Operating Cycle) का लागि छोटो अवधिको कर्जा लिने तर सो रकम दीर्घकालीन प्रकृतिको घरजग्गा, सेयर बजार वा अन्य व्यवसायमा डाइभर्ट गर्ने (Fund Diversion) विकृति बढेपछि नेपाल राष्ट्र बैंकले व्यावसायिक कर्जा क्षेत्रलाई व्यवस्थित गर्न 'चालु पूँजी कर्जा मार्गदर्शन' जारी गरेको हो।",
+                    bodyTitle: "मार्गदर्शनको मूल उद्देश्य र वाणिज्य बैंकहरूको कर्जा गुणस्तरमा यसको बहुआयामिक प्रभाव",
+                    bodyLong: "१. मार्गदर्शन जारी गर्नुका मूल उद्देश्यहरू (Core Strategic Objectives):\n- कर्जाको सदुपयोगिता (End-use of Funds): बैंकबाट लिएको पैसा जुन कामको लागि लागिएको हो (जस्तै कच्चा पदार्थ खरिद, स्टक व्यवस्थापन), सोही कार्यमा मात्र प्रयोग भएको सुनिश्चित गर्नु।\n- एभरग्रिनिङ रोक्नु (Anti-Evergreening): ऋणीले पुरानो ऋणको ब्याज तिर्न अर्को बैंकबाट चालु पूँजी शीर्षकमा नयाँ ऋण लिने र कर्जा सधैं नवीकरण गरिरहने वित्तीय विकृति अन्त्य गर्नु।\n- वास्तविक आवश्यकताको मापन: व्यवसायको कुल बिक्री (Turnover) र सञ्चालन चक्रको वैज्ञानिक गणना (अधिकतम २० देखि २५ प्रतिशतसम्म मात्र कर्जा दिने सीमा) को आधारमा वास्तविक कर्जा माग स्थापित गर्नु।\n\n२. वाणिज्य बैंकहरूको कर्जा गुणस्तरमा पार्ने प्रभाव (Impact on Credit Asset Quality):\n- सकारात्मक प्रभाव (Asset Quality Clean-up): कर्जाको वास्तविक सदुपयोगिता जाँचिने हुनाले बैंकहरूको ऋण अनुत्पादक क्षेत्रमा अड्किने सम्भावना कम हुन्छ। यसले भविष्यमा प्रणालीगत खराब कर्जा (Systemic Bad Loans) को जोखिम न्यूनीकरण गर्छ। बैंकहरूको ब्यालेन्स सिट बढी पारदर्शी र वास्तविक हुन्छ।\n- नकारात्मक वा तात्कालिक दबाब (Short-term High NPL Realization): मार्गदर्शनको कडा प्रावधान (जस्तै वार्षिक रूपमा कम्तीमा ७ दिन चालु पूँजी खाता शून्य वा न्यूनतम ब्यालेन्स कायम गर्नुपर्ने) का कारण कर्जा डाइभर्ट गरेका ऋणीहरू डिफल्ट (Default) हुन पुगे। यसले गर्दा बैंकहरूको निष्क्रिय कर्जा (NPL) तात्कालिक रूपमा बढ्न गयो र बैंकहरूको प्रोभिजनिङ लागत बढ्न गई नाफामा संकुचन आयो।",
+                    recommendations: "१. व्यावहारिक परिमार्जन: अर्थतन्त्रको मन्दीको अवस्था हेरी मार्गदर्शनका सुचकहरू (जस्तै कारोबारको सीमा र समय अवधि) लाई क्षेत्रगत रूपमा (उत्पादनमूलक उद्योगलाई खुकुलो र व्यापारिक क्षेत्रलाई कडा) परिमार्जन गरिनुपर्छ।२. बैंकहरूको आन्तरिक क्रेडिट अडिट: वाणिज्य बैंकहरूले केवल कागजी विवरणमा विश्वास नगरी ऋणीको उद्योगस्थलमै पुगी स्टक र रिसिभेबल (Physical Stock Verification) को औचक निरीक्षण गर्ने प्रविधि बढाउनुपर्छ।३. बहुबैंकिङको अन्त्य: एकै ऋणीले धेरै बैंकबाट चालु पूँजी कर्जा लिई सीमा भन्दा बढी ऋण लिने परिपाटी रोक्न कर्जा सूचना केन्द्र (CIB) को डाटालाई रियल-टाइम बनाउनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: सबै वाणिज्य बैंकहरूलाई मार्गदर्शन कार्यान्वयन गर्दा साना र मझौला व्यवसायी (SMEs) लाई नगद प्रवाह व्यवस्थापनका लागि थप सफ्ट-लोन विन्डो दिने।\n२. मध्यकालीन: आगामी ६ महिनाभित्र बैंकहरूको कर्जा टोलीलाई कर्जाको अन्त-उपयोग (End-use Monitoring) र नगद प्रवाहमा आधारित अडिट सम्बन्धी उच्च-स्तरीय तालिम दिने।\n३. दीर्घकालीन: उद्योगहरूको सञ्चालन चक्र स्वचालित रूपमा वित्तीय विवरणबाटै अनुगमन गर्ने 'Risk-Based Credit Rating Dashboard' लागू गर्ने।",
+                    conclusion: "चालु पूँजी कर्जा मार्गदर्शन बैंकिङ क्षेत्रमा वित्तीय अनुशासन कायम गर्ने एउटा कडा तर अनिवार्य एन्टिबायोटिक हो। यसको सफल कार्यान्वयनले बैंकहरूको सम्पत्तिको गुणस्तर सुधार्न र निक्षेपकर्ताको धन सुरक्षित राख्न दीर्घकालीन मद्दत गर्छ।"
                 },
                 {
                     shortTitle: "Q11: पूँजी पर्याप्तता ढाँचा (CAF) र बैंक वर्गीकरण",
@@ -398,18 +458,15 @@
                     synergy: "पूँजी पर्याप्तता ढाँचा (CAF) ले बैंकहरूको जोखिम भारित सम्पत्ति (Risk Weighted Assets) लाई थेग्न सक्ने 'बफर' निर्माण गरी बैंकिङ क्षेत्रमा प्रणालीगत जोखिम (Systemic Risk) न्यूनीकरण गर्दछ।",
                     legal: [
                         { title: "NRB एकीकृत निर्देशन - निर्देशन नं १", details: "पूँजी पर्याप्तता सम्बन्धी व्यवस्था। वर्ग 'क' का लागि CAF २०१५ (Basel III) र राष्ट्रिय स्तरका 'ख' र 'ग' का लागि CAF २००७/२००८ को परिमार्जित व्यवस्था।" },
-                        { title: "बैंक तथा वित्तीय संस्था ऐन, २०७३", details: "दफा ४०, वित्तीय संस्थाहरूले तोकिएको न्यूनतम पूँजी कोष कायम गर्नुपर्ने र सो नगरेमा हुने कारबाहीको कानूनी व्यवस्था।" }
+                        { title: "बैंक तथा वित्तीय संस्था ऐन, २०७३", details: "दफा ४०, वित्तीय संस्थाहरूले तोकिएको न्यूनतम पूँजी कोष कायम गर्नुपर्ने र सो नगरेमा केन्द्रीय बैंकले गर्ने कारबाहीको कानूनी व्यवस्था।" }
                     ],
-                    intro: "Understand capital adequacy guidelines as a vital safety cushion designed to protect depositors by ensuring a bank holds enough capital to manage its operational risks.",
-                    bodyTitle: "Regulatory Tier Comparison Matrix",
-                    bodyGrid: [
-                        { title: "🏛️ Class 'A' Tier (Basel III)", desc: "Enforces a strict 11% total capital fund requirement, featuring advanced Counter-Cyclical Buffers and Leverage Ratios." },
-                        { title: "⚙️ National Class 'B' Tier", desc: "Follows simplified credit risk assessment templates under the older framework baseline without complex buffer layers." },
-                        { title: "⚠️ Systemic Protection", desc: "Adjusting risk-weighted targets ensures that larger institutions can withstand sudden financial market shocks." }
-                    ],
-                    recommendations: "Bring all national-level financial institutions under Basel III metrics step-by-step, upgrade stress-testing templates, and penalize institutions that misclassify assets to artificially boost their ratios.",
-                    actionPlan: "१. अल्पकालीन: वर्ग 'क' र राष्ट्रिय स्तरका 'ख' बैंकहरूको 'Common Equity Tier 1 (CET1)' पूँजीको मासिक रिपोर्टिङ अनिवार्य गर्ने।\n२. मध्यकालीन: विकास बैंकहरूलाई क्रमिक रूपमा बेसेल-३ को सरलीकृत संस्करण (Simplified Basel III) मा स्तरोन्नति गर्न सङ्क्रमणकालीन रोडम्याप दिने।\n३. दीर्घकालीन: बैंकहरूको जोखिम भारित सम्पत्ति (RWA) को शुद्धता जाँच्न केन्द्रीय बैंकको सुपरिवेक्षण टोलीद्वारा 'अन्तरनिहित जोखिम अडिट' गराउने।",
-                    conclusion: "Maintaining proper capital ratios builds long-term confidence in the financial system, keeping institutions solvent even during unexpected credit cycles."
+                    intro: "पूँजी पर्याप्तता ढाँचा (Capital Adequacy Framework - CAF) बैंक तथा वित्तीय संस्थाहरूको वित्तीय स्वास्थ्य र स्थायित्व नाप्ने सबैभन्दा महत्त्वपूर्ण विश्वव्यापी परिसूचक हो। बैंकहरूले सर्वसाधारणको निक्षेप परिचालन गरी कर्जा प्रवाह गर्दा सृजना हुने विभिन्न जोखिमहरू (Credit, Market, Operational Risk) थेग्नका लागि आफ्नो पुँजीगत कोष कति बलियो राखेका छन् भनी यसले निर्धारण गर्छ। नेपाल राष्ट्र बैंकले संस्थाको आकार र प्रणालीगत गम्भीरताका आधारमा वर्ग 'क' र वर्ग 'ख' का बैंकहरूका लागि फरक-फरक पूँजी पर्याप्तता ढाँचाहरू लागू गरेको छ।",
+                    bodyTitle: "वर्ग 'क' र राष्ट्रिय स्तरका वर्ग 'ख' बैंकहरूको CAF सम्बन्धी कानुनी भिन्नता",
+                    bodyLong: "१. वर्ग 'क' वाणिज्य बैंकहरूका लागि व्यवस्था (CAF 2015 - Basel III Framework):\n- अन्तर्राष्ट्रिय स्तरको बेसेल-३ मापदण्डमा आधारित पूर्ण पूँजी पर्याप्तता ढाँचा, २०१५ लागू गरिएको छ।\n- न्यूनतम कुल पूँजी कोष (Total Capital Fund) जोखिम भारित सम्पत्तिको कम्तीमा ११ प्रतिशत कायम गर्नुपर्छ, जसमा प्राथमिक पूँजी (Tier 1 - Common Equity) न्यूनतम ८.५ प्रतिशत हुनु अनिवार्य छ।\n- यसमा अतिरिक्त पूँजीगत सुरक्षा बफरहरू जस्तै 'काउन्टर-साइक्लिकल बफर' (Counter-Cyclical Buffer) र 'पूँजी संरक्षण बफर' (Capital Conservation Buffer - 2.5%) को कडा व्यवस्था छ, जुन बजार मन्दीको बेला जोखिम थेग्न प्रयोग हुन्छ।\n- तरलता मापनका लागि तरलता कभरेज रेसियो (LCR) र खुद स्थिर कोष रेसियो (NSFR) को कडा अनुगमन हुन्छ।\n\n२. राष्ट्रिय स्तरका वर्ग 'ख' विकास बैंकहरूका लागि व्यवस्था (CAF 2007/2008 Modified Framework):\n- यस्ता बैंकहरूका लागि बेसेल-२ मा आधारित सरलीकृत पूँजी पर्याप्तता ढाँचा (Modified CAF 2007) लागू छ।\n- न्यूनतम कुल पूँजी कोष ११ प्रतिशत नै भए पनि प्राथमिक पूँजी (Tier 1) न्यूनतम ५.५ प्रतिशत मात्र कायम गरे पुग्छ (वाणिज्य बैंकको भन्दा खुकुलो)।\n- यिनीहरूका लागि बेसेल-३ का जटिल सुरक्षा बफरहरू (Countercyclical buffers) र वित्तीय लिभरेज रेसियो (Leverage Ratios) अनिवार्य गरिएको छैन। जोखिमको भार गणना गर्ने सुत्र पनि सरल प्रकृतिको छ।",
+                    recommendations: "१. क्रमिक स्तरोन्नति: राष्ट्रिय स्तरका ठूला विकास बैंकहरूको कारोबार र जोखिमको आकार वाणिज्य बैंक सरह भइसकेकाले उनीहरूलाई पनि चरणबद्ध रूपमा बेसेल-३ को सरलीकृत मोडेलमा लैजानुपर्छ।\n२. सम्पत्ति शुद्धीकरण र जोखिम भार: दुवै वर्गका बैंकहरूमा कर्जाको वर्गीकरण अनुसार जोखिमको भार (Risk Weights) निर्धारण गर्दा धितोको भन्दा ऋणीको नगद प्रवाह र क्रेडिट स्कोरिङ (Credit Scoring) लाई बढी भार दिने गरी ढाँचा परिमार्जन गर्नुपर्छ।\n३. कडा सुपरीवेक्षण: पूँजी पर्याप्तता कोष कृत्रिम रूपमा बढाउन (Window Dressing) नदिन राष्ट्र बैंकको अफ-साइट र अन-साइट सुपरीवेक्षण प्रणालीलाई प्रविधिमैत्री र कडा बनाउनुपर्छ।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: चालू आर्थिक वर्षभित्र न्यूनतम प्राथमिक पूँजी कोष अनुपात कायम नगर्ने बैंकहरूलाई शिघ्र सुधारात्मक कारबाही (Prompt Corrective Action - PCA) अन्तर्गत लाभांश वितरणमा तत्काल रोक लगाउने।\n२. मध्यकालीन: ६ महिनाभित्र वर्ग 'ख' का बैंकहरूका लागि पूँजी योजना (Capital Planning Tool) तर्जुमा गर्न नयाँ निर्देशिका जारी गर्ने।\n३. दीर्घकालीन: सम्पूर्ण बैंकिङ प्रणालीको जोखिम भारित सम्पत्ति स्वचालित रूपमा गणना गर्न केन्द्रीय बैंकमा 'एकीकृत रिस्क रिपोर्टिङ पोर्टल' सफ्टवेयर सञ्चालन गर्ने।",
+                    conclusion: "पूँजी पर्याप्तता ढाँचा बैंकिङ क्षेत्रलाई टाट पल्टिनबाट जोगाउने कवच हो। संस्थाको प्रकृति अनुसार नियमनको कढाइ र लचकता सन्तुलन गर्दै बैंकिङ क्षेत्रको साख जोगाउनु केन्द्रीय बैंकको मूल दायित्व हो।"
                 },
                 {
                     shortTitle: "Q12: निष्क्रिय कर्जा (NPL) व्यवस्थापन र धितो मूल्यांकन",
@@ -417,39 +474,37 @@
                     text: "नेपालको बैंकिङ क्षेत्रमा निष्क्रिय कर्जा (NPL) बढ्नुका बाह्य र आन्तरिक कारणहरू केलाउँदै यसले बैंकको नाफा र लाभांश क्षमतामा पार्ने असरहरू चर्चा गर्नुहोस्। (६+४=१०)",
                     synergy: "धितोको कमसल मूल्यांकन (Overvaluation of Collateral) र व्यापारिक चक्रमा आएको मन्दीले गर्दा बैंकहरूको कर्जा नोक्सानी व्यवस्था (Loan Loss Provisioning) बढेर नाफामा प्रत्यक्ष संकुचन आउँछ।",
                     legal: [
-                        { title: "NRB एकीकृत निर्देशन - निर्देशन नं २", details: "कर्जा वर्गीकरण र कर्जा नोक्सानी व्यवस्था (Loan Loss Provisioning) सम्बन्धी कडा व्यवस्था।" },
-                        { title: "सम्पत्ति शुद्धीकरण निवारण ऐन", details: "उच्च मूल्यका व्यावसायिक कर्जा प्रवाह गर्दा ऋणीको वास्तविक स्रोत र ग्राहक पहिचान (KYC) को गम्भीर परीक्षण।" }
+                        { title: "NRB एकीकृत निर्देशन - निर्देशन नं २", details: "कर्जा वर्गीकरण र कर्जा नोक्सानी व्यवस्था (Loan Loss Provisioning) सम्बन्धी कडा व्यवस्था (Pass, Watchlist, Substandard, Doubtful, Loss)।" },
+                        { title: "सम्पत्ति शुद्धीकरण निवारण ऐन", details: "उच्च मूल्यका व्यावसायिक कर्जा प्रवाह गर्दा ऋणीको वास्तविक आर्थिक स्रोत र ग्राहक पहिचान (KYC) को गम्भीर प्राविधिक परीक्षण।" }
                     ],
-                    intro: "Analyze Non-Performing Loans (NPL) as credit accounts where principal or interest payments remain overdue for 90 days or more. High NPL rates lock up bank funds and trigger strict provisioning costs.",
-                    bodyTitle: "Financial Core Damage Mechanisms",
-                    bodyGrid: [
-                        { title: "⚠️ Internal Credit Pitfalls", desc: "Weak initial borrower risk screening, insider lending issues, and overvaluing real estate collateral during the loan approval phase." },
-                        { title: "📉 External Economic Shocks", desc: "Broader business slowdowns, aggregate consumption drops, and liquidity bottlenecks in real estate markets." },
-                        { title: "💸 Profit Margin Damage", desc: "Forcing institutions to move revenues out of active investments into non-earning loan-loss provision accounts." }
-                    ],
-                    recommendations: "Enforce independent, professional collateral appraisals, improve data sharing with the Credit Information Bureau (CIB), and accelerate judicial debt recovery through the Debt Recovery Tribunal.",
-                    actionPlan: "१. अल्पकालीन: धितो मूल्यांकनकर्ता (Valuators) हरूको व्यावसायिक जवाफदेहिता तय गर्न बैंकहरूमा 'स्वतन्त्र मूल्यांकनकर्ता प्यानल' पुनर्गठन गर्ने।\n२. मध्यकालीन: निष्क्रिय कर्जा ५ प्रतिशत नाघेका बैंकहरूलाई प्रिमियम थपेर बोनस सेयर वा नगद लाभांश वितरण गर्न पूर्ण बन्देज लगाउने।\n३. दीर्घकालीन: खराब कर्जाको छिटो फस्र्यौटका लागि 'एसेट रिकभरी कम्पनी' (Asset Recovery Company - ARC) स्थापना सम्बन्धी कानुनी मस्यौदा पारित गर्ने।",
-                    conclusion: "Proactively managing credit risk protects bank balance sheets, ensuring institutions maintain the lending capacity needed to support economic development."
+                    intro: "बैंकिङ व्यवसायमा कर्जा लगानी गर्दा जोखिम हुनु स्वाभाविक हो, तर जब कर्जाको सावाँ वा ब्याज भुक्तानी हुनुपर्ने निर्धारित समयभन्दा ९० दिन वा सोभन्दा बढी अवधिले भाखा नाघ्छ, त्यस्तो कर्जालाई निष्क्रिय कर्जा (Non-Performing Loans - NPL) भनिन्छ। हाल नेपालको बैंकिङ क्षेत्रमा निष्क्रिय कर्जाको दर लगातार बढ्दै जानु वित्तीय क्षेत्रको स्थायित्वका लागि एउटा ठूलो चुनौती बनेको छ। यसले बैंकहरूको नगद प्रवाह र नाफा दुवैमा गम्भीर धक्का पुऱ्याउँछ।",
+                    bodyTitle: "निष्क्रिय कर्जा बढ्नुका आन्तरिक एवं बाह्य कारण र बैंकको वित्तीय स्वास्थ्यमा असर",
+                    bodyLong: "१. निष्क्रिय कर्जा बढ्नुका आन्तरिक कारणहरू (Internal Credit Management Failures):\n- कर्जा प्रवाह गर्दा ऋणीको नगद प्रवाह (Cash Flow) र व्यवसायको संभाव्यता नहेरी केवल घरजग्गा धितोको बजार मूल्यको आधारमा ऋण दिने प्रवृत्ति (Collateral-based Lending)।\n- धितो मूल्यांकनकर्ता (Valuators) सँगको मिलेमतोमा जग्गाको कृत्रिम मूल्य खडा गरी अधिक कर्जा प्रवाह (Overvaluation of Assets) गरिनु।\n- कर्जा स्वीकृत गरेपछि सो रकम जुन उद्देश्यका लागि लगिएको हो, सोही कार्यमा प्रयोग भयो कि भएन भनी निरन्तर अनुगमन (Post-disbursement Monitoring) नगर्नु।\n\n२. निष्क्रिय कर्जा बढ्नुका बाह्य कारणहरू (External Macroeconomic Shocks):\n- राष्ट्रिय तथा अन्तर्राष्ट्रिय आर्थिक मन्दीका कारण बजारमा कुल माग (Aggregate Demand) घट्नु, जसले गर्दा उद्योग व्यवसायहरूको नगद सङ्कलन र नाफा संकुचित भई बैंकको किस्ता तिर्न नसक्नु।\n- घरजग्गा र सेयर बजारमा आएको सुस्तता र कारोबारमा मन्दी, जसका कारण ऋणीहरूले सम्पत्ति बिक्री गरेर पनि ऋण चुक्ता गर्न नसक्नु।\n- ब्याजदरमा हुने तीव्र उतारचढाव र व्यावसायिक लागतमा भएको वृद्धि।\n\n३. बैंकको नाफा र लाभांश क्षमतामा पार्ने असर (Impact on Profitability & Dividend Yield):\n- प्रोभिजनिङ लागतमा वृद्धि: राष्ट्र बैंकको नियम अनुसार ऋणको भाखा नाघ्दै जाँदा (Substandard को लागि २५%, Doubtful को ५०%, र Loss को लागि १००%) नाफाबाट रकम छुट्याएर कर्जा नोक्सानी व्यवस्था (Loan Loss Provision) मा राख्नुपर्छ। यसले बैंकको खुद नाफा (Net Profit) सिधै घटाउँछ।\n- ब्याज आम्दानी रोकिनु: निष्क्रिय कर्जाको ब्याजलाई बैंकले आम्दानीमा लेख्न पाउँदैन (नगद असुल नभएसम्म सस्पेन्स एकाउन्टमा राख्नुपर्छ), जसले 'Return on Assets (ROA)' र लाभांश दिने क्षमता (Dividend Yield Ratio) भारी मात्रामा संकुचित गराउँछ। सेयर बजारमा बैंकको सेयर मूल्य घट्छ।",
+                    recommendations: "१. एसेट रिकभरी कम्पनी (Asset Recovery Company - ARC): बैंकहरूको ब्यालेन्स सिटबाट खराब कर्जा छुट्टै खरिद गरी असुली प्रक्रिया चलाउने शक्तिशाली राष्ट्रिय एसेट रिकभरी कम्पनी स्थापना गर्ने कानुन ल्याउनुपर्छ।\n२. धितो मूल्यांकनमा कडाइ: धितो मूल्यांकन गर्ने इन्जिनियरहरूको कानुनी जवाफदेहिता स्पष्ट गरी गलत मूल्यांकन गर्नेलाई फौजदारी कसुर र लाइसेन्स खारेज सम्बन्धी कडा कारबाही हुनुपर्छ।\n३. कर्जा सूचना प्रणालीको सुदृढीकरण: ऋणीको व्यक्तिगत क्रेडिट स्कोरिङ प्रणाली विकास गर्ने र कालोसूची सम्बन्धी व्यवस्थालाई अझ प्रभावकारी बनाउने।",
+                    actionPlanType: "text",
+                    actionPlan: "१. अल्पकालीन: वाणिज्य बैंकहरूमा खराब कर्जा असुलीका लागि कार्यकारी प्रमुख (CEO) को प्रत्यक्ष नेतृत्वमा 'Urgent Non-Performing Asset (NPA) Recovery Taskforce' गठन गर्ने।\n२. मध्यकालीन: ६ महिनाभित्र धितो लिलामी प्रक्रियालाई छिटो बनाउन ऋण असुली न्यायाधीकरण (Debt Recovery Tribunal) को इजलास र जनशक्ति थप गर्न कानुन मन्त्रालयसँग समन्वय गर्ने।\n३. दीर्घकालीन: कर्जा प्रवाह प्रणालीलाई मानवरहित र डाटामा आधारित बनाउन 'Digital Credit Scoring Model' अनिवार्य गर्ने।",
+                    conclusion: "निष्क्रिय कर्जा बैंकको वित्तीय स्वास्थ्यको क्यान्सर जस्तै हो। आन्तरिक कर्जा व्यवस्थापनमा सुधार र बाह्य अर्थतन्त्रलाई चलायमान बनाउने नीतिहरू बीच समन्वय गरेर मात्र बैंकिङ क्षेत्रको साख जोगाउन सकिन्छ।"
                 },
                 {
-                    shortTitle: "CS3: [25 MARKS CASE STUDY] समष्टिगत तरलता संकुचन र प्रणालीगत बैंकिङ जोखिम",
+                    shortTitle: "CS3: समष्टिगत तरलता संकुचन र प्रणालीगत बैंकिङ जोखिम",
                     marks: 25,
                     text: "CASE STUDY SCENARIO:\nनेपालको समष्टिगत अर्थतन्त्रमा बाह्य क्षेत्रको चाप (BOP Deficit) र उच्च मुद्रास्फीतिका कारण नेपाल राष्ट्र बैंकले कडा मौद्रिक नीति अख्तियार गर्दछ। यसै समयमा सरकारको कमजोर पुँजीगत खर्चका कारण राष्ट्रिय ढुकुटीमा अर्बौं रकम निष्क्रिय रहँदा बैंकिङ प्रणालीमा निक्षेप सङ्कलन सुस्त हुन्छ र प्रणालीगत तरलता संकुचन (Liquidity Crunch) उत्पन्न हुन्छ। केही ठूला व्यावसायिक घरानाहरूले बैंकबाट लिएको बहुबैंकिङ कर्जा (Multiple Banking Loans) को सावाँ-ब्याज भुक्तानी गर्न नसक्दा तीनवटा ठूला वाणिज्य बैंकहरूको निष्क्रिय कर्जा (NPL) ह्वात्तै बढेर ४.८ प्रतिशत पुग्छ र पूँजी पर्याप्तता कोष (Core Capital Fund Ratio) न्यूनतम सीमाभन्दा तल ओर्लिन्छ। यस खबरले सेयर बजार (NEPSE) मा ती बैंकहरूको सेयर मूल्य तीव्र रूपमा गिरावट आउँछ र सर्वसाधारण निक्षेपकर्ताहरूमा त्रासको वातावरण सिर्जना हुन्छ।\n\nयस परिदृश्यको आधारमा देहायका प्रश्नहरूको उत्तर दिनुहोस्:\n१. यस वित्तीय संकटका मुख्य समष्टिगत आर्थिक (Macroeconomic) र नियमनकारी (Regulatory) कारणहरू के-के हुन्? गम्भीर चिरफार गर्नुहोस्। (१० मार्क्स)\n२. नेपाल राष्ट्र बैंक ऐन र बैंक तथा वित्तीय संस्था ऐन (BAFIA) का व्यवस्थाहरू बमोजिम केन्द्रीय बैंकले चाल्नुपर्ने तत्कालीन सुधारात्मक कदमहरू (Prompt Corrective Actions) के-के हुन सक्छन्? (७ मार्क्स)\n३. यस प्रणालीगत जोखिम न्यूनीकरण गरी बैंकिङ क्षेत्रमा सर्वसाधारणको विश्वास कायमै राख्न र देशको आर्थिक स्थायित्व जोगाउन एक व्यावहारिक, कार्यान्वयनयोग्य कार्ययोजना (Action Plan Framework) तयार गर्नुहोस्। (८ मार्क्स)",
                     synergy: "यस प्रणालीगत संकटलाई सुल्झाउन केन्द्रीय बैंकको 'अन्तिम ऋणदाता' (Lender of Last Resort) को भूमिका, बेसेल-३ को तरलता कभरेज रेसियो (LCR) र एकीकृत निर्देशनको सुधारात्मक कारबाही (PCA) को कडा कार्यान्वयन आवश्यक छ।",
                     legal: [
-                        { title: "नेपाल राष्ट्र बैंक ऐन, २०५८", details: "दफा ८६, समस्याग्रस्त बैंकहरूको पहिचान, व्यवस्थापन नियन्त्रणमा लिने अधिकार, र अन्तिम ऋणदाताको रूपमा विशेष तरलता सुविधा।" },
-                        { title: "बैंक तथा वित्तीय संस्था ऐन (BAFIA), २०७३", details: "दफा ५२ (कर्जा असुली, धितो जफत तथा लिलामी सम्बन्धी कडा कानूनी अधिकार) र शिघ्र सुधारात्मक कारबाही सम्बन्धी व्यवस्थाहरू।" }
+                        { title: "नेपाल राष्ट्र बैंक ऐन, २०५८", details: "दफा ८६, समस्याग्रस्त बैंकहरूको पहिचान, व्यवस्थापन नियन्त्रणमा लिने अधिकार, र अन्तिम ऋणदाता (Lender of Last Resort) को रूपमा विशेष तरलता सुविधा।" },
+                        { title: "बैंक तथा वित्तीय संस्था ऐन (BAFIA), २०७३", details: "दफा ५२ (कर्जा असुली, धितो जफत तथा लिलामी सम्बन्धी कडा कानूनी अधिकार) र शिघ्र सुधारात्मक कारबाही सम्बन्धी व्यवस्था।" }
                     ],
-                    intro: "Analyze this high-stress macroeconomic case profile as a multi-layered financial shock wave where structural fiscal spending delays collide with restrictive monetary controls, testing the system's overall survival capacity.",
-                    bodyTitle: "Macro Financial Contagion Transmission Vectors",
-                    bodyGrid: [
-                        { title: "⚠️ Liquidity Inflows Blocked", desc: "Delays in capital spending trap cash reserves inside the central bank, leaving commercial bank networks short on liquidity." },
-                        { title: "⚙️ Concentration Credit Exposure", desc: "Allowing major business cartels to secure overlapping lines of credit without tight, real-time exposure tracking across competing institutions." },
-                        { title: "🧠 Market Sentiment Contagion", desc: "Falling NEPSE valuations combined with dropping capital adequacy metrics erode depositor confidence, raising the risk of local bank runs." }
+                    intro: "प्रस्तुत परिदृश्यले समष्टिगत आर्थिक नीति (Macroeconomic Policy Gap) र बैंकिङ क्षेत्रको नियमनकारी संवेदनशीलता बीचको गम्भीर प्रणालीगत संकट (Systemic Banking Crisis) लाई चित्रण गर्दछ। जब बाह्य क्षेत्रको चाप (BOP Deficit) लाई नियन्त्रण गर्न केन्द्रीय बैंकले कडा/सङ्कुचनकारी मौद्रिक नीति लिन्छ, र सोही समयमा सरकारले पुँजीगत खर्च गर्न नसकी राष्ट्रिय ढुकुटीमा पैसा थुप्रिन्छ, तब बजारमा तरलताको चरम अनिकाल (Liquidity Crunch) सिर्जना हुन्छ। यसले बैंकहरूको निक्षेप बढाउन सक्दैन तर ठूला ऋणीहरूको बहुबैंकिङ डिफल्ट (Consortium/Multiple Loan Default) का कारण बैंकहरूको निष्क्रिय कर्जा (NPL) बढाउँछ र पूँजी कोष क्षयीकरण गराउँछ। सेयर बजार र निक्षेपकर्तामा फैलिने यो त्रास अन्ततः 'बैंक रन' (Bank Run) र वित्तीय पतनको कारण बन्न सक्छ।",
+                    bodyTitle: "१. वित्तीय संकटका मुख्य समष्टिगत आर्थिक र नियमनकारी कारणहरूको गम्भीर चिरफार",
+                    bodyLong: "क) समष्टिगत आर्थिक कारणहरू (Macroeconomic Structural Factors):\n- वित्तीय र मौद्रिक नीतिको असन्तुलन: सरकारले पुँजीगत खर्च समयमै नगर्दा केन्द्रीय बैंकमा अर्बौं सरकारी नगद मौज्दात (Government Treasury Cash Buffer) फ्रिज भयो, जसले गर्दा बैंकिङ च्यानलमा तरलता आपूर्ति (Money Supply multiplier) रोकिन पुग्यो।\n- बाह्य क्षेत्रको दबाब (External Sector Shock): शोधनान्तर घाटा (BOP Deficit) का कारण देशबाट विदेशी मुद्रा बाहिरिँदा देशभित्रको नेट लिक्विडिटी संकुचित भयो, जसलाई कडा मौद्रिक नीतिले ब्याजदर बढाएर झन् महँगो बनाइदियो।\n\nख) नियमनकारी र सुपरीवेक्षकीय कमजोरीहरू (Regulatory & Supervisory Failures):\n- बहुबैंकिङ कर्जाको कमजोर अनुगमन: ठूला व्यावसायिक घरानाहरूले एउटै धितो वा कमजोर वित्तीय विवरणका आधारमा बहुसंख्यक बैंकहरूबाट अर्बौंको ऋण लिने (Over-leveraging) कार्यलाई रोक्न राष्ट्र बैंकको 'क्रेडिट कन्सन्ट्रेशन लिमिट' (Credit Concentration Risk Monitoring) अनुगमन कमजोर देखियो।\n- प्रोभिजनिङ र पूँजी कोषको क्षयीकरण: NPL ४.८ प्रतिशत पुग्नु र पूँजी पर्याप्तता कोष (Capital Adequacy Ratio) न्यूनतम सीमा भन्दा तल झर्नुले बैंकहरूले विगतमा कर्जा नोक्सानी व्यवस्था पारदर्शी रूपमा नगरेको र जोखिम भारित सम्पत्ति (Risk Weighted Assets) को व्यवस्थापन सही ढंगले नगरेको (Window Dressing) पुष्टि गर्छ।\n- बजारको मनोविज्ञान र वित्तीय साखको संकट: बैंकिङ वित्तीय सूचकहरू खराब भएको संवेदनशील सूचना बजारमा चुहिँदा निक्षेपकर्ताहरूले पैसा निकाल्ने (Contagion Run Risk) र NEPSE मा सेयर मूल्य ओरालो लाग्ने स्थिति बन्यो।",
+                    recommendations: "१. शिघ्र सुधारात्मक कारबाही (Prompt Corrective Action - PCA) को घोषणा: जिन बैंकहरूको पूँजी पर्याप्तता कोष न्यूनतम सीमा भन्दा तल झरेको छ, उनीहरूलाई राष्ट्र बैंक ऐन र BAFIA को दफा बमोजिम शिघ्र सुधारात्मक कारबाहीको दायरामा ल्याउने। यस अन्तर्गत सेयर होल्डरहरूलाई नगद लाभांश वितरणमा पूर्ण रोक लगाउने, नयाँ कर्जा प्रवाह र नयाँ शाखा विस्तार रोक्का गर्ने र सञ्चालक समितिको भत्ता र सुविधा रोक्ने।\n२. विशेष तरलता सुविधा र अन्तिम ऋणदाताको भूमिका (Lender of Last Resort): निक्षेपकर्ताहरूको सर्वसाधारणको डर हटाउन र बैंक टाट पल्टिनबाट जोगाउन नेपाल राष्ट्र बैंकले ऐनको दफा ८६ बमोजिम ती बैंकहरूलाई 'अन्तिम ऋणदाता सुविधा' अन्तर्गत विशेष ओभरड्राफ्ट (Emergency Liquidity Support) वा स्थायी तरलता सुविधा (SLF) उपलब्ध गराउने। तर, यो सुविधा दिनु अगाडि बैंकको व्यवस्थापनमा राष्ट्र बैंकले आफ्नो विशेष सुपरीवेक्षण टोली (Supervisory Management Takeover) खटाउनुपर्छ।\n३. बहुबैंकिङ व्यवस्थापन र धितो नियन्त्रण: समस्याग्रस्त व्यावसायिक घरानाको सम्पूर्ण बैंक खाता, व्यावसायिक कारोबार र धितोलाई रोक्का गर्ने। BAFIA को दफा ५२ को विशेष अधिकार प्रयोग गरी ३५ दिने सार्वजनिक सूचना जारी गरेर उनीहरूको व्यक्तिगत र संस्थागत सम्पत्ति जफत र लिलामी प्रक्रिया द्रुत गतिमा अघि बढाउने।",
+                    actionPlanType: "table",
+                    actionPlanRows: [
+                        { phase: "🚨 अल्पकालीन (Immediate - 30 Days)", action: "• समस्याग्रस्त बैंकहरूमा सर्वसाधारण निक्षेपकर्ताहरूको निक्षेप सुरक्षित रहेको र केन्द्रीय बैंकले तरलता ब्याकअप दिएको भनी गभर्नरको आधिकारिक वक्तव्य जारी गरी बजारको त्रास शान्त पार्ने।\n• ती बैंकहरूमा शिघ्र सुधारात्मक कारबाही (PCA) लागू गरी नयाँ ठूला कर्जा रोक्का गर्ने र राष्ट्र बैंकको निरन्तर अन-साइट सुपरीवेक्षण टोली खटाउने।", unit: "• नेपाल राष्ट्र बैंक (गभर्नर कार्यालय)\n• बैंक सुपरीवेक्षण विभाग", metric: "• बजार र निक्षेपकर्तामा स्थिरता\n• दैनिक तरलता रिपोर्टिङ र नियन्त्रण" },
+                        { phase: "⚙️ मध्यकालीन (2 - 6 Months)", action: "• पूँजी कोष बढाउनका लागि बैंकका मुख्य प्रवर्द्धकहरू (Promoters) लाई थप पुँजी इन्जेक्सन (Capital Injection) गर्न वा 'राइट सेयर' (Right Shares) जारी गर्न लिखित प्रतिवद्धता गराउने; सो नभएमा सक्षम बैंकसँग जबर्जस्ती गाभ्ने (Forced Merger) प्रक्रिया अघि बढाउने।\n• डिफल्टर व्यावसायिक घरानाको सम्पत्ति ऋण असुली न्यायाधीकरण (DRT) मार्फत द्रुत गतिमा लिलामी गरी नगद असुलउपर गर्ने।", unit: "• बैंक नियमन विभाग\n• ऋण असुली न्यायाधीकरण\n• बैंक सञ्चालक समिति", metric: "• पूँजी पर्याप्तता कोष ११% माथि पुगेको\n• खराब कर्जा रिकभरी कम्तीमा ५०%" },
+                        { phase: "📈 दीर्घकालीन (6 - 12 Months)", action: "• भविष्यमा प्रणालीगत जोखिम रोक्न कर्जा सूचना केन्द्र (CIB) मा ऋणीहरूको 'End-to-End Real-time Credit Exposure Tracking Software' जडान गर्ने।\n• नेपाल सरकारसँग समन्वय गरी पुँजीगत खर्च वर्षको सुरुदेखि नै त्रैमासिक विभाजन गरेर नियमित गर्ने र सरकारी ढुकुटीको पैसा वाणिज्य बैंकहरूमा 'प्रतिस्पर्धात्मक निक्षेप' को रूपमा परिचालन गर्ने स्थायी नीति बनाउने।", unit: "• नेपाल राष्ट्र बैंक\n• अर्थ मन्त्रालय\n• कर्जा सूचना केन्द्र (CIB)", metric: "• रियल-टाइम कर्जा सूचना प्रणाली लागू\n• म्याक्रो तरलता उतारचढाव ५% भित्र सीमित" }
                     ],
-                    recommendations: "Deploy targeted emergency liquidity facilities to solvent but low-cash institutions, temporarily lower structural penalty burdens, and launch intense on-site supervisory team checks.",
-                    actionPlan: "🏆 CASE STUDY SPECIFIC IMPLEMENTABLE ACTION PLAN MATRIX:\n\n| Phase / Timeline | Strategic Corrective Action Required | Responsible Executive Unit | Key Output Metric / Deliverable |\n| :--- | :--- | :--- | :--- |\n| 🚨 SHORT-TERM\n(Immediate to 30 Days) | • Deploy targeted Emergency Liquidity Support or Standing Liquidity Facility (SLF) windows to stabilize interbank market clearing rates.\n• Implement a temporary halt on cash dividend distributions for institutions falling under core capital limits. | • NRB Monetary Management Dept\n• Bank Supervision Directorate | • Stabilized overnight call rates\n• Issue of formal PCA orders |\n| ⚙️ MEDIUM-TERM\n(2 - 6 Months) | • Mandate a full forensic audit of the highly exposed multi-banking accounts to uncover hidden asset diversions.\n• Enforce a time-bound capital injection plan via targeted right shares or institutional mergers. | • Special Inspection Taskforce\n• Commercial Bank Board of Directors | • Forensic asset quality logs\n• Signed commitment agreements |\n| 📈 LONG-TERM\n(6 - 12 Months) | • Integrate a real-time 'Central Credit Registry Digital Platform' to prevent single business groups from over-borrowing across different institutions.\n• Establish a formal Deposit Insurance Framework up to higher threshold guarantees. | • NRB Regulation Department\n• Deposit & Credit Guarantee Fund | • Live Credit Registry deployment\n• Enhanced depositor safety metrics |",
-                    conclusion: "Protecting a complex modern banking environment requires shifting from simple retrospective reporting to proactive, risk-based supervision, ensuring deep systemic stability when under stress."
+                    conclusion: "बैंकिङ क्षेत्र अर्थतन्त्रको ऐना र सार्वजनिक विश्वासको धरोहर हो। यस्ता प्रणालीगत तरलता र कर्जा संकट समाधान गर्न केन्द्रीय बैंकले कठोर अभिभावकीय भूमिका र नियमनकारी डण्डा दुवै सँगै चलाउनुपर्छ। प्रस्तुत कार्ययोजनाले बजारको साख जोगाउँदै देशको समष्टिगत वित्तीय स्थायित्व सुनिश्चित गर्दछ।"
                 }
             ]
         };
@@ -482,8 +537,8 @@
             container.innerHTML = `
                 <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>🧠 Framing & Outlining:</span> <span class="text-white font-bold">${m1} Mins</span></div>
                 <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>✍️ Intro & Context Anchor:</span> <span class="text-white font-bold">${m2} Mins</span></div>
-                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>📊 Main Body Grid Exposition:</span> <span class="text-white font-bold">${m3} Mins</span></div>
-                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>📋 Implementable Action Plan:</span> <span class="text-white font-bold">${m4} Mins</span></div>
+                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>📊 Main Body Narrative Build:</span> <span class="text-white font-bold">${m3} Mins</span></div>
+                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>📋 Action Plan Roadmap Execution:</span> <span class="text-white font-bold">${m4} Mins</span></div>
                 <div class="flex justify-between pb-1"><span>🏁 Strategic Conclusion Alignment:</span> <span class="text-white font-bold">${m5} Mins</span></div>
             `;
         }
@@ -493,7 +548,7 @@
             if(timerInterval) {
                 clearInterval(timerInterval);
                 timerInterval = null;
-                btn.textContent = "Resume Simulation Timer";
+                btn.textContent = "सिमुलेसन पुनरावृत्ति गर्नुहोस् (Resume)";
                 btn.className = "w-full py-1.5 bg-amber-600 text-white text-xs font-bold rounded-lg cursor-pointer";
             } else {
                 if(timeRemaining <= 0) {
@@ -501,7 +556,7 @@
                     const idx = document.getElementById('repo-question').value;
                     adjustTimeAllocation(questionBank[cat][idx].marks);
                 }
-                btn.textContent = "Pause Timer";
+                btn.textContent = "समय रोक्नुहोस् (Pause)";
                 btn.className = "w-full py-1.5 bg-slate-700 text-white text-xs font-bold rounded-lg cursor-pointer";
                 
                 timerInterval = setInterval(() => {
@@ -510,8 +565,8 @@
                     if(timeRemaining <= 0) {
                         clearInterval(timerInterval);
                         timerInterval = null;
-                        alert("Time limit reached for this exam answer simulation!");
-                        btn.textContent = "Restart Simulation Timer";
+                        alert("यस प्रश्नको निर्धारित समय समाप्त भयो!");
+                        btn.textContent = "पुनः सिमुलेसन सुरु गर्नुहोस्";
                     }
                 }, 1000);
             }
@@ -524,7 +579,7 @@
         }
 
         function revealModelBlueprint() {
-            document.getElementById('blueprint-blur-shield').className = "space-y-4 unblurred-content";
+            document.getElementById('blueprint-blur-shield').className = "space-y-4 unblurred-content print-padding";
         }
 
         function populateQuestions() {
@@ -543,7 +598,7 @@
         }
 
         function loadQuestionBlueprint() {
-            document.getElementById('blueprint-blur-shield').className = "space-y-4 blurred-content";
+            document.getElementById('blueprint-blur-shield').className = "space-y-4 blurred-content print-padding";
             document.getElementById('user-scratchpad').value = '';
 
             const cat = document.getElementById('repo-category').value;
@@ -552,65 +607,204 @@
             if(idx === "" || !questionBank[cat][idx]) return;
             const data = questionBank[cat][idx];
 
-            // 1. Render Big Text Prompt and Marks Badge
             document.getElementById('full-question-display').textContent = data.text;
             const marksBadge = document.getElementById('prompt-weight-badge');
             marksBadge.textContent = `${data.marks} MARKS`;
-            if(data.marks === 25) {
-                marksBadge.className = "text-[10px] font-bold px-2 py-0.5 bg-rose-950 text-rose-400 border border-rose-700 rounded uppercase tracking-wide animate-pulse";
-            } else {
-                marksBadge.className = "text-[10px] font-bold px-2 py-0.5 bg-slate-800 text-slate-300 border border-slate-700 rounded uppercase tracking-wide";
-            }
-
-            // 2. Map structural components to HTML layout fields
+            
             document.getElementById('synergy-bonus-text').textContent = data.synergy;
             document.getElementById('section-1-desc').textContent = data.intro;
             document.getElementById('section-2-title').textContent = data.bodyTitle;
+            document.getElementById('section-2-long-content').textContent = data.bodyLong;
             document.getElementById('section-3-desc').textContent = data.recommendations;
-            document.getElementById('section-4-action-plan').textContent = data.actionPlan;
             document.getElementById('section-5-desc').textContent = data.conclusion;
 
+            // Render Action Plan (List View vs Table View)
+            const targetActionContainer = document.getElementById('action-plan-dynamic-target');
+            targetActionContainer.innerHTML = '';
+
+            if (data.actionPlanType === "table") {
+                let htmlTable = `
+                    <table class="w-full text-left border-collapse border border-slate-300 dark:border-slate-700 text-[11px] mt-2 font-medium">
+                        <thead>
+                            <tr class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+                                <th class="border border-slate-300 p-2 font-bold w-[20%]">तह / समयावधि</th>
+                                <th class="border border-slate-300 p-2 font-bold w-[45%]">रणनीतिक सुधारात्मक कार्य</th>
+                                <th class="border border-slate-300 p-2 font-bold w-[15%]">जिम्मेवार निकाय</th>
+                                <th class="border border-slate-300 p-2 font-bold w-[20%]">अपेक्षित सूचक / प्रतिफल</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                data.actionPlanRows.forEach(row => {
+                    htmlTable += `
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                            <td class="border border-slate-300 p-2 font-bold text-rose-600 whitespace-pre-line">${row.phase}</td>
+                            <td class="border border-slate-300 p-2 whitespace-pre-line">${row.action}</td>
+                            <td class="border border-slate-300 p-2 font-semibold text-slate-700 dark:text-slate-300 whitespace-pre-line">${row.unit}</td>
+                            <td class="border border-slate-300 p-2 font-medium italic text-emerald-600 whitespace-pre-line">${row.metric}</td>
+                        </tr>
+                    `;
+                });
+                htmlTable += `</tbody></table>`;
+                targetActionContainer.innerHTML = htmlTable;
+            } else {
+                targetActionContainer.innerHTML = `<div class="text-xs text-slate-800 dark:text-slate-200 font-semibold whitespace-pre-line leading-relaxed">${data.actionPlan}</div>`;
+            }
+
+            // Legal Anchors mapping
             const anchorsContainer = document.getElementById('legal-anchors-container');
             anchorsContainer.innerHTML = '';
             data.legal.forEach(item => {
                 anchorsContainer.innerHTML += `
                     <div class="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 shadow-sm">
                         <strong class="text-rose-500 block text-[10px] uppercase">${item.title}</strong>
-                        <span class="text-slate-500 dark:text-slate-400 font-medium">${item.details}</span>
+                        <span class="text-slate-600 dark:text-slate-400 font-semibold text-[11px]">${item.details}</span>
                     </div>
                 `;
             });
 
+            // Mini visual grid setup
             const gridContainer = document.getElementById('section-2-grid');
             gridContainer.innerHTML = '';
-            data.bodyGrid.forEach(block => {
-                gridContainer.innerHTML += `
-                    <div class="p-2.5 bg-slate-50 dark:bg-slate-950 rounded border border-slate-100 dark:border-slate-800">
-                        <span class="font-bold text-slate-700 dark:text-slate-300 block mb-0.5 text-xs">${block.title}</span>
-                        <span class="text-slate-500 dark:text-slate-400 block leading-tight font-medium text-[11px]">${block.desc}</span>
-                    </div>
-                `;
-            });
+            if(data.bodyGrid) {
+                data.bodyGrid.forEach(block => {
+                    gridContainer.innerHTML += `
+                        <div class="p-2.5 bg-slate-50 dark:bg-slate-950 rounded border border-slate-100 dark:border-slate-800">
+                            <span class="font-bold text-slate-700 dark:text-slate-300 block mb-0.5 text-xs">${block.title}</span>
+                            <span class="text-slate-500 dark:text-slate-400 block leading-tight font-medium text-[10px]">${block.desc}</span>
+                        </div>
+                    `;
+                });
+            }
 
             adjustTimeAllocation(data.marks);
+        }
+
+        function openCompiledModal() {
+            const cat = document.getElementById('repo-category').value;
+            const idx = document.getElementById('repo-question').value;
+            const data = questionBank[cat][idx];
+            
+            const target = document.getElementById('modal-scroll-content');
+            
+            let actionSectionHTML = "";
+            if(data.actionPlanType === "table") {
+                actionSectionHTML = `
+                    <table style="width:100%; border-collapse: collapse; margin-top: 10px; font-size:11px;" border="1" cellpadding="5">
+                        <tr style="background-color: #f2f2f2; font-weight: bold;">
+                            <td>तह / समयावधि</td><td>रणनीतिक सुधारात्मक कार्य</td><td>जिम्मेवार निकाय</td><td>अपेक्षित सूचक</td>
+                        </tr>
+                `;
+                data.actionPlanRows.forEach(row => {
+                    actionSectionHTML += `<tr><td><b>${row.phase}</b></td><td>${row.action}</td><td><b>${row.unit}</b></td><td><i>${row.metric}</i></td></tr>`;
+                });
+                actionSectionHTML += `</table>`;
+            } else {
+                actionSectionHTML = data.actionPlan;
+            }
+
+            let legalListHTML = "";
+            data.legal.forEach(l => {
+                legalListHTML += `• <b>${l.title}</b>: ${l.details}\n`;
+            });
+
+            target.innerHTML = `
+                <div class="text-center border-b pb-4">
+                    <h2 class="text-lg font-bold text-slate-900">${data.shortTitle}</h2>
+                    <p class="text-xs font-bold text-rose-600 mt-1">पूर्णाङ्क: ${data.marks} मार्क्स | लोकसेवा आयोग परीक्षा दृष्टिकोण रूपरेखा</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-rose-600 uppercase text-[11px]">[परीक्षा प्रश्न पत्र - Full Prompt]</h4>
+                    <p class="bg-slate-100 p-3 rounded font-bold border">${data.text}</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 border-b pb-1">🏛️ कानुनी एवं संवैधानिक आधारहरू (Mandatory Legal Anchors):</h4>
+                    <p class="pt-1">${legalListHTML}</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 border-b pb-1">खण्ड क: परिचय खण्ड (Introduction)</h4>
+                    <p class="pt-1">${data.intro}</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 border-b pb-1">खण्ड ख: मुख्य विश्लेषणात्मक आयाम (Core Narrative Analysis)</h4>
+                    <p class="font-bold text-slate-700 py-1 italic">${data.bodyTitle}</p>
+                    <p>${data.bodyLong}</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 border-b pb-1">खण्ड ग: नीतिगत तथा व्यावहारिक सुझावहरू (Policy Recommendations)</h4>
+                    <p class="pt-1">${data.recommendations}</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 border-b pb-1">खण्ड घ: कार्यान्वयनयोग्य कार्ययोजना रूपरेखा (Action Plan Matrix)</h4>
+                    <div>${actionSectionHTML}</div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 border-b pb-1">खण्ड ङ: निष्कर्ष (Pragmatic Conclusion Alignment)</h4>
+                    <p class="pt-1">${data.conclusion}</p>
+                </div>
+            `;
+            
+            document.getElementById('compiled-print-modal').classList.remove('hidden');
+        }
+
+        function closeCompiledModal() {
+            document.getElementById('compiled-print-modal').classList.add('hidden');
+        }
+
+        function toggleAdminPanel() {
+            const pin = prompt("Enter Master Admin Verification Key to toggle database builder inputs:");
+            if(pin === "1234") { // Simple local custom security passkey parameter
+                const panel = document.getElementById('admin-secret-gate');
+                panel.classList.toggle('hidden');
+            } else if (pin !== null) {
+                alert("Unauthorized configuration password access keys!");
+            }
+        }
+
+        function generateAdminCodePayload() {
+            const cat = document.getElementById('adm-cat').value;
+            const short = document.getElementById('adm-short').value;
+            const txt = document.getElementById('adm-text').value;
+            const intr = document.getElementById('adm-intro').value;
+            const bdy = document.getElementById('adm-body').value;
+            const rec = document.getElementById('adm-recom').value;
+            const act = document.getElementById('adm-action').value;
+            const conc = document.getElementById('adm-conc').value;
+            const syn = document.getElementById('adm-syn').value;
+
+            const targetObj = {
+                shortTitle: short,
+                marks: 10,
+                text: txt,
+                synergy: syn,
+                legal: [{title: "संविधान/ऐन", details: "यहाँ दफाहरू भर्नुहोस्।"}],
+                intro: intr,
+                bodyTitle: "विश्लेषण आयाम",
+                bodyLong: bdy,
+                recommendations: rec,
+                actionPlanType: "text",
+                actionPlan: act,
+                conclusion: conc
+            };
+
+            document.getElementById('admin-output-code').value = ",\n" + JSON.stringify(targetObj, null, 4);
         }
 
         function exportDraftOutline() {
             const scratchpadData = document.getElementById('user-scratchpad').value;
             if(!scratchpadData.trim()) {
-                alert("The Active Practice canvas is empty. Write your outline notes first.");
+                alert("The Active Practice canvas is empty.");
                 return;
             }
             const cat = document.getElementById('repo-category').value;
             const idx = document.getElementById('repo-question').value;
             const qText = questionBank[cat][idx].text;
 
-            const fileContent = `EXAM RECALL STUDY SHEET\nQuestion:\n${qText}\n\nYour Practice Outline Notes:\n=======================\n${scratchpadData}`;
+            const fileContent = `EXAM ACTIVE RECALL SHEET\n\nQuestion:\n${qText}\n\nYour Practice Outline Notes:\n=======================\n${scratchpadData}`;
             const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
-            
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = `Exam-Draft-Outline-${cat}.txt`;
+            link.download = `Exam-Practice-Note-${cat}.txt`;
             link.click();
         }
 
