@@ -115,6 +115,46 @@
                                 <i class="fa-solid fa-shuffle mr-1"></i> Shuffle Formula
                             </button>
                         </div>
+            <div class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm mb-6 select-none">
+    <div class="mb-5">
+        <h3 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+            <span class="text-rose-500">🧮</span> अनुसन्धान विधि तथा तथ्याङ्क म्याट्रिक्स (Research Matrix)
+        </h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Select your study parameters to instantly identify the correct research framework and statistical path.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="space-y-2">
+            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">१. अध्ययनको उद्देश्य (Objective)</label>
+            <select id="matrix-objective" onchange="updateResearchMatrix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                <option value="compare-2">Compare Means (2 Groups / Samples)</option>
+                <option value="compare-multi">Compare Means (3+ Groups / ANOVA)</option>
+                <option value="association">Test Association / Relationship</option>
+                <option value="prediction">Forecasting / Impact Prediction</option>
+            </select>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">२. तथ्याङ्कको प्रकृति (Data Nature)</label>
+            <select id="matrix-nature" onchange="updateResearchMatrix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                <option value="parametric">Parametric (Normal Distribution, Interval/Ratio)</option>
+                <option value="non-parametric">Non-Parametric (Skenwed/Ordinal/Nominal)</option>
+            </select>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+                <span class="inline-block text-[10px] font-bold uppercase px-2 py-0.5 bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded mb-2" id="matrix-tag">PARAMETRIC TEST</span>
+                <div id="matrix-test-name" class="text-base font-bold text-slate-800 dark:text-white">t-Test (Independent / Paired)</div>
+                <div id="matrix-desc" class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">Used to compare the mean scores of two distinct sample groups under normal probability curve distribution conditions.</div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+                <span class="text-[11px] font-semibold text-slate-400">Sampling Tool:</span>
+                <span id="matrix-sampling" class="text-xs font-bold text-slate-700 dark:text-slate-300">Probability Sampling</span>
+            </div>
+        </div>
+    </div>
+</div>
                     </div>
                 </div>
 
@@ -1329,6 +1369,57 @@ window.addEventListener('click', function(e) {
 
         // Initialize immediately upon document construction
         document.addEventListener('DOMContentLoaded', initializeNepaliDateTime);
+// ==========================================
+// 🧮 RESEARCH METHODOLOGY MATRIX LOGIC
+// ==========================================
+function updateResearchMatrix() {
+    const objective = document.getElementById('matrix-objective').value;
+    const nature = document.getElementById('matrix-nature').value;
+
+    const testNameEl = document.getElementById('matrix-test-name');
+    const descEl = document.getElementById('matrix-desc');
+    const tagEl = document.getElementById('matrix-tag');
+    const samplingEl = document.getElementById('matrix-sampling');
+
+    // Matrix rule dataset lookup engine
+    if (nature === 'parametric') {
+        tagEl.textContent = 'PARAMETRIC TEST';
+        tagEl.className = 'inline-block text-[10px] font-bold uppercase px-2 py-0.5 bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded mb-2';
+        samplingEl.textContent = 'Probability (Random/Stratified)';
+        
+        if (objective === 'compare-2') {
+            testNameEl.textContent = 'Independent / Paired t-Test';
+            descEl.textContent = 'Compares the means of two groups (e.g., pre vs post test data, or treatment vs control group) assuming normal distribution curve parameters.';
+        } else if (objective === 'compare-multi') {
+            testNameEl.textContent = 'One-Way / Two-Way ANOVA (F-Test)';
+            descEl.textContent = 'Evaluates variance differences across three or more distinct categorical independent groups to isolate structural significance.';
+        } else if (objective === 'association') {
+            testNameEl.textContent = 'Pearson Correlation Coefficient (r)';
+            descEl.textContent = 'Measures the linear relationship strength and direct path direction between two continuous numerical variables scale matrix arrays.';
+        } else if (objective === 'prediction') {
+            testNameEl.textContent = 'Ordinary Least Squares (OLS) Regression';
+            descEl.textContent = 'Estimates structural coefficients of independent variables to forecast or map explicit predictive variance impact targets.';
+        }
+    } else {
+        tagEl.textContent = 'NON-PARAMETRIC TEST';
+        tagEl.className = 'inline-block text-[10px] font-bold uppercase px-2 py-0.5 bg-amber-100 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 rounded mb-2';
+        samplingEl.textContent = 'Non-Probability / Purposive Allowed';
+
+        if (objective === 'compare-2') {
+            testNameEl.textContent = 'Mann-Whitney U / Wilcoxon Sign-Rank';
+            descEl.textContent = 'Compares structural position medians when variables are rank-ordered or scaled ordinal data, bypassing regular distribution demands.';
+        } else if (objective === 'compare-multi') {
+            testNameEl.textContent = 'Kruskal-Wallis Test Matrix';
+            descEl.textContent = 'The non-parametric version of a regular ANOVA. Compares three or more groups when continuous scale normality conditions fail completely.';
+        } else if (objective === 'association') {
+            testNameEl.textContent = 'Chi-Square Test (χ²) / Spearman Rho';
+            descEl.textContent = 'Tests independence consistency or correlation ranking between discrete nominal data categories (e.g., gender vs choice distribution).';
+        } else if (objective === 'prediction') {
+            testNameEl.textContent = 'Binary Logistic Regression Analysis';
+            descEl.textContent = 'Models performance log-odds likelihood thresholds when predicting outcomes that fall into absolute true binary branches (0 or 1).';
+        }
+    }
+}
     </script>
 </body>
 </html>
