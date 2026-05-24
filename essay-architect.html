@@ -1,1 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Syllabus Master Matrix & Active Practice Canvas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; }
+        .blurred-content { filter: blur(6px); pointer-events: none; transition: filter 0.3s ease; }
+        .unblurred-content { filter: blur(0); pointer-events: auto; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen p-4 sm:p-6 transition-colors duration-200">
 
+    <div class="w-full max-w-7xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md">
+        
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-5">
+            <div>
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <span class="text-rose-500">🏆</span> उच्च-स्तरीय परीक्षा रणनीति केन्द्र (Executive Exam Strategy Workspace)
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Simulate real exam conditions, test your active recall, and master cross-cutting constitutional and administrative legal structures.</p>
+            </div>
+            <a href="index.html" class="self-start lg:self-center text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors decoration-none">
+                &larr; मुख्य ड्यासबोर्ड
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <div class="lg:col-span-5 space-y-5">
+                
+                <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">१. अभ्यास विन्यास (Practice Target Selection)</h4>
+                        <div class="flex items-center gap-2">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">Marks Weight:</label>
+                            <select id="exam-marks" onchange="adjustTimeAllocation()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded p-1 text-[10px] font-bold text-slate-700 dark:text-slate-300">
+                                <option value="10">10 Marks (Normal)</option>
+                                <option value="20">20 Marks (Comprehensive)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <select id="repo-category" onchange="populateQuestions()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                            <option value="audit">Public Expenditure, Budgeting & Audit</option>
+                            <option value="governance">Federalism, Good Governance & Administration</option>
+                            <option value="banking">Macroeconomics & Banking Financial Regulation</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <select id="repo-question" onchange="loadQuestionBlueprint()" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                            </select>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-xl p-4 space-y-3 shadow-md">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="text-[10px] font-bold tracking-widest text-rose-500 uppercase">⏱️ Real-Time Milestone Pace Tracker</span>
+                        <div class="text-sm font-black text-emerald-400" id="live-timer-countdown">22:00 Mins</div>
+                    </div>
+                    <div class="text-[11px] space-y-2 text-slate-400 font-medium" id="milestone-timeline-container">
+                        </div>
+                    <button onclick="toggleExamTimer()" id="timer-action-btn" class="w-full py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all">
+                        Start Simulation Timer
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">📝 Active Recall Outline Canvas</h4>
+                        <button onclick="exportDraftOutline()" class="text-[10px] font-bold text-rose-500 hover:underline bg-transparent border-none cursor-pointer">💾 Save/Export Outline</button>
+                    </div>
+                    <p class="text-[10px] text-slate-400 font-medium leading-tight">Force your brain to recall the legal provisions and main points *before* you unblur the recommended model answer architecture on the right.</p>
+                    <textarea id="user-scratchpad" placeholder="Type your core structural outline points, specific articles, and laws here to evaluate your recall speed..." rows="5" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs font-medium text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 resize-none shadow-inner"></textarea>
+                    <button onclick="revealModelBlueprint()" class="w-full py-2 bg-slate-800 dark:bg-slate-700 hover:bg-emerald-600 dark:hover:bg-emerald-600 text-white text-xs font-bold rounded-lg cursor-pointer transition-all">
+                        🔓 Unblur Model Architecture & Verify Match
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-7 space-y-4">
+                
+                <div class="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-xl p-3.5 flex items-start gap-3">
+                    <span class="text-xl">💡</span>
+                    <div>
+                        <span class="text-[10px] font-black tracking-widest text-emerald-600 dark:text-emerald-400 block uppercase">Syllabus Synergy Expansion Bullet:</span>
+                        <p id="synergy-bonus-text" class="text-xs text-slate-600 dark:text-slate-400 font-medium mt-0.5">...</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">🏛️ Mandatory Legal Anchors for your Paper</h4>
+                    <div id="legal-anchors-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                        </div>
+                </div>
+
+                <div class="space-y-4 relative">
+                    <div id="blueprint-blur-shield" class="space-y-4 blurred-content">
+                        
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड क: परिचय खण्ड (Introduction & System Context)</div>
+                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium" id="section-1-desc">...</p>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-2">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड ख: मुख्य विश्लेषणात्मक आयाम (Core Evaluation Metrics)</div>
+                            <h5 class="text-xs font-bold text-slate-800 dark:text-white" id="section-2-title">...</h5>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-[11px]" id="section-2-grid">
+                                </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड ग: नीतिगत तथा व्यावहारिक सुझावहरू (Prescriptive Way Forward)</div>
+                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium" id="section-3-desc">...</p>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-900 p-3.5 rounded-lg border border-slate-200/60 dark:border-slate-800 shadow-sm space-y-1.5">
+                            <div class="text-[10px] font-black tracking-wider text-rose-500 uppercase">खण्ड घ: निष्कर्ष (Pragmatic Conclusion Alignment)</div>
+                            <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed font-medium" id="section-4-desc">...</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // System Database Map containing questions, architectures, legal frameworks and extra syllabus synergy vectors
+        const questionBank = {
+            audit: [
+                {
+                    text: "सार्वजनिक खर्च व्यवस्थापनमा देखा परेका बेरुजूका संरचनात्मक कारणहरू औंल्याउँदै वित्तीय अनुशासन कायम गर्ने उपायहरू सुझाउनुहोस्।",
+                    framework: "pcs",
+                    synergy: "Cross-link this with employee retirement accountability under standard frameworks (like NAS 19) to argue that operational financial discipline begins with standardized human resource accounting frameworks, not just final audits.",
+                    legal: [
+                        { title: "नेपालको संविधान", details: "भाग १९ (आर्थिक कार्यप्रणाली) र महालेखा परीक्षकको क्षेत्राधिकार (धारा २४३)।" },
+                        { title: "वित्तीय उत्तरदायित्व ऐन", details: "लेखा उत्तरदायी अधिकृतको व्यक्तिगत आर्थिक जिम्मेवारी सम्बन्धी सीमाहरू।" }
+                    ],
+                    intro: "Define 'Beruju' as an objective compliance divergence indicator. Frame public expenditure discipline as the cornerstone of macro-fiscal stability and federal resource trust.",
+                    bodyTitle: "Structural, Functional & Behavioral Irregularity Mapping Matrix",
+                    bodyGrid: [
+                        { title: "⚠️ Structural", desc: "Overlapping accountability lines, fragmented local treasury structures, and inadequate pre-appraisal systems." },
+                        { title: "⚙️ Functional", desc: "Splitting procurement packages to bypass transparency thresholds, weak internal checking desks, and rushed year-end spending." },
+                        { title: "🧠 Behavioral", desc: "Deficit in personal financial responsibility, low compliance values, and lack of reward-punishment integration." }
+                    ],
+                    recommendations: "Enforce strict penalties via the Fiscal Responsibility Framework, transition all local units to advanced electronic procurement arrays (e-GP), and mandate quarterly interior audits.",
+                    conclusion: "Conclude by proving that minimizing irregularities protects the integrity of the state and reinforces democratic transparency for taxpayers."
+                },
+                {
+                    text: "नेपालमा राष्ट्रिय गौरवका आयोजनाहरूमा हुने बजेट ढिलाइ र कम पुँजीगत खर्चका समस्याहरूलाई नीतिगत परिप्रेक्ष्यमा मुल्यांकन गर्नुहोस्।",
+                    framework: "pestel",
+                    synergy: "Connect this to Asset Impairment models (NAS 36). Delayed projects lose economic value over time; evaluating project health through standard impairment parameters protects national investments.",
+                    legal: [
+                        { title: "१६ औं आवधिक योजना", details: "पुँजीगत खर्च रुपान्तरण रणनीति र पूर्वाधार निर्माण माइलस्टोन परिमाणहरू।" },
+                        { title: "सार्वजनिक खरिद नियमावली", details: "साइट क्लियरेन्स र पूर्व-तयारी चरण सुनिश्चितता सम्बन्धी बाध्यात्मक व्यवस्था।" }
+                    ],
+                    intro: "Define the capital expenditure execution lag as an institutional inhibitor that dampens the national growth multiplier.",
+                    bodyTitle: "Macroeconomic Implementation Environment Matrix",
+                    bodyGrid: [
+                        { title: "🏛️ Political & Legal", desc: "Inter-provincial land acquisition hurdles, forest site clearance delays, and shifting priority targets." },
+                        { title: "💰 Economic Realities", desc: "Spreading capital budgets thinly across thousands of low-impact local tracking programs rather than focusing on mega-infrastructure." },
+                        { title: "⚙️ Capacity Barriers", desc: "High turnover rates of key Project Directors and a lack of standardized project management certification frameworks." }
+                    ],
+                    recommendations: "Establish an independent Project Bank System to block unready programs, mandate multi-year rolling contract security, and penalize contractor delays.",
+                    conclusion: "Frame capital spending efficiency as the driver that converts dormant treasury liquidity into long-term infrastructure wealth."
+                }
+            ],
+            governance: [
+                {
+                    text: "संघीय शासन प्रणालीमा संघ, प्रदेश र स्थानीय तहबीचको प्रशासनिक र वित्तीय अन्तरसम्बन्धमा देखिएका विवादका क्षेत्रहरू विश्लेषण गर्नुहोस्।",
+                    framework: "pcs",
+                    synergy: "Cross-reference with the Intergovernmental Fiscal Arrangement Act. Argue that administrative friction drops significantly when formula-driven fiscal allocations match functional assignments.",
+                    legal: [
+                        { title: "नेपालको संविधान", details: "अनुसूची ५, ६, ७, ८, ९ (एकल र साझा अधिकार सूचिहरू) र अन्तर-तह सम्बन्ध निर्देशिका (धारा २३२)।" },
+                        { title: "अन्तर-सरकारी वित्त ऐन", details: "चार प्रकारका वित्तीय हस्तान्तरण अनुदान ढाँचा र राजस्व परिचालन मोडालिटी।" }
+                    ],
+                    intro: "Define the core intergovernmental relationship parameters under the principles of co-existence, cooperation, and coordination.",
+                    bodyTitle: "Tri-Partite Inter-Level Conflict Matrix",
+                    bodyGrid: [
+                        { title: "⚠️ Structural", desc: "Concurrent jurisdiction overlaps where fields like localized education and healthcare lack clear functional unbundling boundaries." },
+                        { title: "⚙️ Functional", desc: "Delays in passing the Federal Civil Service Act, leaving sub-national tiers short on specialized technical officers." },
+                        { title: "🧠 Behavioral", desc: "Centralized institutional thinking vs localized sub-national resource autonomy resistance patterns." }
+                    ],
+                    recommendations: "Institutionalize regular meetings of the Inter-State Council for dispute tracking, transition to objective formula-based grants, and speed up administrative unbundling.",
+                    conclusion: "Conclude that federal strength relies on collaborative coordination and equal development capability across all administrative tiers."
+                }
+            ],
+            banking: [
+                {
+                    text: "नेपाल राष्ट्र बैंकको मौद्रिक नीति र सरकारको वित्तीय नीति (Fiscal Policy) बीच सन्तुलन कायम नहुँदा समष्टिगत आर्थिक स्थायित्वमा पर्ने असरहरू चर्चा गर्नुहोस्।",
+                    framework: "pestel",
+                    synergy: "Bring in NRB Unified Directives or Capital Adequacy Framework protocols. Clarify that while Class 'A' and national 'B' banks follow Basel III timelines, localized setups operate on variations, meaning sudden expansionary fiscal movements stress distinct liquidity tiers differently.",
+                    legal: [
+                        { title: "नेपाल राष्ट्र बैंक ऐन", details: "केन्द्रीय बैंकको स्वायत्तता (दफा ४), मौद्रिक व्यवस्थापन र मूल्य स्थायित्व कायम गर्ने कानूनी कार्यादेश।" },
+                        { title: "चालु पूँजी कर्जा मार्गदर्शन", details: "उत्पादनशील क्षेत्रमा वास्तविक कर्जा प्रवाह सुनिश्चित गर्न जारी गरिएका एकीकृत निर्देशनहरू।" }
+                    ],
+                    intro: "Define the fiscal-monetary policy mix parameter. Explain how an expansionary fiscal stance paired with restrictive monetary mechanisms generates structural constraints.",
+                    bodyTitle: "Macro-Environmental Evaluation Framework",
+                    bodyGrid: [
+                        { title: "🏛️ Political & Legal", desc: "Short-term growth demands from public channels encountering long-term inflation containment boundaries." },
+                        { title: "💰 Economic Imbalances", desc: "Private credit crowding-out effects, balance of payments (BOP) constraints, and structural liquidity traps." },
+                        { title: "⚙️ Institutional Gaps", desc: "Incoordination between Ministry of Finance deficit spending calendars and central bank open market operating cycles." }
+                    ],
+                    recommendations: "Activate a permanent Fiscal-Monetary Joint Coordination Committee, tie public borrowing limits to inflation bands, and deepen local debt markets.",
+                    conclusion: "Conclude that monetary and fiscal policies must operate like the two wings of an aircraft—perfectly synchronized to maintain stable macro flight paths."
+                }
+            ]
+        };
+
+        let timerInterval = null;
+        let timeRemaining = 0;
+
+        function adjustTimeAllocation() {
+            const marks = document.getElementById('exam-marks').value;
+            const display = document.getElementById('live-timer-countdown');
+            
+            if(marks === "10") {
+                timeRemaining = 22 * 60;
+                display.textContent = "22:00 Mins";
+            } else {
+                timeRemaining = 45 * 60;
+                display.textContent = "45:00 Mins";
+            }
+            renderMilestoneTimeline(parseInt(marks));
+        }
+
+        function renderMilestoneTimeline(marks) {
+            const container = document.getElementById('milestone-timeline-container');
+            const totalMins = marks === 10 ? 22 : 45;
+            
+            const m1 = Math.round(totalMins * 0.10);
+            const m2 = Math.round(totalMins * 0.15);
+            const m3 = Math.round(totalMins * 0.60);
+            const m4 = totalMins - (m1 + m2 + m3);
+
+            container.innerHTML = `
+                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>🧠 Framing & Outlining:</span> <span class="text-white font-bold">${m1} Mins</span></div>
+                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>✍️ Intro & Context Anchor:</span> <span class="text-white font-bold">${m2} Mins</span></div>
+                <div class="flex justify-between border-b border-slate-800/40 pb-1"><span>📊 Main Body Grid Exposition:</span> <span class="text-white font-bold">${m3} Mins</span></div>
+                <div class="flex justify-between pb-1"><span>🏁 Solutions & Strategic Conclusion:</span> <span class="text-white font-bold">${m4} Mins</span></div>
+            `;
+        }
+
+        function toggleExamTimer() {
+            const btn = document.getElementById('timer-action-btn');
+            if(timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                btn.textContent = "Resume Simulation Timer";
+                btn.className = "w-full py-1.5 bg-amber-600 text-white text-xs font-bold rounded-lg cursor-pointer";
+            } else {
+                if(timeRemaining <= 0) adjustTimeAllocation();
+                btn.textContent = "Pause Timer";
+                btn.className = "w-full py-1.5 bg-slate-700 text-white text-xs font-bold rounded-lg cursor-pointer";
+                
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    if(timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        alert("Time limit reached for this exam answer simulation!");
+                        btn.textContent = "Restart Simulation Timer";
+                    }
+                }, 1000);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeRemaining / 60);
+            const secs = timeRemaining % 60;
+            document.getElementById('live-timer-countdown').textContent = `${mins}:${secs < 10 ? '0' : ''}${secs} Mins`;
+        }
+
+        function revealModelBlueprint() {
+            document.getElementById('blueprint-blur-shield').className = "space-y-4 unblurred-content";
+        }
+
+        function populateQuestions() {
+            const cat = document.getElementById('repo-category').value;
+            const qSelect = document.getElementById('repo-question');
+            qSelect.innerHTML = '';
+
+            questionBank[cat].forEach((q, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = q.text.substring(0, 65) + '...';
+                qSelect.appendChild(opt);
+            });
+
+            loadQuestionBlueprint();
+        }
+
+        function loadQuestionBlueprint() {
+            document.getElementById('blueprint-blur-shield').className = "space-y-4 blurred-content";
+            document.getElementById('user-scratchpad').value = '';
+
+            const cat = document.getElementById('repo-category').value;
+            const idx = document.getElementById('repo-question').value;
+            
+            if(idx === "" || !questionBank[cat][idx]) return;
+            const data = questionBank[cat][idx];
+
+            document.getElementById('synergy-bonus-text').textContent = data.synergy;
+            document.getElementById('section-1-desc').textContent = data.intro;
+            document.getElementById('section-2-title').textContent = data.bodyTitle;
+            document.getElementById('section-3-desc').textContent = data.recommendations;
+            document.getElementById('section-4-desc').textContent = data.conclusion;
+
+            const anchorsContainer = document.getElementById('legal-anchors-container');
+            anchorsContainer.innerHTML = '';
+            data.legal.forEach(item => {
+                anchorsContainer.innerHTML += `
+                    <div class="p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <strong class="text-rose-500 block text-[10px] uppercase">${item.title}</strong>
+                        <span class="text-slate-500 dark:text-slate-400 font-medium">${item.details}</span>
+                    </div>
+                `;
+            });
+
+            const gridContainer = document.getElementById('section-2-grid');
+            gridContainer.innerHTML = '';
+            data.bodyGrid.forEach(block => {
+                gridContainer.innerHTML += `
+                    <div class="p-2.5 bg-slate-50 dark:bg-slate-950 rounded border border-slate-100 dark:border-slate-800">
+                        <span class="font-bold text-slate-700 dark:text-slate-300 block mb-0.5">${block.title}</span>
+                        <span class="text-slate-500 dark:text-slate-400 block leading-tight font-medium">${block.desc}</span>
+                    </div>
+                `;
+            });
+
+            adjustTimeAllocation();
+        }
+
+        function exportDraftOutline() {
+            const scratchpadData = document.getElementById('user-scratchpad').value;
+            if(!scratchpadData.trim()) {
+                alert("The Active Practice canvas is empty. Write your outline notes first.");
+                return;
+            }
+            const cat = document.getElementById('repo-category').value;
+            const idx = document.getElementById('repo-question').value;
+            const qText = questionBank[cat][idx].text;
+
+            const fileContent = `EXAM RECALL STUDY SHEET\nQuestion: ${qText}\n\nYour Practice Outline Notes:\n=======================\n${scratchpadData}`;
+            const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
+            
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Exam-Draft-Outline-${cat}.txt`;
+            link.click();
+        }
+
+        window.onload = function() {
+            populateQuestions();
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        };
+    </script>
+</body>
+</html>
