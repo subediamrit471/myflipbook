@@ -1207,28 +1207,40 @@ window.addEventListener('click', function(e) {
     }
 });
 // ==========================================
-        // 🔄 AUTOMATED LIVE VISITOR COUNTER ENGINE
+        // 🔄 GLOBAL TOTAL VISITOR COUNTER ENGINE
         // ==========================================
-        function initializeVisitorCounter() {
-            // Check if our tracking ledger already has a count saved
-            let currentCount = localStorage.getItem('ls_matrix_counter_clean');
+        async function initializeVisitorCounter() {
+            // Automatically detects your unique live domain name (or localhost)
+            const domainName = window.location.hostname || "loksewa-sarathi-local";
             
-            if (!currentCount) {
-                // First launch? Start fresh at 1
-                currentCount = 1;
-            } else {
-                // Subsequent load or refresh? Increment the count by 1
-                currentCount = parseInt(currentCount) + 1;
+            try {
+                // Record the current visit to the global database server
+                const response = await fetch('https://visitor.6developer.com/visit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        domain: domainName,
+                        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                        page_path: window.location.pathname,
+                        page_title: document.title
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // If the global server answers, display the total aggregate count
+                if (data && data.totalCount) {
+                    document.getElementById('visitor-count').innerText = data.totalCount;
+                } else {
+                    document.getElementById('visitor-count').innerText = "1";
+                }
+            } catch (error) {
+                // Smooth local fallback if tracking network encounters high latency
+                document.getElementById('visitor-count').innerText = "1";
             }
-            
-            // Save the updated value back to the browser storage
-            localStorage.setItem('ls_matrix_counter_clean', currentCount);
-            
-            // Render the value beautifully into your visual HTML slot
-            document.getElementById('visitor-count').innerText = currentCount;
         }
 
-        // Initialize the automation tracker as soon as the page loads
+        // Run the global tracking handshake instantly upon interface execution
         document.addEventListener('DOMContentLoaded', initializeVisitorCounter);
     </script>
 </body>
