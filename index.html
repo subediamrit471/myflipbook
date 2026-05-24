@@ -66,6 +66,24 @@
                     </button>
                 </div>
             </header>
+    <div class="w-full bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 mb-6 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-3 select-none">
+    <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-rose-50 dark:bg-rose-950/40 text-rose-500 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+            </svg>
+        </div>
+        <div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">आजको मिति र समय</div>
+            <div id="nepali-date-string" class="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300">
+                लोड हुँदैछ...
+            </div>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-1.5 rounded-full font-mono text-sm sm:text-base font-semibold text-rose-500 dark:text-rose-400 shadow-sm min-w-[110px] text-center" id="nepali-live-clock">
+        ००:००:००
+    </div>
+</div>
         </div>
     </div>
 
@@ -1234,6 +1252,93 @@ window.addEventListener('click', function(e) {
             }
         // Run immediately when page loads
         document.addEventListener('DOMContentLoaded', initializeVisitorCounter);
+// ==========================================
+        // 📅 DYNAMIC NEPALI DATE & TIME BANNER
+        // ==========================================
+        function initializeNepaliDateTime() {
+            const nepaliDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+            const nepaliDays = ['आइतबार', 'सोमबार', 'मंगलबार', 'बुधबार', 'बिहीबार', 'शुक्रबार', 'शनिबार'];
+            const nepaliMonths = ['बैशाख', 'जेठ', 'असार', 'साउन', 'भदौ', 'असोज', 'कात्तिक', 'मंसिर', 'पुस', 'माघ', 'फागुन', 'चैत'];
+
+            // Helper to translate regular numbers into Nepali script digits
+            function toNepaliNumber(num) {
+                return num.toString().split('').map(digit => nepaliDigits[parseInt(digit)] || digit).join('');
+            }
+
+            // High-speed precision local engine to approximate dynamic BS calendar context
+            function calculateApproximateBS() {
+                const now = new Date();
+                
+                // Static anchor point (May 24, 2026 maps perfectly to Jeth 10, 2083)
+                const anchorAD = new Date(2026, 4, 24); 
+                const anchorBSYear = 2083;
+                const anchorBSMonth = 1; // Jeth (0-indexed base for array mapping)
+                const anchorBSDay = 10;
+
+                // Simple elapsed day matrix delta
+                const msPerDay = 24 * 60 * 60 * 1000;
+                const deltaDays = Math.round((now - anchorAD) / msPerDay);
+
+                let bsYear = anchorBSYear;
+                let bsMonth = anchorBSMonth;
+                let bsDay = anchorBSDay + deltaDays;
+
+                // Month length matrix for standard BS 2083 tracking approximation
+                const monthLengths = [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30];
+
+                while (bsDay > monthLengths[bsMonth]) {
+                    bsDay -= monthLengths[bsMonth];
+                    bsMonth++;
+                    if (bsMonth > 11) {
+                        bsMonth = 0;
+                        bsYear++;
+                    }
+                }
+                while (bsDay < 1) {
+                    bsMonth--;
+                    if (bsMonth < 0) {
+                        bsMonth = 11;
+                        bsYear--;
+                    }
+                    bsDay += monthLengths[bsMonth];
+                }
+
+                const dayOfWeekStr = nepaliDays[now.getDay()];
+                const monthStr = nepaliMonths[bsMonth];
+
+                return `${dayOfWeekStr}, ${toNepaliNumber(bsDay)} ${monthStr} ${toNepaliNumber(bsYear)}`;
+            }
+
+            // Running clock tick logic
+            function updateClock() {
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                let seconds = now.getSeconds();
+
+                // Format structure padding
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                const liveTimeStr = `${toNepaliNumber(hours)}:${toNepaliNumber(minutes)}:${toNepaliNumber(seconds)}`;
+                document.getElementById('nepali-live-clock').textContent = liveTimeStr;
+            }
+
+            // Set static calendar display instantly
+            try {
+                document.getElementById('nepali-date-string').textContent = calculateApproximateBS();
+            } catch (e) {
+                document.getElementById('nepali-date-string').textContent = "नेपाली मिति प्रणाली उपलब्ध छैन";
+            }
+
+            // Fire and scale clock loop smoothly every second
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        // Initialize immediately upon document construction
+        document.addEventListener('DOMContentLoaded', initializeNepaliDateTime);
     </script>
 </body>
 </html>
