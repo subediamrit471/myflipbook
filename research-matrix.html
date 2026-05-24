@@ -3,118 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Methodology & Statistics Matrix</title>
+    <title>Advanced Research Methodology & Statistics Blueprint Engine</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex items-center justify-center p-4 transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen p-4 sm:p-6 transition-colors duration-200">
 
-    <div class="w-full max-w-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-md select-none">
+    <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-md">
         
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-slate-100 dark:border-slate-800 pb-5">
             <div>
-                <h3 class="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                    <span class="text-rose-500">🧮</span> अनुसन्धान विधि तथा तथ्याङ्क म्याट्रिक्स (Research Matrix)
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    <span class="text-rose-500">📊</span> अनुसन्धान विधि परिष्कृत इन्जिन (Advanced Research Blueprint Engine)
                 </h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">अध्ययनको विशेषता छनोट गर्नुहोस् र सही तथ्याङ्कीय विधि पत्ता लगाउनुहोस्।</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">An integrated architectural framework for statistical testing, sample sizing, data validation, and research design design optimization.</p>
             </div>
-            <a href="index.html" class="self-start sm:self-center text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors decoration-none">
-                &larr; मुख्य ड्यासबोर्ड
+            <a href="index.html" class="self-start md:self-center text-xs font-bold px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors decoration-none">
+                &larr; मुख्य ड्यासबोर्ड (Dashboard)
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-            <div class="space-y-2">
-                <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">१. अध्ययनको उद्देश्य (Objective)</label>
-                <select id="matrix-objective" onchange="updateResearchMatrix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all cursor-pointer">
-                    <option value="compare-2">Compare Means (2 Groups / Samples)</option>
-                    <option value="compare-multi">Compare Means (3+ Groups / ANOVA)</option>
-                    <option value="association">Test Association / Relationship</option>
-                    <option value="prediction">Forecasting / Impact Prediction</option>
-                </select>
-            </div>
-
-            <div class="space-y-2">
-                <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">२. तथ्याङ्कको प्रकृति (Data Nature)</label>
-                <select id="matrix-nature" onchange="updateResearchMatrix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all cursor-pointer">
-                    <option value="parametric">Parametric (Normal Distribution, Interval/Ratio)</option>
-                    <option value="non-parametric">Non-Parametric (Skewed/Ordinal/Nominal)</option>
-                </select>
-            </div>
+        <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 dark:border-slate-800 pb-3">
+            <button onclick="switchTab('tab-matrix')" id="btn-tab-matrix" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-rose-500 text-white cursor-pointer transition-all">
+                🧮 Statistical Matrix
+            </button>
+            <button onclick="switchTab('tab-sample')" id="btn-tab-sample" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-all">
+                📐 Sample Size Calculator
+            </button>
+            <button onclick="switchTab('tab-reliability')" id="btn-tab-reliability" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-all">
+                🛡️ Reliability & Scale Validation
+            </button>
+            <button onclick="switchTab('tab-mmr')" id="btn-tab-mmr" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-all">
+                🔍 Mixed-Methods Blueprint
+            </button>
+            <button onclick="switchTab('tab-violations')" id="btn-tab-violations" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-all">
+                🛠️ Assumption Violations Repair
+            </button>
         </div>
 
-        <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-inner">
-            <div class="flex items-center justify-between mb-3">
-                <span class="inline-block text-[10px] font-bold uppercase px-2.5 py-1 bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded-md tracking-wider" id="matrix-tag">
-                    PARAMETRIC TEST
-                </span>
-                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400">
-                    <span>Sampling:</span>
-                    <span id="matrix-sampling" class="font-bold text-slate-700 dark:text-slate-300">Probability (Random/Stratified)</span>
+        <div id="tab-matrix" class="tab-content active space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">१. अध्ययनको उद्देश्य (Research Objective)</label>
+                    <select id="matrix-objective" onchange="updateResearchMatrix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                        <option value="compare-2">Compare Means (2 Groups / Samples)</option>
+                        <option value="compare-multi">Compare Means (3+ Groups / ANOVA)</option>
+                        <option value="association">Test Association / Relationship</option>
+                        <option value="prediction">Forecasting / Impact Prediction</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">२. तथ्याङ्कको प्रकृति (Data Nature & Parameters)</label>
+                    <select id="matrix-nature" onchange="updateResearchMatrix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                        <option value="parametric">Parametric (Normal Distribution, Interval/Ratio Scale)</option>
+                        <option value="non-parametric">Non-Parametric (Skewed Distribution, Nominal/Ordinal Scale)</option>
+                    </select>
                 </div>
             </div>
-            
-            <div id="matrix-test-name" class="text-lg font-bold text-slate-800 dark:text-white tracking-tight">
-                Independent / Paired t-Test
+
+            <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-inner space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <span class="text-[10px] font-bold uppercase px-2.5 py-1 bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded-md tracking-wider" id="matrix-tag">PARAMETRIC TEST</span>
+                    <div class="text-xs font-medium text-slate-400">
+                        Appropriate Sampling Class: <span id="matrix-sampling" class="font-bold text-slate-700 dark:text-slate-300">Probability (Random/Stratified)</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="matrix-test-name" class="text-base font-bold text-slate-800 dark:text-white">Independent / Paired t-Test</h4>
+                    <p id="matrix-desc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">Compares the mathematical mean metrics across two structural sample variants assuming clear gaussian distribution features.</p>
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 border-l-4 border-amber-500 rounded-r-lg">
+                    <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 block uppercase tracking-wide">Exam Application / Theoretical Notes:</span>
+                    <p id="matrix-hint" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Highly tested in administration papers for isolating training intervention values (Pre-test vs Post-test metrics analysis models).</p>
+                </div>
             </div>
-            <p id="matrix-desc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed font-medium">
-                Compares the means of two groups (e.g., pre vs post test data, or treatment vs control group) assuming normal distribution curve parameters.
-            </p>
         </div>
+
+        <div id="tab-sample" class="tab-content space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Population Type</label>
+                    <select id="sample-pop-type" onchange="calculateSampleSize()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <option value="finite">Finite / Known Population Size</option>
+                        <option value="infinite">Infinite / Unknown Population Size</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Margin of Error (e)</label>
+                    <select id="sample-error" onchange="calculateSampleSize()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <option value="0.05">5% (Standard Precision)</option>
+                        <option value="0.01">1% (High Executive Precision)</option>
+                        <option value="0.10">10% (Exploratory Precision)</option>
+                    </select>
+                </div>
+                <div id="finite-input-wrap" class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Total Population size (N)</label>
+                    <input type="number" id="sample-population" value="1000" oninput="calculateSampleSize()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800">
+                    <span class="text-[10px] font-bold text-rose-500 block uppercase tracking-wider mb-2">Deployed Mathematical Formula</span>
+                    <div id="sample-formula" class="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm text-center">
+                        n = N / [1 + N(e)²]
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-2" id="formula-meta">Yamane's structural model is strictly deployed for finite organizational frame populations.</p>
+                </div>
+                <div class="p-4 bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl text-white flex flex-col justify-center items-center shadow-md">
+                    <span class="text-[11px] font-bold uppercase tracking-widest opacity-80">Recommended Sample Size (n)</span>
+                    <div id="sample-result" class="text-4xl font-black mt-1">286</div>
+                    <span class="text-[10px] opacity-90 mt-1 font-semibold">Minimum safe units required for operational research validity</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-reliability" class="tab-content space-y-5">
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Cronbach's Alpha Threshold Value (α)</label>
+                <select id="reliability-alpha" onchange="updateReliabilityScore()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                    <option value="excellent">α ≥ 0.90 (Excellent Internal Consistency)</option>
+                    <option value="good" selected>0.80 ≤ α < 0.90 (Good Scale Cohesion)</option>
+                    <option value="acceptable">0.70 ≤ α < 0.80 (Acceptable Baseline Reliability)</option>
+                    <option value="poor">α < 0.60 (Unacceptable / Questionnaires Flawed)</option>
+                </select>
+            </div>
+
+            <div class="p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+                <div class="flex items-center gap-2">
+                    <div id="alpha-status-dot" class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <h4 id="alpha-title" class="text-sm font-bold text-slate-800 dark:text-white">Reliable Structural Framework</h4>
+                </div>
+                <p id="alpha-desc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">The target scale markers match high empirical standards. Variables are safe for factor profiling or multivariate structural tracking.</p>
+                <div class="p-3 bg-white dark:bg-slate-900 border-l-4 border-rose-500 rounded-r-lg text-xs text-slate-500 dark:text-slate-400 font-medium" id="alpha-remedy">
+                    * No revision steps required. Items demonstrate clear structural coherence.
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-mmr" class="tab-content space-y-5">
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Mixed-Methods Research (MMR) Design Architecture</label>
+                <select id="mmr-design" onchange="updateMMRBlueprint()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                    <option value="convergent">Convergent Parallel Design (Simultaneous Tracking)</option>
+                    <option value="explanatory">Explanatory Sequential Design (QUAN → qual)</option>
+                    <option value="exploratory">Exploratory Sequential Design (QUAL → quan)</option>
+                </select>
+            </div>
+
+            <div class="p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+                <div class="font-mono text-[10px] font-black tracking-widest text-rose-500 uppercase" id="mmr-flow">QUANTITATIVE + QUALITATIVE (SIMULTANEOUSLY)</div>
+                <h4 id="mmr-title" class="text-base font-bold text-slate-800 dark:text-white">Convergent Parallel Framework</h4>
+                <p id="mmr-desc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">Collects statistical survey data and rich qualitative thematic focus arrays at the same baseline period. Both datasets are analyzed independently, then compared directly to see if they yield complementary conclusions.</p>
+                <div class="bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+                    <strong>Exam Note:</strong> This is a common strategy in public policy auditing to check if numerical budget execution metrics align with qualitative interviews from local government tracking teams.
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-violations" class="tab-content space-y-5">
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Detected Data Flaw / Violation Constraint</label>
+                <select id="violation-type" onchange="updateViolationFix()" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-semibold text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer">
+                    <option value="right-skew">Positive (Right) Skewness detected in income/budget data array</option>
+                    <option value="hetero">Heteroscedasticity verified via Breusch-Pagan parameters</option>
+                    <option value="outliers">Extreme Outliers disrupting normal distribution parameters</option>
+                </select>
+            </div>
+
+            <div class="p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+                <div class="inline-block text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 rounded">REPAIR TECHNIQUE SPECIFIED</div>
+                <h4 id="violation-title" class="text-base font-bold text-slate-800 dark:text-white">Logarithmic Transformation (Log10 / Natural Log)</h4>
+                <p id="violation-desc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">Apply a $Y' = \log(Y)$ transformation matrix sequence to all data entries. This compresses extreme long-tail variances, converting standard exponential skew structures smoothly into an aligned Gaussian normal shape.</p>
+            </div>
+        </div>
+
     </div>
 
     <script>
+        // Tab switching logic controller
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.className = "tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-all";
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).className = "tab-btn px-4 py-2 text-xs font-bold rounded-lg bg-rose-500 text-white cursor-pointer transition-all";
+            
+            if(tabId === 'tab-sample') calculateSampleSize();
+        }
+
+        // Tab 1: Statistical Decision Matrix Processor
         function updateResearchMatrix() {
             const objective = document.getElementById('matrix-objective').value;
             const nature = document.getElementById('matrix-nature').value;
 
-            const testNameEl = document.getElementById('matrix-test-name');
-            const descEl = document.getElementById('matrix-desc');
-            const tagEl = document.getElementById('matrix-tag');
-            const samplingEl = document.getElementById('matrix-sampling');
+            const name = document.getElementById('matrix-test-name');
+            const desc = document.getElementById('matrix-desc');
+            const tag = document.getElementById('matrix-tag');
+            const sampling = document.getElementById('matrix-sampling');
+            const hint = document.getElementById('matrix-hint');
 
             if (nature === 'parametric') {
-                tagEl.textContent = 'PARAMETRIC TEST';
-                tagEl.className = 'inline-block text-[10px] font-bold uppercase px-2.5 py-1 bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded-md tracking-wider';
-                samplingEl.textContent = 'Probability (Random/Stratified)';
+                tag.textContent = 'PARAMETRIC TEST';
+                tag.className = 'inline-block text-[10px] font-bold uppercase px-2.5 py-1 bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 rounded-md tracking-wider';
+                sampling.textContent = 'Probability (Random/Stratified Proportionate Models)';
                 
                 if (objective === 'compare-2') {
-                    testNameEl.textContent = 'Independent / Paired t-Test';
-                    descEl.textContent = 'Compares the means of two groups (e.g., pre vs post test data, or treatment vs control group) assuming normal distribution curve parameters.';
+                    name.textContent = 'Independent / Paired t-Test';
+                    desc.textContent = 'Evaluates and isolates structural difference thresholds between two sample averages drawn under symmetrical continuous data constraints.';
+                    hint.textContent = 'Highly tested in administrative selection exams for tracking structural policy pre-vs-post operational interventions.';
                 } else if (objective === 'compare-multi') {
-                    testNameEl.textContent = 'One-Way / Two-Way ANOVA (F-Test)';
-                    descEl.textContent = 'Evaluates variance differences across three or more distinct categorical independent groups to isolate structural significance.';
+                    name.textContent = 'One-Way / Two-Way ANOVA (F-Test Framework)';
+                    desc.textContent = 'Evaluates structural variance differences across three or more distinct sample clusters to prevent cross-group Type I error compounding patterns.';
+                    hint.textContent = 'Use this when cross-comparing budget execution variations simultaneously between multiple government divisions.';
                 } else if (objective === 'association') {
-                    testNameEl.textContent = 'Pearson Correlation Coefficient (r)';
-                    descEl.textContent = 'Measures the linear relationship strength and direct path direction between two continuous numerical variables scale matrix arrays.';
+                    name.textContent = "Pearson Correlation Coefficient (r Model Matrix)";
+                    desc.textContent = "Quantifies precise bi-directional linear correlation strength metrics bounded strictly inside standard -1.00 to +1.00 parameters.";
+                    hint.textContent = "Perfect for proving if continuous macroeconomic allocations correlate directly with local employment ratios.";
                 } else if (objective === 'prediction') {
-                    testNameEl.textContent = 'Ordinary Least Squares (OLS) Regression';
-                    descEl.textContent = 'Estimates structural coefficients of independent variables to forecast or map explicit predictive variance impact targets.';
+                    name.textContent = "Ordinary Least Squares (OLS) Linear Regression";
+                    desc.textContent = "Models target predictive coordinate tracks by minimizing squared residual matrices across configured continuous independent variables.";
+                    hint.textContent = "Crucial for writing policy defense papers that attempt to project forward year development output trajectories based on expenditure inputs.";
                 }
             } else {
-                tagEl.textContent = 'NON-PARAMETRIC TEST';
-                tagEl.className = 'inline-block text-[10px] font-bold uppercase px-2.5 py-1 bg-amber-100 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 rounded-md tracking-wider';
-                samplingEl.textContent = 'Non-Probability / Purposive';
+                tag.textContent = 'NON-PARAMETRIC TEST';
+                tag.className = 'inline-block text-[10px] font-bold uppercase px-2.5 py-1 bg-amber-100 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 rounded-md tracking-wider';
+                sampling.textContent = 'Non-Probability (Purposive / Judgmental / Quota Allowed)';
 
                 if (objective === 'compare-2') {
-                    testNameEl.textContent = 'Mann-Whitney U / Wilcoxon Sign-Rank';
-                    descEl.textContent = 'Compares structural position medians when variables are rank-ordered or scaled ordinal data, bypassing regular distribution demands.';
+                    name.textContent = 'Mann-Whitney U / Wilcoxon Sign-Rank System';
+                    desc.textContent = 'Converts raw records into numerical ranking lines to isolate structural median placement divergence across independent or paired tracks.';
+                    hint.textContent = 'Deploy this whenever data is ranked using 5-point Likert matrices where standard mean curves are mathematically invalid.';
                 } else if (objective === 'compare-multi') {
-                    testNameEl.textContent = 'Kruskal-Wallis Test Matrix';
-                    descEl.textContent = 'The non-parametric version of a regular ANOVA. Compares three or more groups when continuous scale normality conditions fail completely.';
+                    name.textContent = 'Kruskal-Wallis Variance Analysis';
+                    desc.textContent = 'An omnibus non-parametric rank system that determines if continuous distribution shapes dominate matching sample layout tiers.';
+                    hint.textContent = 'Acts as the direct non-parametric replacement for an ANOVA if group population records fail basic skew parameters.';
                 } else if (objective === 'association') {
-                    testNameEl.textContent = 'Chi-Square Test (χ²) / Spearman Rho';
-                    descEl.textContent = 'Tests independence consistency or correlation ranking between discrete nominal data categories (e.g., gender vs choice distribution).';
+                    name.textContent = 'Chi-Square Test (χ²) / Spearman Rank Rho';
+                    desc.textContent = 'Evaluates independence consistency configurations between distinct categorical nominal boxes by tracking observed vs expected counts.';
+                    hint.textContent = 'Classic testing blueprint for analyzing categorical attributes, like matching citizen gender against selection preferences for civic services.';
                 } else if (objective === 'prediction') {
-                    testNameEl.textContent = 'Binary Logistic Regression Analysis';
-                    descEl.textContent = 'Models performance log-odds likelihood thresholds when predicting outcomes that fall into absolute true binary branches (0 or 1).';
+                    name.textContent = 'Binary Logistic Regression Framework';
+                    desc.textContent = 'Transforms linear vectors into sigmoidal probability odds to map outcomes bounded inside explicit binary boundaries (0 or 1 thresholds).';
+                    hint.textContent = 'Perfect framework for modeling risk matrices (e.g., classifying a credit or project profile as likely to "Succeed" or "Default").';
                 }
             }
         }
 
-        // Apply dark mode styling instantly if the platform uses it
+        // Tab 2: Sample Size Mathematical Processor
+        function calculateSampleSize() {
+            const popType = document.getElementById('sample-pop-type').value;
+            const error = parseFloat(document.getElementById('sample-error').value);
+            const popInputWrap = document.getElementById('finite-input-wrap');
+            const formulaEl = document.getElementById('sample-formula');
+            const metaEl = document.getElementById('formula-meta');
+            const resultEl = document.getElementById('sample-result');
+
+            if (popType === 'infinite') {
+                popInputWrap.style.display = 'none';
+                formulaEl.innerHTML = 'n = [Z² × p × q] / e²';
+                metaEl.textContent = "Cochran's matrix formula deployed assuming unknown population width at standard 95% confidence bounds (Z=1.96, p=0.5).";
+                
+                const n = Math.ceil((1.96 * 1.96 * 0.25) / (error * error));
+                resultEl.textContent = n;
+            } else {
+                popInputWrap.style.display = 'block';
+                formulaEl.innerHTML = 'n = N / [1 + N(e)²]';
+                metaEl.textContent = "Yamane's structural model is strictly deployed for finite organizational frame populations.";
+                
+                const N = parseInt(document.getElementById('sample-population').value) || 0;
+                if(N <= 0) {
+                    resultEl.textContent = '0';
+                    return;
+                }
+                const n = Math.ceil(N / (1 + (N * error * error)));
+                resultEl.textContent = n;
+            }
+        }
+
+        // Tab 3: Reliability Processor
+        function updateReliabilityScore() {
+            const val = document.getElementById('reliability-alpha').value;
+            const dot = document.getElementById('alpha-status-dot');
+            const title = document.getElementById('alpha-title');
+            const desc = document.getElementById('alpha-desc');
+            const remedy = document.getElementById('alpha-remedy');
+
+            if(val === 'excellent') {
+                dot.className = "w-3 h-3 rounded-full bg-emerald-500";
+                title.textContent = "Exceptional Consistency Standard";
+                desc.textContent = "The scale items possess an incredibly high level of internal cohesion. Excellent for building standardized testing matrices.";
+                remedy.textContent = "* Matrix Optimization: Scale is flawless. Safe for structural equation testing frameworks.";
+            } else if(val === 'good') {
+                dot.className = "w-3 h-3 rounded-full bg-teal-500";
+                title.textContent = "Reliable Structural Framework";
+                desc.textContent = "The target scale markers match high empirical standards. Variables are safe for factor profiling or multivariate structural tracking.";
+                remedy.textContent = "* No revision steps required. Items demonstrate clear structural coherence.";
+            } else if(val === 'acceptable') {
+                dot.className = "w-3 h-3 rounded-full bg-amber-500";
+                title.textContent = "Acceptable Minimum Threshold";
+                desc.textContent = "Meets the bare baseline requirements for academic data tools. Caution is advised if performing deep exploratory analysis.";
+                remedy.textContent = "* Suggestion: Look into correlations between questionnaire items; clearing out lowest scoring values can lift alpha scores.";
+            } else {
+                dot.className = "w-3 h-3 rounded-full bg-rose-500 animate-bounce";
+                title.textContent = "Flawed Internal Consistency";
+                desc.textContent = "Scale reliability has broken completely down. The items inside the questionnaire likely contradict each other or fail to measure the same target attribute.";
+                remedy.textContent = "⚠️ Critical Repair Action Required: Reject current data array. Rewrite question item blocks, delete conflicting scale metrics, and rerun pilot validations.";
+            }
+        }
+
+        // Tab 4: Mixed-Methods Design Blueprinter
+        function updateMMRBlueprint() {
+            const val = document.getElementById('mmr-design').value;
+            const flow = document.getElementById('mmr-flow');
+            const title = document.getElementById('mmr-title');
+            const desc = document.getElementById('mmr-desc');
+
+            if(val === 'convergent') {
+                flow.textContent = "QUANTITATIVE + QUALITATIVE (SIMULTANEOUSLY)";
+                title.textContent = "Convergent Parallel Framework Design";
+                desc.textContent = "Collects statistical survey data and rich qualitative thematic focus arrays at the same baseline period. Both datasets are analyzed independently, then compared directly to see if they yield complementary conclusions.";
+            } else if (val === 'explanatory') {
+                flow.textContent = "QUANTITATIVE (QUAN) ──> QUALITATIVE (qual)";
+                title.textContent = "Explanatory Sequential Framework Design";
+                desc.textContent = "Prioritizes numeric quantitative evaluation first. Once macro statistical patterns are verified, targeted qualitative key-informant interviews are introduced explicitly to explain the deeper contextual 'why' behind the numbers.";
+            } else {
+                flow.textContent = "QUALITATIVE (QUAL) ──> QUANTITATIVE (quan)";
+                title.textContent = "Exploratory Sequential Framework Design";
+                desc.textContent = "Begins completely inside an inductive, qualitative thematic field phase to discover hidden behavioral factors. Those field insights are then built directly into custom survey structures to test their validity across a wider population footprint.";
+            }
+        }
+
+        // Tab 5: Assumption Error Repairs
+        function updateViolationFix() {
+            const val = document.getElementById('violation-type').value;
+            const title = document.getElementById('violation-title');
+            const desc = document.getElementById('violation-desc');
+
+            if(val === 'right-skew') {
+                title.textContent = "Logarithmic Transformation (Log10 / Natural Log Matrices)";
+                desc.textContent = "Apply a Y' = log(Y) transformation matrix sequence to all data entries. This compresses extreme long-tail variances, converting standard exponential skew structures smoothly into an aligned Gaussian normal shape.";
+            } else if (val === 'hetero') {
+                title.textContent = "Weighted Least Squares (WLS) / Robust Standard Errors";
+                desc.textContent = "Abandon standard homoscedastic OLS parameters. Shift to a Weighted Least Squares framework or activate Robust Hub-White Error adjustment vectors to neutralize non-constant error distribution weights.";
+            } else {
+                title.textContent = "Winsorization Protocol or Interquartile Range (IQR) Trimming";
+                desc.textContent = "Isolate variance metrics exceeding 1.5 times the IQR (or values where Z > 3.0). Recode extreme outlying boundary ticks to match the exact value at the 95th percentile parameter threshold to safeguard slope calculations.";
+            }
+        }
+
+        // Automatic local system dark mode sync routine
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
