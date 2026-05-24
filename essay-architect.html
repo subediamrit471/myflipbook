@@ -825,6 +825,13 @@
                 document.documentElement.classList.add('dark');
             }
         };
+// Force the panel to hide when the page first loads
+document.addEventListener("DOMContentLoaded", () => {
+    const panel = document.getElementById('admin-secret-gate');
+    if (panel) {
+        panel.classList.add('hidden');
+    }
+});
     </script>
 </body>
 </html>
