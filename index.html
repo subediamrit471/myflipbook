@@ -1206,37 +1206,34 @@ window.addEventListener('click', function(e) {
         closeLegalModal();
     }
 });
-// ==========================================
-        // 🔄 GLOBAL TOTAL VISITOR COUNTER ENGINE
         // ==========================================
-        (function() {
-            // Encode the clean domain mapping directly for the API server
-            const domain = encodeURIComponent(window.location.hostname || "loksewa-sarathi-main");
-            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const page_path = window.location.pathname;
-            const page_title = document.title;
-            const referrer = document.referrer;
+        // 🔄 INSTANT REAL-TIME VISITOR COUNTER
+        // ==========================================
+        function initializeVisitorCounter() {
+            // Using a unique key for your studio
+            const namespace = "loksewasarathistudio2026";
+            const key = "totalviews";
 
-            // Submit session packet directly via POST
-            fetch('https://visitor.6developer.com/visit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ domain, timezone, page_path, page_title, referrer })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.totalCount) {
-                    // Update your custom layout badge smoothly
-                    document.getElementById('visitor-count').textContent = data.totalCount;
-                } else {
-                    document.getElementById('visitor-count').textContent = "1";
-                }
-            })
-            .catch(error => {
-                // Fail-safe protection standard fallback
-                document.getElementById('visitor-count').textContent = "1";
-            });
-        })();
+            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.value) {
+                        // The server sent the total global count back perfectly!
+                        document.getElementById('visitor-count').textContent = data.value;
+                    } else {
+                        document.getElementById('visitor-count').textContent = "1";
+                    }
+                })
+                .catch(error => {
+                    // Local memory fallback if network is completely offline
+                    let localCount = localStorage.getItem('ls_fallback_counter') || 1;
+                    localCount = parseInt(localCount) + 1;
+                    localStorage.setItem('ls_fallback_counter', localCount);
+                    document.getElementById('visitor-count').textContent = localCount;
+                });
+            }
+        // Run immediately when page loads
+        document.addEventListener('DOMContentLoaded', initializeVisitorCounter);
     </script>
 </body>
 </html>
